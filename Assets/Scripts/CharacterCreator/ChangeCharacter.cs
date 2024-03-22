@@ -7,10 +7,10 @@ using UnityEditor;
 public class ChangeCharacter : MonoBehaviour
 {
     public CharacterItem actualCharacter; //el que sale mostrado actualmente en el creador de personajes
-    public CharacterItem playerSavedCharacter; //el que elige y tiene guardado
-
+    public CharacterItem playerCharacter; //el guardado
 
     [SerializeField] GameObject container;
+    [SerializeField] GameObject characterSavedText;
     [SerializeField] List<CharacterItem> characters;
     int characterActive = 0;
     [SerializeField] TextMeshProUGUI nameText;
@@ -20,68 +20,12 @@ public class ChangeCharacter : MonoBehaviour
     private void Awake()
     {
         //Leer el personaje guardado
-        /* saveData = GetComponent<SaveData>();
-         saveData.ReadFromJson();
-         CharacterDataToScriptableObject();
-
-
-
-         //Actualizar el personaje en pantalla
-         Destroy(container.transform.GetChild(0).gameObject);
-         Instantiate(characters[characterActive].prefab, Vector3.zero, Quaternion.identity, container.transform);
-         nameText.text = characters[characterActive].characterName;
-
-
-
-         print(characterActive);*/
-        actualCharacter = characters[0];
+        saveData = GetComponent<SaveData>();
+        saveData.ReadFromJson();
+        ReadCharacter();
         
-        //Para hacer reset de todos los personajes al darle al play
-        foreach (CharacterItem character in characters)
-        {
-            character.hairColor = character.hair.color;
-            character.skinColor = character.skin.color;
-            character.topColor = character.top.color;
-            character.bottomColor = character.bottom.color;
-        }
+
     }
-
-    /*public void CharacterDataToScriptableObject()
-    {
-        //Leer el nombre. Con esto puedo buscar el material y el prefab
-        actualCharacter.characterName = saveData.player.playerCharacterData.characterName;
-
-        //Buscar en qué índice de la lista de personajes está, segun el NOMBRE del personaje
-        characterActive = characters.FindIndex(character => character.characterName == actualCharacter.characterName);
-
-        //Asignar el prefab y los materiales
-        actualCharacter.prefab = characters[characterActive].prefab;
-        actualCharacter.hair = characters[characterActive].hair;
-        actualCharacter.skin = characters[characterActive].skin;
-        actualCharacter.top = characters[characterActive].top;
-        actualCharacter.bottom = characters[characterActive].bottom;
-
-        //Leer los colores
-        Color color = Color.black; //si falla saldrá negro
-        if(ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.hairColor, out color))
-        {
-            actualCharacter.hairColor = color;
-        }
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.skinColor, out color))
-        {
-            actualCharacter.skinColor = color;
-        }
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.bottomColor, out color))
-        {
-            actualCharacter.bottomColor = color;
-        }
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.topColor, out color))
-        {
-            actualCharacter.topColor = color;
-        }
-
-
-    }*/
 
     public void OnArrowClicked(string direction)
     {
@@ -131,33 +75,88 @@ public class ChangeCharacter : MonoBehaviour
 
     }
 
+    public void ReadCharacter()
+    {
+        //Buscar la skin
+        string savedSkin = saveData.player.playerCharacterData.characterName;
+        if(savedSkin == null)
+        {
+            actualCharacter = characters[0];
+            characterActive = 0;
+            print("Error: No hay personaje guardado");
+            return;
+        }
+        //Buscar en qué índice de la lista de personajes está, segun el NOMBRE de la skin
+        characterActive = characters.FindIndex(character => character.characterName == savedSkin);
+        actualCharacter = characters[characterActive];
+
+        //Actualizar el personaje en pantalla
+        Destroy(container.transform.GetChild(0).gameObject);
+        Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, container.transform);
+        nameText.text = actualCharacter.characterName;
+
+        //Asignar colores guardados (cuando haga reset deben salir estos)
+        Color color = Color.black; //si falla saldrá negro
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.hairColor, out color))
+        {
+            actualCharacter.hairColor = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.skinColor, out color))
+        {
+            actualCharacter.skinColor = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.bottomColor, out color))
+        {
+            actualCharacter.bottomColor = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.topColor, out color))
+        {
+            actualCharacter.topColor = color;
+        }
+
+        //scriptable object con estos datos
+        playerCharacter.characterName = actualCharacter.characterName;
+        playerCharacter.prefab = actualCharacter.prefab;
+        playerCharacter.hair = actualCharacter.hair;
+        playerCharacter.skin = actualCharacter.skin;
+        playerCharacter.top = actualCharacter.top;
+        playerCharacter.bottom = actualCharacter.bottom;
+        playerCharacter.hairColor = actualCharacter.hairColor;
+        playerCharacter.skinColor = actualCharacter.skinColor;
+        playerCharacter.topColor = actualCharacter.topColor;
+        playerCharacter.bottomColor = actualCharacter.bottomColor;
+    }
+
     public void SaveCharacter()
     {
-        //Se guarda el nombre
-        playerSavedCharacter.characterName = characters[characterActive].characterName;
-        //Se guarda la skin
-        playerSavedCharacter.prefab = characters[characterActive].prefab;
-        //Se guarda el mismo material que el original. De esta manera si se vuelve a entrar al editor, el material estará actualizado
-        playerSavedCharacter.hair = characters[characterActive].hair;
-        playerSavedCharacter.skin = characters[characterActive].skin;
-        playerSavedCharacter.top = characters[characterActive].top;
-        playerSavedCharacter.bottom = characters[characterActive].bottom;
-        //Se guardan los nuevos colores
-        playerSavedCharacter.hairColor = playerSavedCharacter.hair.color;
-        playerSavedCharacter.skinColor = playerSavedCharacter.skin.color;
-        playerSavedCharacter.topColor = playerSavedCharacter.top.color;
-        playerSavedCharacter.bottomColor = playerSavedCharacter.bottom.color;
-        //Se guardan las zapatillas
-        //characterToSave.shoes = 
-
-
-        saveData.player.playerCharacterData.characterName = characters[characterActive].characterName;
-        saveData.player.playerCharacterData.hairColor = ColorToHex(playerSavedCharacter.hairColor);
-        saveData.player.playerCharacterData.skinColor = ColorToHex(playerSavedCharacter.skinColor);
-        saveData.player.playerCharacterData.topColor = ColorToHex(playerSavedCharacter.topColor);
-        saveData.player.playerCharacterData.bottomColor = ColorToHex(playerSavedCharacter.bottomColor);
+        saveData.player.playerCharacterData.characterName = actualCharacter.characterName;
+        saveData.player.playerCharacterData.hairColor = ColorToHex(actualCharacter.hair.color);
+        saveData.player.playerCharacterData.skinColor = ColorToHex(actualCharacter.skin.color);
+        saveData.player.playerCharacterData.topColor = ColorToHex(actualCharacter.top.color);
+        saveData.player.playerCharacterData.bottomColor = ColorToHex(actualCharacter.bottom.color);
         saveData.SaveToJson();
+        saveData.ReadFromJson();
+        ReadCharacter();
+        StartCoroutine(CharacterSavedText());
+    }
 
+    IEnumerator CharacterSavedText()
+    {
+        characterSavedText.SetActive(true);
+        yield return new WaitForSeconds(2);
+        characterSavedText.SetActive(false);
+    }
+
+    private void AsignColors()
+    {
+        //Para hacer reset de todos los personajes al darle al play
+        foreach (CharacterItem character in characters)
+        {
+            character.hairColor = character.hair.color;
+            character.skinColor = character.skin.color;
+            character.topColor = character.top.color;
+            character.bottomColor = character.bottom.color;
+        }
     }
 
     public static string ColorToHex(Color color)

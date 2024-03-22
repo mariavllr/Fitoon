@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Tienda.unity
     guid: ed99ad9ac867ef947a0ff16156d613cc
   - enabled: 1
+    path: Assets/Scenes/FindingScenario.unity
+    guid: e2519767f6c1f0b4c9c101aea80a6b19
+  - enabled: 1
     path: Assets/Scenes/Dizzy Height.unity
     guid: 86f4b78440aa39648908fe69f04e06d4
   - enabled: 1

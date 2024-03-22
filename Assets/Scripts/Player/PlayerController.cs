@@ -8,6 +8,8 @@ using UnityEngine.Networking;
 
 public class PlayerController : NetworkBehaviour
 {
+    public CharacterItem playerCharacter;
+
     public float moveSpeed = 7f;
     [SerializeField] private float speedMultiplier = 1f;
     [SerializeField] private float speedBoost = 1f;
@@ -99,6 +101,10 @@ public class PlayerController : NetworkBehaviour
         botSpawner = FindObjectOfType<BotSpawner>();
         goalController = FindObjectOfType<GoalController>();
         goal = goalController.gameObject;
+
+        //Asignar personaje
+      //  FindObjectOfType<NetworkManager>().NetworkConfig.PlayerPrefab = playerCharacter.prefab;
+        
     }
 
     private void Start()
