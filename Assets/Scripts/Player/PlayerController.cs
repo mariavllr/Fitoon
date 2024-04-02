@@ -102,8 +102,18 @@ public class PlayerController : NetworkBehaviour
         goalController = FindObjectOfType<GoalController>();
         goal = goalController.gameObject;
 
-        //Asignar personaje
-      //  FindObjectOfType<NetworkManager>().NetworkConfig.PlayerPrefab = playerCharacter.prefab;
+        //Asignar personaje guardado
+        GameObject playerContainer = GameObject.FindGameObjectWithTag("Player");
+        GameObject characterInPrefab = GameObject.FindGameObjectWithTag("Character");
+        GameObject newCharacter = Instantiate(playerCharacter.prefab, characterInPrefab.transform.position, Quaternion.identity, playerContainer.transform);
+        newCharacter.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+        Destroy(newCharacter.GetComponent<CapsuleCollider>());
+        Destroy(newCharacter.GetComponent<RotateCharacter>());
+        newCharacter.AddComponent<PlayerAnimationController>();
+        newCharacter.transform.SetSiblingIndex(0);
+
+        Destroy(characterInPrefab);
+       
         
     }
 
@@ -306,14 +316,19 @@ public class PlayerController : NetworkBehaviour
             finishController.Finish();
             if (goalController != null) goalController.RemovePlayerFromList(transform);
             if (goalController != null) goalController.PlayerFinish();
-            rB.isKinematic = true;
-            rB.collisionDetectionMode = CollisionDetectionMode.Discrete;
-            rB.velocity = Vector3.zero;
-            rB.rotation = Quaternion.identity;
-            rB.detectCollisions = false;
-            charModel.gameObject.SetActive(false);
-            GetComponent<PlayerNameHolder>().textHolder.SetActive(false);
+            StopCharacterOnFinish();
         }
+    }
+
+    public void StopCharacterOnFinish()
+    {
+        rB.isKinematic = true;
+        rB.collisionDetectionMode = CollisionDetectionMode.Discrete;
+        rB.velocity = Vector3.zero;
+        rB.rotation = Quaternion.identity;
+        rB.detectCollisions = false;
+       // charModel.gameObject.SetActive(false);
+        GetComponent<PlayerNameHolder>().textHolder.SetActive(false);
     }
 
     private void OnTriggerStay(Collider collider)

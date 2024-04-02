@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GoalController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GoalController : MonoBehaviour
     [SerializeField] private int playerPosition = 0;
     [SerializeField] private bool playerFinished = false;
     [SerializeField] private List<Transform> players;
+    [SerializeField] private Button exitButton;
 
 
     private void Awake()
@@ -47,6 +49,34 @@ public class GoalController : MonoBehaviour
         //players.Remove(player);
         finishedPlayers++;
         players.RemoveAll(p => p == null || p == player);
+        Debug.LogWarning(finishedPlayers);
+        if (finishedPlayers == 8)
+        {
+            Debug.LogWarning("fin de ronda");
+            PlayerFinish();
+            FindObjectOfType<FinishController>().Finish();
+            FindObjectOfType<PlayerController>().StopCharacterOnFinish();
+
+            if (playerFinished)
+            {
+                //Ha ganado
+                //Pasar a siguiente nivel aleatorio
+                FindObjectOfType<ButtonFunctions>().LoadScene("FindingScenario");
+            }
+            else
+            {
+                //Ha perdido
+                exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
+            }
+        }
+
+        else
+        {
+            if (playerFinished)
+            {
+                Debug.LogWarning("Has ganado la ronda");
+            }
+        }
     }
 
 

@@ -970,9 +970,10 @@ GameObject:
   - component: {fileID: 8998448321280030257}
   - component: {fileID: 521287158}
   - component: {fileID: 521287157}
+  - component: {fileID: 387245337376332441}
   m_Layer: 0
   m_Name: ChicoGorro
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1053,6 +1054,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb5a9facaf4b4b4388a791c15db10a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &387245337376332441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399034774071457521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 8998448321280030257}
 --- !u!1 &2490345629196703146
 GameObject:
   m_ObjectHideFlags: 0

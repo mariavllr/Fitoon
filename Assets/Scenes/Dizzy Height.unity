@@ -13564,6 +13564,7 @@ MonoBehaviour:
   playerPosition: 0
   playerFinished: 0
   players: []
+  exitButton: {fileID: 1176868667}
 --- !u!65 &572928455
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16879,6 +16880,7 @@ GameObject:
   - component: {fileID: 710239041}
   - component: {fileID: 710239042}
   - component: {fileID: 710239043}
+  - component: {fileID: 710239044}
   m_Layer: 0
   m_Name: Data
   m_TagString: Untagged
@@ -16949,6 +16951,18 @@ MonoBehaviour:
   countdownTimer: {fileID: 882515600}
   netData: {fileID: 710239042}
   startButton: {fileID: 995958477}
+--- !u!114 &710239044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710239038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9566431fc4b49543808c656bb6fa50c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &710681388 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7452218666140772657, guid: eea75dce62580034a913ad3f32ba3b12, type: 3}
@@ -29665,6 +29679,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 710239044}
+        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: FinPartida
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1176868668

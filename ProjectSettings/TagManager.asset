@@ -16,6 +16,7 @@ TagManager:
   - Top
   - Bottom
   - Shoes
+  - Character
   layers:
   - Default
   - TransparentFX

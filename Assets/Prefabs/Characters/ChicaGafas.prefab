@@ -228,9 +228,10 @@ GameObject:
   - component: {fileID: 6509495759563284318}
   - component: {fileID: 9190963490098043232}
   - component: {fileID: 9190963490098043233}
+  - component: {fileID: 4583971147251899869}
   m_Layer: 0
   m_Name: ChicaGafas
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -330,6 +331,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb5a9facaf4b4b4388a791c15db10a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4583971147251899869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575796233090883486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 6509495759563284318}
 --- !u!1 &658625288430133385
 GameObject:
   m_ObjectHideFlags: 0

@@ -83,7 +83,7 @@ public class ChangeCharacter : MonoBehaviour
         {
             actualCharacter = characters[0];
             characterActive = 0;
-            print("Error: No hay personaje guardado");
+            Debug.LogError("Error: No hay personaje guardado");
             return;
         }
         //Buscar en qué índice de la lista de personajes está, segun el NOMBRE de la skin
