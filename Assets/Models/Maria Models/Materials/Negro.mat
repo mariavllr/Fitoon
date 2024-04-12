@@ -84,7 +84,7 @@ Material:
     - _OcclusionStrength: 1
     - _OutlineSize: 0
     - _Parallax: 0.02
-    - _RampLevels: 2.5
+    - _RampLevels: 2
     - _RimAlpha: 0.15
     - _RimDropOff: 0
     - _RimPower: 0.513

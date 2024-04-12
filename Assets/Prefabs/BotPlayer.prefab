@@ -5234,6 +5234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b5a916cfac2024d994e87c934a9aa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  network: 1
   rayLength: 5
   sideRayAngle: 20
   obstacleLayer:
