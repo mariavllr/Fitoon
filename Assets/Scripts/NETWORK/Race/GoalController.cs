@@ -13,8 +13,13 @@ public class GoalController : MonoBehaviour
     [SerializeField] private bool playerFinished = false;
     [SerializeField] private List<Transform> players;
     [SerializeField] private Button exitButton;
-
+    [SerializeField] private TextMeshProUGUI roundText;
+    [SerializeField] private TextMeshProUGUI infoText;
     int maxPlayers = 32;
+
+    //Evento cuando acaba la carrera. Se manda a todos los participantes (bots incluidos)
+    public delegate void OnRaceFinish();
+    public static event OnRaceFinish onRaceFinishEvent;
 
     private void Awake()
     {
@@ -24,14 +29,19 @@ public class GoalController : MonoBehaviour
     private void LateUpdate()
     {
         //Order player list by distance to the goal. This only works for straight courses
-        if (!playerFinished) if (players != null && players.Count > 1) players.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+       /* if (!playerFinished)
+            if (players != null && players.Count > 1)
+                players.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));*/
     }
 
     public void UpdatePosition(Transform player)
     {
-        if (players.Contains(player)) playerPosition = finishedPlayers + (players.IndexOf(player) + 1);
+        //if (players.Contains(player)) playerPosition = finishedPlayers + (players.IndexOf(player) + 1);
 
-        currentPositionTextMesh.text = playerPosition + "/" + (players.Count + finishedPlayers);
+        //currentPositionTextMesh.text = playerPosition + "/" + (players.Count + finishedPlayers);
+
+        //En lugar de la posicion mostramos los clasificados
+        currentPositionTextMesh.text = finishedPlayers + "/" + (maxPlayers);
     }
 
 
@@ -50,49 +60,78 @@ public class GoalController : MonoBehaviour
         //players.Remove(player);
         finishedPlayers++;
         players.RemoveAll(p => p == null || p == player);
-        //Hacer que desaparezca el bot
-        //Añadirlo a una lista en race manager para la siguiente ronda
+        
+
+        if (player.GetChild(0).gameObject.tag == "Character")
+        {
+            //Ha entrado el jugador
+            PlayerFinish();
+            FindObjectOfType<PlayerControl>().StopCharacterOnFinish();
+            FindObjectOfType<FinishController>().Finish(); //Animacion de acabar. To do: que diga You win!
+        }
+
+        else
+        {
+            //Ha entrado otro
+            //Hacer que desaparezca el bot
+            player.gameObject.SetActive(false);
+            //Añadirlo a una lista en race manager para la siguiente ronda
+
+        }
 
         if (finishedPlayers == maxPlayers)
         {
-            Debug.LogWarning("fin de ronda");
-
-            PlayerFinish();
-            FindObjectOfType<FinishController>().Finish();
-            FindObjectOfType<PlayerControl>().StopCharacterOnFinish();
-
+            //Fin de carrera
+            FindObjectOfType<FinishController>().Finish(); //Animacion de acabar
+            
+            //Lanzar evento fin de carrera a los que queden
+            if(onRaceFinishEvent != null)
+            {
+                onRaceFinishEvent();
+            }
+            
 
             RaceManager.Instance.numberOfRace++;
             if(RaceManager.Instance.numberOfRace > RaceManager.Instance.maxRaces)
             {
                 Debug.LogWarning("fin de PARTIDA");
+                if (playerFinished)
+                {
+                    //Ganó el jugador
+                    infoText.text = "You win!!!";
+                    exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
+                }
+                else
+                {
+                    //Perdió
+                    infoText.text = "You lost!!!";
+                    exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
+                }
             }
             else
             {
                 if (playerFinished)
                 {
-                    //Ha ganado, puede
-                    //Pasar a siguiente nivel aleatorio
-                    FindObjectOfType<ButtonFunctions>().LoadScene("FindingScenario");
+                    //Ha ganado, puede pasar a siguiente nivel aleatorio
+                    StartCoroutine(NextLevel());
+                    
                 }
                 else
                 {
                     //Ha perdido, vuelve al inicio
+                    infoText.text = "You lost... Press exit to go back";
                     exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
                 }
-            }
-            
+            }   
         }
+       
+    }
 
-        else
-        {
-            if (playerFinished)
-            {
-                //Ha ganado pero tiene que esperar a los demas
-                Debug.LogWarning("Has ganado la ronda");
-            }
-        }
-        
+    IEnumerator NextLevel()
+    {
+        infoText.text = "You win! Next level...";
+        yield return new WaitForSeconds(5f);
+        FindObjectOfType<ButtonFunctions>().LoadScene("FindingScenario");
     }
 
 
@@ -112,8 +151,8 @@ public class GoalController : MonoBehaviour
 
         if (RaceManager.Instance != null)
         {
-
-            switch (RaceManager.Instance.numberOfRace)
+            int ronda = RaceManager.Instance.numberOfRace;
+            switch (ronda)
             {
                 case 1:
                     maxPlayers = 16;
@@ -125,7 +164,7 @@ public class GoalController : MonoBehaviour
                     maxPlayers = 1;
                     break;
             }
-            Debug.Log("MAX PLAYERS" + maxPlayers);
+            roundText.text = "RONDA " + ronda;
         }
 
         else Debug.LogError("Error: No race manager");

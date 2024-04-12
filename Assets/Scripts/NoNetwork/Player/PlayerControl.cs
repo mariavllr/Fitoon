@@ -58,6 +58,44 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    //-----EVENTS-----
+
+    private void OnEnable()
+    {
+        GoalController.onRaceFinishEvent += EndRace;
+        FaceTrackingToMovement.onCaraDetectadaEvent += caraDetectada;
+        FaceTrackingToMovement.onCaraNoDetectadaEvent += caraNoDetectada;
+    }
+
+    private void OnDisable()
+    {
+        GoalController.onRaceFinishEvent -= EndRace;
+        FaceTrackingToMovement.onCaraDetectadaEvent -= caraDetectada;
+        FaceTrackingToMovement.onCaraNoDetectadaEvent -= caraNoDetectada;
+    }
+
+    void caraDetectada()
+    {
+        faceDetected = true;
+        if (MovementAllowed()) anim.SetBool("isRunning", true);
+    }
+
+    void caraNoDetectada()
+    {
+        faceDetected = false;
+        anim.SetBool("isRunning", false);
+    }
+    //If the player looses
+    void EndRace()
+    {
+        LockMovement(true);
+        StopCharacterOnFinish();
+        anim.SetBool("isRunning", false);
+    }
+
+
+
+
 
     private void SendSpawnpointDataClientRpc(int spIndex, Vector3 spPosition)
     {
@@ -132,10 +170,6 @@ public class PlayerControl : MonoBehaviour
         goalController = FindObjectOfType<GoalController>();
         goal = goalController.gameObject;
 
-
-        FaceTrackingToMovement.onCaraDetectadaEvent += caraDetectada;
-        FaceTrackingToMovement.onCaraNoDetectadaEvent += caraNoDetectada;
-
         //Asignar personaje guardado
         GameObject playerContainer = GameObject.FindGameObjectWithTag("Player");
         GameObject characterInPrefab = GameObject.FindGameObjectWithTag("Character");
@@ -144,7 +178,7 @@ public class PlayerControl : MonoBehaviour
         playerContainer.GetComponent<PlayerControl>().anim = newCharacter.GetComponent<Animator>();
         Destroy(newCharacter.GetComponent<CapsuleCollider>());
         Destroy(newCharacter.GetComponent<RotateCharacter>());
-        
+
         newCharacter.transform.SetSiblingIndex(0);
 
         Destroy(characterInPrefab);
@@ -153,34 +187,16 @@ public class PlayerControl : MonoBehaviour
     }
 
 
-    private void OnDisable()
-    {
-        FaceTrackingToMovement.onCaraDetectadaEvent -= caraDetectada;
-        FaceTrackingToMovement.onCaraNoDetectadaEvent -= caraNoDetectada;
-    }
-
-    void caraDetectada()
-    {
-        faceDetected = true;
-        anim.SetBool("isRunning", true);
-    }
-
-    void caraNoDetectada()
-    {
-        faceDetected = false;
-        anim.SetBool("isRunning", false);
-    }
-
     private void Start()
     {
 
-            joystick = FindObjectOfType<FloatingJoystick>();
-            joystick.enabled = true;
-            joystick.GetComponentInChildren<Transform>().gameObject.SetActive(true);
+        joystick = FindObjectOfType<FloatingJoystick>();
+        joystick.enabled = true;
+        joystick.GetComponentInChildren<Transform>().gameObject.SetActive(true);
 
-            mainCamera = Camera.main;
+        mainCamera = Camera.main;
 
-            if (goalController != null) goalController.Reset();
+        if (goalController != null) goalController.Reset();
 
         charModel = anim.transform;
 
@@ -191,6 +207,7 @@ public class PlayerControl : MonoBehaviour
         gravityDirection = new Vector3(0, Physics.gravity.y * 2, 0);
         rB.interpolation = RigidbodyInterpolation.None;
         rB.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        LockMovement(false);
         //-------------------------------------------------------------------------------------------
 
         if (countdownTimer == null) countdownTimer = FindObjectOfType<Countdown>();
@@ -200,11 +217,11 @@ public class PlayerControl : MonoBehaviour
         countdownTimer.Reset();
 
 
-            //When a Player spawn, the Server searches for a not occupied spawnpoint from the NetworkList for him.
-            SearchNextFreeSpawnPoint();
+        //When a Player spawn, the Server searches for a not occupied spawnpoint from the NetworkList for him.
+        SearchNextFreeSpawnPoint();
 
-            //Each time a Player joins the lobby his Server side checks num of players connected to that lobby and starts the countdown when full
-            //CheckConnectedPlayers();
+        //Each time a Player joins the lobby his Server side checks num of players connected to that lobby and starts the countdown when full
+        //CheckConnectedPlayers();
 
     }
 
@@ -244,28 +261,17 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-   /* private void CheckConnectedPlayers()
-    {
-        if (netData.GetPlayerCount() == netData.GetCurrentMaxPlayersPerLobby())/// ToDo: Add 60s timer and fill with bots if it ends
-        {
-            Debug.Log("START");
-            botSpawner.FillSpawnpointsWithBots(); //Spawn Bots
-            StartCountdownClientRpc();//Send RPC to clients to start countdown aswell
-        }
-    }*/
-
-
     private void Update()
     {
 
         if (MovementAllowed())
         {
-            if (goalController != null) goalController.AddPlayerToList(transform);
+            if (goalController != null)
+            {
+                goalController.AddPlayerToList(transform);
+                goalController.UpdatePosition(transform);
+            }
         }
-
-        //The client owner controls his player with the input
-
-        if (MovementAllowed()) goalController.UpdatePosition(transform);
 
         if (!testing)
         {
@@ -278,10 +284,10 @@ public class PlayerControl : MonoBehaviour
             movementH = Math.Clamp(Mathf.Round(joystick.Horizontal * 10) / 10 + Mathf.Round(Input.GetAxis("Horizontal") * 10) / 10, -1, 1);
         }
 
-            movementV = Mathf.Clamp01(movementV);
-            if (autoRun) movementV = 1f;
+        movementV = Mathf.Clamp01(movementV);
+        if (autoRun) movementV = 1f;
 
-            playerMovement = new PlayerMovement { _moveV = movementV, _moveH = movementH, _position = playerMovement._position };
+        playerMovement = new PlayerMovement { _moveV = movementV, _moveH = movementH, _position = playerMovement._position };
 
         if (speedBoost > 1f)
         {
@@ -305,42 +311,42 @@ public class PlayerControl : MonoBehaviour
 
         //If isOwner, apply movement instantly from the input
 
-        
-            if (MovementAllowed())
+
+        if (MovementAllowed())
+        {
+            Vector3 fwd = transform.forward.normalized * movementV * moveSpeed * speedMultiplier * speedBoost;
+
+            if (testing)
             {
-                Vector3 fwd = transform.forward.normalized * movementV * moveSpeed * speedMultiplier * speedBoost;
+                Vector3 rotation = new Vector3(0, movementH * rotationSpeed, 0);
 
-                if (testing)
-                {
-                    Vector3 rotation = new Vector3(0, movementH * rotationSpeed, 0);
-
-                    Vector3 currentRotation = transform.rotation.eulerAngles;
-                    //Rotate Player based on Horizontal input
-                    rB.MoveRotation(Quaternion.Euler(currentRotation + rotation));
-                }
-
-                rB.velocity = fwd + new Vector3(0, rB.velocity.y, 0);   
-                anim.SetBool("isRunning", true);
-
+                Vector3 currentRotation = transform.rotation.eulerAngles;
+                //Rotate Player based on Horizontal input
+                rB.MoveRotation(Quaternion.Euler(currentRotation + rotation));
             }
 
-            if(movementH <0.1f && movementV < 0.1f)
+            rB.velocity = fwd + new Vector3(0, rB.velocity.y, 0);
+            anim.SetBool("isRunning", true);
+
+        }
+
+        if (movementH < 0.1f && movementV < 0.1f)
         {
             anim.SetBool("isRunning", false);
         }
 
 
-            if (Input.GetKeyDown(KeyCode.Space) && MovementAllowed())
-            {
-                LockMovement(true);
+        if (Input.GetKeyDown(KeyCode.Space) && MovementAllowed())
+        {
+            LockMovement(true);
 
-                rB.AddForce(transform.up * 8, ForceMode.VelocityChange);
-            }
+            rB.AddForce(transform.up * 8, ForceMode.VelocityChange);
+        }
 
-            //Apply extra gravity to the Player to force fast falling
-            rB.AddForce(gravityDirection, ForceMode.Acceleration);
+        //Apply extra gravity to the Player to force fast falling
+        rB.AddForce(gravityDirection, ForceMode.Acceleration);
 
-        
+
 
     }
 
@@ -391,7 +397,7 @@ public class PlayerControl : MonoBehaviour
         rB.rotation = Quaternion.identity;
         rB.detectCollisions = false;
         // charModel.gameObject.SetActive(false);
-      //  GetComponent<PlayerNameHolder>().textHolder.SetActive(false);
+        //  GetComponent<PlayerNameHolder>().textHolder.SetActive(false);
     }
 
     private void OnTriggerStay(Collider collider)

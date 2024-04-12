@@ -9,7 +9,7 @@ public class BotNoNetwork : MonoBehaviour
     public Animator anim;
     public GameObject trailBoost;
 
-    private float movementSpeed = 7f;
+    [SerializeField] private float movementSpeed = 7f;
     private float speedMultiplier = 1f;
     private float speedBoost = 1f;
     private float rotationSpeed = 1f;
@@ -17,6 +17,7 @@ public class BotNoNetwork : MonoBehaviour
     private float moveV;
     private float moveH;
     private bool isFrozen = false;
+    private bool endRace = false;
 
     private Transform charModel;
     private Rigidbody rB;
@@ -26,6 +27,24 @@ public class BotNoNetwork : MonoBehaviour
 
     private bool isRecovering = false;
     private bool isEffectApplied = false;
+
+    private void OnEnable()
+    {
+        GoalController.onRaceFinishEvent += EndRace;
+    }
+
+    private void OnDisable()
+    {
+        GoalController.onRaceFinishEvent -= EndRace;
+    }
+
+    void EndRace()
+    {
+        LockMovement(true);
+        endRace = true;
+        GetComponent<Rigidbody>().isKinematic = true;
+        anim.SetBool("isRunning", false);
+    }
 
 
     private void Awake()
@@ -105,7 +124,7 @@ public class BotNoNetwork : MonoBehaviour
 
     public void SetMovement(float moveV, float moveH)
     {
-        if (countdownTimer.HasFinished())
+        if (countdownTimer.HasFinished() && !endRace)
         {
             this.moveV = moveV;
             this.moveH = moveH;
