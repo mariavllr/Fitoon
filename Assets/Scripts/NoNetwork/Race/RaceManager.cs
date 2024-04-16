@@ -8,6 +8,7 @@ public class RaceManager : MonoBehaviour
 
     public int numberOfRace = 1;
     public int maxRaces = 3;
+    public bool playerWon;
 
     private void Awake()
     {

@@ -19729,6 +19729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfRace: 1
   maxRaces: 3
+  playerWon: 0
 --- !u!4 &635491658
 Transform:
   m_ObjectHideFlags: 0
@@ -19762,7 +19763,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &638236588
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35289,7 +35290,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1091028989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41737,24 +41738,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasAR
       objectReference: {fileID: 0}
+    - target: {fileID: 1530052218433117972, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1530052219073317147, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5808098866864636674, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5808098866864636674, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5808098866864636674, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 925.17
       objectReference: {fileID: 0}
     - target: {fileID: 5808098866864636674, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: -21.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808098867136863822, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

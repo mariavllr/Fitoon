@@ -82,49 +82,64 @@ public class GoalController : MonoBehaviour
         if (finishedPlayers == maxPlayers)
         {
             //Fin de carrera
-            FindObjectOfType<FinishController>().Finish(); //Animacion de acabar
-            
-            //Lanzar evento fin de carrera a los que queden
-            if(onRaceFinishEvent != null)
-            {
-                onRaceFinishEvent();
-            }
-            
+            EndRace();
+        }
+       
+    }
 
-            RaceManager.Instance.numberOfRace++;
-            if(RaceManager.Instance.numberOfRace > RaceManager.Instance.maxRaces)
+    private void EndRace()
+    {
+        FindObjectOfType<FinishController>().Finish(); //Animacion de acabar
+
+        //Lanzar evento fin de carrera a los que queden
+        if (onRaceFinishEvent != null)
+        {
+            onRaceFinishEvent();
+        }
+
+
+        RaceManager.Instance.numberOfRace++;
+        if (RaceManager.Instance.numberOfRace > RaceManager.Instance.maxRaces)
+        {
+            EndGame();
+        }
+        else
+        {
+            if (playerFinished)
             {
-                Debug.LogWarning("fin de PARTIDA");
-                if (playerFinished)
-                {
-                    //Ganó el jugador
-                    infoText.text = "You win!!!";
-                    exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
-                }
-                else
-                {
-                    //Perdió
-                    infoText.text = "You lost!!!";
-                    exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
-                }
+                //Ha ganado, puede pasar a siguiente nivel aleatorio
+                StartCoroutine(NextLevel());
             }
             else
             {
-                if (playerFinished)
-                {
-                    //Ha ganado, puede pasar a siguiente nivel aleatorio
-                    StartCoroutine(NextLevel());
-                    
-                }
-                else
-                {
-                    //Ha perdido, vuelve al inicio
-                    infoText.text = "You lost... Press exit to go back";
-                    exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
-                }
-            }   
+                //Ha perdido, vuelve al inicio
+                infoText.text = "You lost... Press exit to go back";
+                RaceManager.Instance.playerWon = false;
+                exitButton.gameObject.SetActive(true);
+                exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
+            }
         }
-       
+    }
+
+    private void EndGame()
+    {
+        Debug.LogWarning("fin de PARTIDA");
+        if (playerFinished)
+        {
+            //Ganó el jugador
+            infoText.text = "You win!!! Press exit to go back";
+            RaceManager.Instance.playerWon = true;
+            exitButton.gameObject.SetActive(true);
+            exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
+        }
+        else
+        {
+            //Perdió
+            infoText.text = "You lost!!! Press exit to go back";
+            RaceManager.Instance.playerWon = false;
+            exitButton.gameObject.SetActive(true);
+            exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
+        }
     }
 
     IEnumerator NextLevel()
