@@ -50,7 +50,6 @@ public class GoalController : MonoBehaviour
         if (!players.Exists(p => p == player))
         {
             players.Add(player);
-            Debug.Log("AddPlayer");
         }
     }
 
@@ -67,6 +66,7 @@ public class GoalController : MonoBehaviour
             //Ha entrado el jugador
             PlayerFinish();
             FindObjectOfType<PlayerControl>().StopCharacterOnFinish();
+            FindObjectOfType<PlayerControl>().LockMovement(true);
             FindObjectOfType<FinishController>().Finish(); //Animacion de acabar. To do: que diga You win!
         }
 

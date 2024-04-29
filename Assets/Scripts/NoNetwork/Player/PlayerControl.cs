@@ -7,30 +7,22 @@ public class PlayerControl : MonoBehaviour
 {
     public CharacterItem playerCharacter;
 
-    public float moveSpeed = 7f;
-    [SerializeField] private float speedMultiplier = 1f;
-    [SerializeField] private float speedBoost = 1f;
-    public float rotationSpeed = 1f;
+    [SerializeField] public float speedMultiplier = 1f;
+    [SerializeField] public float speedBoost = 1f;
     public Animator anim;
     public GameObject trailBoost;
 
     [SerializeField] private bool autoRun = false;
 
-    private float movementV = 0;
-    private float movementH = 0;
 
     private Countdown countdownTimer;
     private FinishController finishController;
     private GoalController goalController;
-    private FloatingJoystick joystick;
     private Rigidbody rB;
-    private Camera mainCamera;
     private int playerSPIndex = -1;
-    private Transform charModel;
     private CreateBots botSpawner;
     private GameObject goal;
     private bool isFrozen = false;
-    private Vector3 gravityDirection;
     private bool isRecovering = false;
     private bool isEffectApplied = false;
     private bool faceDetected = true;
@@ -38,25 +30,6 @@ public class PlayerControl : MonoBehaviour
     SaveData saveData;
     [SerializeField] List<CharacterItem> charactersList;
 
-    public bool testing; //to move the character on editor
-
-
-
-    private PlayerMovement playerMovement = new PlayerMovement(0, 0, Vector3.zero);
-
-    public struct PlayerMovement
-    {
-        public float _moveV;
-        public float _moveH;
-        public Vector3 _position;
-
-        public PlayerMovement(float moveV, float moveH, Vector3 position)
-        {
-            _moveV = moveV;
-            _moveH = moveH;
-            _position = position;
-        }
-    }
 
     //-----EVENTS-----
 
@@ -91,17 +64,6 @@ public class PlayerControl : MonoBehaviour
         LockMovement(true);
         StopCharacterOnFinish();
         anim.SetBool("isRunning", false);
-    }
-
-
-
-
-
-    private void SendSpawnpointDataClientRpc(int spIndex, Vector3 spPosition)
-    {
-        transform.position = new Vector3(spPosition.x, spPosition.y + 1, spPosition.z);
-        playerSPIndex = spIndex;
-        Debug.Log("[CLIENT RPC]-Player spawned at SP: " + spIndex);
     }
 
     private void StartCountdownClientRpc()
@@ -161,6 +123,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Awake()
     {
+        rB = GetComponent<Rigidbody>();
         saveData = FindAnyObjectByType<SaveData>();
         ReadCharacterSaved();
 
@@ -189,24 +152,8 @@ public class PlayerControl : MonoBehaviour
 
     private void Start()
     {
-
-        joystick = FindObjectOfType<FloatingJoystick>();
-        joystick.enabled = true;
-        joystick.GetComponentInChildren<Transform>().gameObject.SetActive(true);
-
-        mainCamera = Camera.main;
-
         if (goalController != null) goalController.Reset();
 
-        charModel = anim.transform;
-
-        rB = GetComponent<Rigidbody>();
-
-        rB.isKinematic = false;
-        rB.useGravity = false;
-        gravityDirection = new Vector3(0, Physics.gravity.y * 2, 0);
-        rB.interpolation = RigidbodyInterpolation.None;
-        rB.collisionDetectionMode = CollisionDetectionMode.Continuous;
         LockMovement(false);
         //-------------------------------------------------------------------------------------------
 
@@ -216,43 +163,23 @@ public class PlayerControl : MonoBehaviour
 
         countdownTimer.Reset();
 
-
         //When a Player spawn, the Server searches for a not occupied spawnpoint from the NetworkList for him.
         SearchNextFreeSpawnPoint();
-
-        //Each time a Player joins the lobby his Server side checks num of players connected to that lobby and starts the countdown when full
-        //CheckConnectedPlayers();
 
     }
 
     private void SearchNextFreeSpawnPoint()
     {
-        Debug.Log("[SERVER]-SP Count: " + botSpawner.spawnpointData.Count);
 
         for (int i = 0; i <= botSpawner.spawnpointData.Count; i++)
         {
-            Debug.Log("[SERVER]-SP Current: " + i);
-
-            /*if (i == botSpawner.spawnpointData.Count)
-            {
-                Debug.Log("[SERVER]-The room is full, exiting...");
-                //matchMaker.DestroyOrExitLobby();
-                //mainCamera.enabled = true;
-                break;
-            }*/
-
             if (!botSpawner.spawnpointData[i]._isOccupied)
             {
                 //Updates the spawnpoint NetworkList with this spawnpoint as isOccupied and the playerId on it
                 botSpawner.UpdateSpawnpointsList(i, botSpawner.spawnpointData[i]._spPosition, true, "Player");
 
                 transform.position = new Vector3(botSpawner.spawnpointData[i]._spPosition.x, botSpawner.spawnpointData[i]._spPosition.y + 1, botSpawner.spawnpointData[i]._spPosition.z);
-                //playerMovement.Value = new PlayerMovement { _moveV = 0, _moveH = 0, _position = transform.position };
                 playerSPIndex = i;
-                Debug.Log("[SERVER]-Player spawned at SP: " + i);
-
-                //Calls a ClientRPC to tell their relative Client Player his spawnpoint position
-                SendSpawnpointDataClientRpc(i, botSpawner.spawnpointData[i]._spPosition);
 
                 botSpawner.InitializeBots();
 
@@ -273,22 +200,6 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        if (!testing)
-        {
-            movementV = Math.Clamp(Mathf.Round(joystick.Vertical * 10) / 10 + Mathf.Round(10) / 10, 0, 1);
-            movementH = Math.Clamp(Mathf.Round(joystick.Horizontal * 10) / 10 + Mathf.Round(10) / 10, -1, 1);
-        }
-        else
-        {
-            movementV = Math.Clamp(Mathf.Round(joystick.Vertical * 10) / 10 + Mathf.Round(Input.GetAxis("Vertical") * 10) / 10, 0, 1);
-            movementH = Math.Clamp(Mathf.Round(joystick.Horizontal * 10) / 10 + Mathf.Round(Input.GetAxis("Horizontal") * 10) / 10, -1, 1);
-        }
-
-        movementV = Mathf.Clamp01(movementV);
-        if (autoRun) movementV = 1f;
-
-        playerMovement = new PlayerMovement { _moveV = movementV, _moveH = movementH, _position = playerMovement._position };
-
         if (speedBoost > 1f)
         {
             trailBoost.GetComponent<TrailRenderer>().emitting = true;
@@ -305,57 +216,12 @@ public class PlayerControl : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
-    {
-        //Applys physical movement to the player
-
-        //If isOwner, apply movement instantly from the input
-
-
-        if (MovementAllowed())
-        {
-            Vector3 fwd = transform.forward.normalized * movementV * moveSpeed * speedMultiplier * speedBoost;
-
-            if (testing)
-            {
-                Vector3 rotation = new Vector3(0, movementH * rotationSpeed, 0);
-
-                Vector3 currentRotation = transform.rotation.eulerAngles;
-                //Rotate Player based on Horizontal input
-                rB.MoveRotation(Quaternion.Euler(currentRotation + rotation));
-            }
-
-            rB.velocity = fwd + new Vector3(0, rB.velocity.y, 0);
-            anim.SetBool("isRunning", true);
-
-        }
-
-        if (movementH < 0.1f && movementV < 0.1f)
-        {
-            anim.SetBool("isRunning", false);
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Space) && MovementAllowed())
-        {
-            LockMovement(true);
-
-            rB.AddForce(transform.up * 8, ForceMode.VelocityChange);
-        }
-
-        //Apply extra gravity to the Player to force fast falling
-        rB.AddForce(gravityDirection, ForceMode.Acceleration);
-
-
-
-    }
-
     public void LockMovement(bool state)
     {
         isFrozen = state;
     }
 
-    private bool MovementAllowed()
+    public bool MovementAllowed()
     {
         return (!isFrozen && countdownTimer.HasFinished() && !finishController.IsFinished() && faceDetected);
     }
@@ -365,7 +231,6 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Floor"))
         {
-            //gravityDirection = -collision.GetContact(0).normal;
             LockMovement(false); //Unfreeze movement when the player touches the floor
         }
     }
@@ -396,6 +261,7 @@ public class PlayerControl : MonoBehaviour
         rB.velocity = Vector3.zero;
         rB.rotation = Quaternion.identity;
         rB.detectCollisions = false;
+        anim.SetBool("isRunning", false);
         // charModel.gameObject.SetActive(false);
         //  GetComponent<PlayerNameHolder>().textHolder.SetActive(false);
     }

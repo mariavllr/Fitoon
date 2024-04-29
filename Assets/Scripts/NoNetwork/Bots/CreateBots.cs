@@ -99,7 +99,7 @@ public class CreateBots : MonoBehaviour
 
     public void SpawnBot(Vector3 spawnpointPosition)
     {
-        Debug.Log("Bot Spawned");
+        //Debug.Log("Bot Spawned");
         GameObject inst = Instantiate(botPrefab, spawnpointPosition, transform.rotation);
         inst.name = spawnedBotName;
         //inst.GetComponent<NetworkObject>().Spawn();
