@@ -25,8 +25,10 @@ public class Cadencia : MonoBehaviour
 
     private float timer = 0;
     private int pasos = 0;
+    private int pasosTotales = 0;
     private float frecuencia;
     private float velocidad; //metros por segundo
+    [SerializeField] TextMeshProUGUI pasosText;
 
     private void OnEnable()
     {
@@ -72,6 +74,8 @@ public class Cadencia : MonoBehaviour
             {
                 Debug.Log("Paso " + pasos);
                 pasos++;
+                pasosTotales++;
+                pasosText.text = pasosTotales.ToString();
                 cooldownTimer = 0;
             }
         }

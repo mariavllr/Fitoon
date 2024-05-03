@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.IO;
 using UnityEngine.XR.ARFoundation;
-
+using Unity.Mathematics;
+using TMPro;
 public class WriteDataToCSV : MonoBehaviour
 {
     ARFaceManager faceManager;
@@ -11,8 +12,22 @@ public class WriteDataToCSV : MonoBehaviour
     // Ruta donde guardaremos el archivo CSV
     string filePath;
 
+    private float2 posFiltrada;
+
+    private OneEuroFilter filter = new OneEuroFilter();
+    public float betaValue{get; set;}
+    public float mincutOffValue { get; set; }
+    [SerializeField] TextMeshProUGUI betaText;
+    [SerializeField] TextMeshProUGUI cutoffText;
+
+
     private void OnEnable()
     {
+        posFiltrada = new float2();
+        betaValue = 0.01f;
+        mincutOffValue = 5f;
+
+
         faceManager = FindFirstObjectByType<ARFaceManager>();
         filePath = Application.persistentDataPath + Path.DirectorySeparatorChar + "FaceData.csv";
         faceManager.facesChanged += CaraDetectada;
@@ -24,7 +39,7 @@ public class WriteDataToCSV : MonoBehaviour
 
         using (StreamWriter writer = new StreamWriter(filePath, true))
         {
-            writer.WriteLine("Posicion X;Posicion Y;Posicion Z;Rotacion X;Rotacion Y;Rotacion Z");
+            writer.WriteLine("Posicion X;Posicion Y;Posicion X f; Posicion Y f");
         }
     }
 
@@ -37,8 +52,14 @@ public class WriteDataToCSV : MonoBehaviour
     {
         if (detectado)
         {
+            FiltrarDatos();
             EscribirCSV();
         }
+
+        filter.Beta = betaValue;
+        filter.MinCutoff = mincutOffValue;
+        betaText.text = filter.Beta.ToString();
+        cutoffText.text = filter.MinCutoff.ToString();
     }
 
     void CaraDetectada(ARFacesChangedEventArgs aRFacesChangedEventArgs)
@@ -57,14 +78,17 @@ public class WriteDataToCSV : MonoBehaviour
             detectado = false;
         }
     }
-
+    private void FiltrarDatos()
+    {
+        float2 posicion = new float2(face.transform.position.x, face.transform.position.y);
+        posFiltrada = filter.Step(Time.time, posicion);
+    }
     void EscribirCSV()
     {
         using (StreamWriter writer = new StreamWriter(filePath, true))
         {
             // Escribimos cada dato en una línea separada
-            writer.WriteLine(string.Format("{0};{1};{2};{3};{4};{5}",
-            face.transform.position.x, face.transform.position.y, face.transform.position.z, face.transform.rotation.x, face.transform.rotation.y, face.transform.rotation.z));
+            writer.WriteLine(string.Format("{0};{1};{2};{3}", face.transform.position.x, face.transform.position.y, posFiltrada.x, posFiltrada.y));
         }
     }
 }
