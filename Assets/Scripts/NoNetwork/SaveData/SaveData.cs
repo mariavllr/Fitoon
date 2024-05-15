@@ -6,11 +6,12 @@ using UnityEngine.Android;
 
 public class SaveData : MonoBehaviour
 {
-    public PlayerData player = new PlayerData();
+    public PlayerData player;
 
     
     private void Awake()
     {
+        player  = new PlayerData();
         // Create directory if not exists
         if (!Directory.Exists(Application.persistentDataPath))
         {
@@ -34,15 +35,16 @@ public class SaveData : MonoBehaviour
     public void SaveToJson()
     {
         string playerData = JsonUtility.ToJson(player);
-        string filePath = Application.persistentDataPath + Path.DirectorySeparatorChar + "PlayerData.json";
+        string filePath = System.IO.Path.Combine(Application.persistentDataPath,"PlayerData.json");
         System.IO.File.WriteAllText(filePath, playerData);
         Debug.Log("Datos guardados en " + filePath);
     }
 
     public void ReadFromJson()
     {
-        string filePath = Application.persistentDataPath + Path.DirectorySeparatorChar + "PlayerData.json";
+        string filePath = System.IO.Path.Combine(Application.persistentDataPath, "PlayerData.json");
         string playerData = System.IO.File.ReadAllText(filePath);
+        Debug.Log(filePath);
 
         player = JsonUtility.FromJson<PlayerData>(playerData);
         Debug.Log("Datos leidos");
