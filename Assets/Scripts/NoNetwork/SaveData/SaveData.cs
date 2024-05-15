@@ -7,17 +7,10 @@ using UnityEngine.Android;
 public class SaveData : MonoBehaviour
 {
     public PlayerData player;
-
     
     private void Awake()
     {
         player  = new PlayerData();
-        // Create directory if not exists
-        if (!Directory.Exists(Application.persistentDataPath))
-        {
-            Directory.CreateDirectory(Application.persistentDataPath);
-            Debug.Log("DIRECTORY DOES NOT EXIST: CREATING DIRECTORY");
-        }
         ReadFromJson();
     }
     private void Update()
@@ -37,17 +30,39 @@ public class SaveData : MonoBehaviour
         string playerData = JsonUtility.ToJson(player);
         string filePath = System.IO.Path.Combine(Application.persistentDataPath,"PlayerData.json");
         System.IO.File.WriteAllText(filePath, playerData);
-        Debug.Log("Datos guardados en " + filePath);
+        //Si está vacío poner un personaje default
+        if (player.playerCharacterData is null)
+        {
+            player.playerCharacterData = new CharacterData();
+            player.playerCharacterData.characterName = "Juan";
+            player.playerCharacterData.hairColor = "#4D2413";
+            player.playerCharacterData.skinColor = "#A87458";
+            player.playerCharacterData.topColor = "#B46600";
+            player.playerCharacterData.bottomColor = "#4F2F12";
+            playerData = JsonUtility.ToJson(player);
+            Debug.Log("No había datos. Creando personaje por defecto.");
+        }
+        System.IO.File.WriteAllText(filePath, playerData);
+        Debug.Log("[SAVE] Datos guardados en " + filePath);
     }
 
     public void ReadFromJson()
     {
         string filePath = System.IO.Path.Combine(Application.persistentDataPath, "PlayerData.json");
-        string playerData = System.IO.File.ReadAllText(filePath);
-        Debug.Log(filePath);
 
-        player = JsonUtility.FromJson<PlayerData>(playerData);
-        Debug.Log("Datos leidos");
+        try
+        {
+            string playerData = System.IO.File.ReadAllText(filePath);
+
+            player = JsonUtility.FromJson<PlayerData>(playerData);
+            Debug.Log("[SAVE] Datos leidos");
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("No existe JSON: Creandolo...");
+            SaveToJson();
+            ReadFromJson();
+        }
 
     }
 }
