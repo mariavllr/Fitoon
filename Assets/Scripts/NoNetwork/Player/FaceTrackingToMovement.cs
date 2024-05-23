@@ -5,12 +5,10 @@ using UnityEngine.XR.ARFoundation;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
-
-
+using System;
 
 public class FaceTrackingToMovement : MonoBehaviour
 {
-    [Header("AR")]
     ARFaceManager faceManager;
     ARFace face;
     Animator animator;
@@ -21,10 +19,24 @@ public class FaceTrackingToMovement : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] int rotationIntensity = 2;
 
+    [Header("Velocity")]
+    [SerializeField] TextMeshProUGUI velocityText;
+    [SerializeField] TextMeshProUGUI cadenceText;
+    [SerializeField] TextMeshProUGUI animCadenceText;
+    List<float> data;
+    public float sampleRate; //frames para calcular la velocidad
+    public float distanciaPaso;
+    DominantFrequencyCounter frequencyCounter;
+    MoveThePlayer playerMov;
+    float velocidad;
+
+    int pasosAnimacion;
+    float timer;
+    bool activarTimer = false;
+
     [Header("Debug")]
     public TMP_InputField enter_intensity;
     public Transform debugCube;
-    // [SerializeField] private TextMeshProUGUI uiText;
     private GoalController goal;
 
     //EVENTOS (Para el movimiento del personaje)
@@ -34,22 +46,26 @@ public class FaceTrackingToMovement : MonoBehaviour
     public delegate void OnCaraNoDetectada();
     public static event OnCaraNoDetectada onCaraNoDetectadaEvent;
 
-    
-
 
     private void OnEnable()
     {
+        pasosAnimacion = 0;
         faceManager = FindFirstObjectByType<ARFaceManager>();
         fadeCamera = FindFirstObjectByType<FadeCamera>();
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
+        frequencyCounter = FindFirstObjectByType<DominantFrequencyCounter>();
+        playerMov = GetComponent<MoveThePlayer>();
 
         faceManager.facesChanged += CaraDetectada;
-        //uiText.text = "Mira hacia la cámara con la cara visible para calibrar";
         if(fadeCamera != null) fadeCamera.StartFade(true);
 
         goal = FindObjectOfType<GoalController>();
         goal.AddPlayerToList(transform);
+
+        data = new List<float>();
+
+        CuentaPasos.onPasoEvent += ContarPaso;
 
     }
 
@@ -65,8 +81,71 @@ public class FaceTrackingToMovement : MonoBehaviour
         if (detectado)
         {
             RotateCharacter(face.transform);
+            CalculateVelocity(face.transform);
         }
 
+        velocityText.text = $"Velocity: {Math.Round(velocidad, 2, MidpointRounding.AwayFromZero)} ({Math.Round(velocidad * 3.6, 2, MidpointRounding.AwayFromZero)} km/h)";
+        
+        if (activarTimer) timer += Time.deltaTime;
+    }
+
+    private void CalculateVelocity(Transform faceData)
+    {
+        //Cuando pasen X frames, mandar esa lista a la FFT y sacar la frecuencia
+        if(data.Count == sampleRate)
+        {
+
+                float frecuencia = frequencyCounter.DoFFT(data.ToArray());
+                //Calcular la velocidad. Pasos/segundo -> Metros/segundo
+                velocidad = distanciaPaso * frecuencia;
+                Debug.Log($"Velocidad media: {velocidad} m/s.");
+
+                float cadencia = frecuencia * 60f;
+                //La animacion base a velocidad 1 tiene una cadencia de aprox 136.
+                float animationSpeed = cadencia / 136;
+                animator.SetFloat("playerSpeed", animationSpeed);
+
+                cadenceText.text = $"Cadence: {cadencia}";
+
+            playerMov.moveSpeed = velocidad * 3f;
+            
+            //Reiniciar lista
+            data.Clear();
+        }
+        else
+        {
+            //Guardar en una lista el input del face.transform.y
+            data.Add(faceData.position.y);
+        }
+
+    }
+
+    // Calcular el rango entre el valor mínimo y máximo de una lista
+    float CalculateRange(List<float> positions)
+    {
+        if (positions.Count == 0)
+        {
+            return 0;
+        }
+
+        float min = float.MaxValue;
+        float max = float.MinValue;
+
+        foreach (float pos in positions)
+        {
+            if (pos < min)
+            {
+                min = pos;
+            }
+
+            if (pos > max)
+            {
+                max = pos;
+            }
+        }
+
+        float range = max - min;
+        return range;
     }
 
     private void RotateCharacter(Transform otherObject)
@@ -97,6 +176,21 @@ public class FaceTrackingToMovement : MonoBehaviour
         }
     }
     
+
+    void ContarPaso()
+    {       
+        activarTimer = true;
+        pasosAnimacion++;
+        if(timer >= 15)
+        {
+            Debug.Log($"Cadencia personaje: {pasosAnimacion*4}");
+            animCadenceText.text = $"Animation cadence: {pasosAnimacion * 4}";
+            timer = 0;
+            pasosAnimacion = 0;
+        }
+        
+    }
+
     //-----------EVENTS---------
     void CaraDetectada(ARFacesChangedEventArgs aRFacesChangedEventArgs)
     {
@@ -112,9 +206,6 @@ public class FaceTrackingToMovement : MonoBehaviour
             {
                 onCaraDetectadaEvent();
             }
-
-
-            StartCoroutine(ShowUIMessage("Cara detectada"));
             if (fadeCamera != null) fadeCamera.StartFade(false);
         }
 
@@ -127,17 +218,8 @@ public class FaceTrackingToMovement : MonoBehaviour
             {
                 onCaraNoDetectadaEvent();
             }
-
-            StartCoroutine(ShowUIMessage("Cara no reconocida"));
             if (fadeCamera != null) fadeCamera.StartFade(true);
         }
-    }
-
-    IEnumerator ShowUIMessage(string message)
-    {
-        //uiText.text = message;
-        yield return new WaitForSeconds(2f);
-        //uiText.text = "";
     }
 
 

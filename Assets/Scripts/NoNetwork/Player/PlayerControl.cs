@@ -9,7 +9,7 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] public float speedMultiplier = 1f;
     [SerializeField] public float speedBoost = 1f;
-    public Animator anim;
+    Animator anim;
     public GameObject trailBoost;
 
     [SerializeField] private bool autoRun = false;
@@ -38,6 +38,7 @@ public class PlayerControl : MonoBehaviour
         GoalController.onRaceFinishEvent += EndRace;
         FaceTrackingToMovement.onCaraDetectadaEvent += caraDetectada;
         FaceTrackingToMovement.onCaraNoDetectadaEvent += caraNoDetectada;
+        anim = GetComponentInChildren<Animator>();
     }
 
     private void OnDisable()

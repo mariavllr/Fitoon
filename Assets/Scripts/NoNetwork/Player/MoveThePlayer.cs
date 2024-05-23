@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 public class MoveThePlayer : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class MoveThePlayer : MonoBehaviour
     public float moveSpeed;
     public float rotationSpeed;
     Vector3 moveDirection;
+    [SerializeField] TextMeshProUGUI velocityText;
 
     [Header("Ground check")]
     public float playerHeight;
@@ -33,8 +36,8 @@ public class MoveThePlayer : MonoBehaviour
         {
             //Activate face tracking
             GetComponent<FaceTrackingToMovement>().enabled = true;
-            GetComponent<Cadencia>().enabled = true;
             GetComponent<WriteDataToCSV>().enabled = true;
+            GetComponent<DominantFrequencyCounter>().enabled = true;
         }
     }
 
@@ -58,7 +61,7 @@ public class MoveThePlayer : MonoBehaviour
         {
             rb.drag = 0;
         }
-        
+        velocityText.text = $"In game velocity: {Math.Round(rb.velocity.magnitude, 2, MidpointRounding.AwayFromZero)} ({Math.Round(rb.velocity.magnitude * 3.6, 2, MidpointRounding.AwayFromZero)}) km/h";
     }
 
     private void FixedUpdate()

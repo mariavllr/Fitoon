@@ -9,7 +9,8 @@ public class DominantFrequencyCounter : MonoBehaviour
 {
     //Datos reales
     public List<float> data;
-    string rutaPrueba = "Assets/Scripts/NoNetwork/Cadencia/datosPrueba.json";
+    string rutaPrueba = "Assets/Scripts/NoNetwork/Cadencia/datosPrueba_rapido.json";
+    [SerializeField] string fileName;
 
 
     public float[] inputData; // Datos de la posición en x respecto al tiempo
@@ -20,27 +21,170 @@ public class DominantFrequencyCounter : MonoBehaviour
 
     void Start()
     {
+        //ReadJSONFile();
+        ReadCSVFile(fileName);
+
+        //Calculo del coste
+        //Stopwatch stopwatch = new Stopwatch();
+        //stopwatch.Start();
+
+         AdjustListLengthToPowerOfTwo(data);
+         inputData = data.ToArray();
+         DoFFT(inputData);
+
+         // Calcula la frecuencia de prueba
+         Debug.Log("----FRECUENCIA MEDIA DATOS PRUEBA: METODO TRANSFORMADA RÁPIDA DE FOURIER-----");
+         Debug.Log("[FFT] Frecuencia dominante: " + frequency);
+         Debug.Log("[FFT] Cadencia: " + frequency*60f);
+        
+
+        
+        // Dividir la lista en sublistas de tamaño fijo
+       /* List<List<float>> sublists = SplitList(data, 256);
+
+         for (int i = 0; i < sublists.Count; i++)
+         {
+             inputData = sublists[i].ToArray();
+             DoFFT(inputData);
+             // Calcula la frecuencia de prueba
+             Debug.Log("----FRECUENCIA MEDIA DATOS PRUEBA: METODO TRANSFORMADA RÁPIDA DE FOURIER-----");
+             Debug.Log("[FFT] Frecuencia dominante: " + frequency);
+             Debug.Log("[FFT] Cadencia: " + frequency * 60f);
+        }*/
+         
+
+        //stopwatch.Stop();
+
+
+        // Debug.Log("Coste del algoritmo: " + stopwatch.ElapsedMilliseconds + " ms");
+    }
+
+    List<List<float>> SplitList(List<float> list, int chunkSize)
+    {
+        List<List<float>> chunks = new List<List<float>>();
+        int count = list.Count;
+
+        for (int i = 0; i < count; i += chunkSize)
+        {
+            List<float> chunk = list.GetRange(i, Mathf.Min(chunkSize, count - i));
+            chunks.Add(chunk);
+        }
+
+        return chunks;
+    }
+
+    bool IsPowerOfTwo(int n)
+    {
+        return (n > 0) && (n & (n - 1)) == 0;
+    }
+
+    void AdjustListLengthToPowerOfTwo(List<float> list)
+    {
+        int originalLength = list.Count;
+
+        if (IsPowerOfTwo(originalLength))
+        {
+            // La longitud ya es una potencia de 2
+            Debug.Log("La longitud de la lista ya es una potencia de 2.");
+            return;
+        }
+
+        // Encuentra la mayor potencia de 2 menor o igual a la longitud actual
+        int newLength = 1;
+        while (newLength * 2 <= originalLength)
+        {
+            newLength *= 2;
+        }
+
+        // Recortar la lista
+        list.RemoveRange(newLength, list.Count - newLength);
+
+        Debug.Log("Lista recortada a la longitud más cercana que es potencia de 2: " + newLength);
+    }
+
+    void ReadJSONFile()
+    {
         // Lee el archivo JSON y carga los datos
         string jsonString = File.ReadAllText(rutaPrueba);
         DatosJSON datosJSON = JsonUtility.FromJson<DatosJSON>(jsonString);
         data = new List<float>(datosJSON.data);
         inputData = data.ToArray();
+    }
 
-        //Determinar segundos de muestra. La camara es 30fps
-        sampleRate = data.Count / 30;
+    void ReadCSVFile(string fileName)
+    {
+        data = new List<float>();
+        TextAsset csvData = Resources.Load<TextAsset>(fileName);
 
-        //Calculo del coste
-        Stopwatch stopwatch = new Stopwatch();
-        stopwatch.Start();
-
-        // Realiza la Transformada Rápida de Fourier
-        Complex[] complexData = new Complex[inputData.Length];
-        for (int i = 0; i < inputData.Length; i++)
+        if (csvData == null)
         {
-            complexData[i] = new Complex(inputData[i], 0); // Los datos deben ser en forma de números complejos
+            Debug.LogError("Archivo CSV no encontrado.");
+            return;
+        }
+
+        using (StringReader reader = new StringReader(csvData.text))
+        {
+            bool isFirstLine = true;
+            int yColumnIndex = -1;
+
+            while (reader.Peek() != -1)
+            {
+                string line = reader.ReadLine();
+                if (isFirstLine)
+                {
+                    // Procesar la primera línea para encontrar el índice de la columna "Posicion Y"
+                    string[] headers = line.Split(';');
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        if (headers[i].Trim() == "Posicion Y")
+                        {
+                            yColumnIndex = i;
+                            break;
+                        }
+                    }
+                    isFirstLine = false;
+
+                    if (yColumnIndex == -1)
+                    {
+                        Debug.LogError("No se encontró la columna 'Posicion Y' en el archivo CSV.");
+                        return;
+                    }
+                }
+                else
+                {
+                    // Leer los datos de las siguientes líneas
+                    string[] fields = line.Split(';');
+                    if (fields.Length > yColumnIndex)
+                    {
+                        if (float.TryParse(fields[yColumnIndex], out float yPos))
+                        {
+                            data.Add(yPos);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("No se pudo convertir el valor de 'Posicion Y' a float en la línea: " + line);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Ahora `yPositions` contiene todas las posiciones Y del archivo CSV
+        Debug.Log("Se han cargado " + data.Count + " posiciones Y.");
+    }
+
+    public float DoFFT(float[] FFTdata)
+    {
+        // Realiza la Transformada Rápida de Fourier
+        Complex[] complexData = new Complex[FFTdata.Length];
+        for (int i = 0; i < FFTdata.Length; i++)
+        {
+            complexData[i] = new Complex(FFTdata[i], 0); // Los datos deben ser en forma de números complejos
         }
         FFT(complexData);
-        
+
+        //Determinar segundos de muestra. La camara es 30fps
+        sampleRate = FFTdata.Length / 30;
 
         // Encuentra la frecuencia dominante
         float maxMagnitude = 0;
@@ -55,16 +199,14 @@ public class DominantFrequencyCounter : MonoBehaviour
         }
 
         frequency = maxFFTIndex / sampleRate;
-        stopwatch.Stop();
+       // Debug.Log("----FRECUENCIA MEDIA DATOS: METODO TRANSFORMADA RÁPIDA DE FOURIER-----");
+       // Debug.Log("[FFT] Frecuencia dominante: " + frequency);
 
-        // Calcula la frecuencia
-        Debug.Log("----FRECUENCIA MEDIA: METODO TRANSFORMADA RÁPIDA DE FOURIER-----");
-        Debug.Log("[FFT] Frecuencia dominante: " + frequency);
-        Debug.Log("Coste del algoritmo: " + stopwatch.ElapsedMilliseconds + " ms");
+        return frequency;
     }
 
     // Implementación de la Transformada Rápida de Fourier (FFT)
-    void FFT(Complex[] data)
+    public void FFT(Complex[] data)
     {
         int n = data.Length;
         int m = (int)Mathf.Log(n, 2);
