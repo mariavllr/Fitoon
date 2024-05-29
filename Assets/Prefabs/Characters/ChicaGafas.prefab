@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 9190963490098043232}
   - component: {fileID: 9190963490098043233}
   - component: {fileID: 4583971147251899869}
+  - component: {fileID: -7744766482351412254}
   m_Layer: 3
   m_Name: ChicaGafas
   m_TagString: Character
@@ -326,7 +327,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575796233090883486}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fb5a9facaf4b4b4388a791c15db10a6, type: 3}
   m_Name: 
@@ -345,6 +346,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TransitionStateInfoList: []
   m_Animator: {fileID: 6509495759563284318}
+--- !u!114 &-7744766482351412254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575796233090883486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 2
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &658625288430133385
 GameObject:
   m_ObjectHideFlags: 0

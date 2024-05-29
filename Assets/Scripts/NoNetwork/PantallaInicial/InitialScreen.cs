@@ -7,6 +7,7 @@ public class InitialScreen : MonoBehaviour
     [SerializeField] GameObject characterContainer;
     SaveData saveData;
     [SerializeField] List<CharacterItem> characters;
+    [SerializeField] GameObject treadmillPrefab;
     private void Start()
     {
         saveData = GetComponent<SaveData>();
@@ -27,8 +28,15 @@ public class InitialScreen : MonoBehaviour
         //Buscar personaje
         CharacterItem actualCharacter = characters.Find(character => character.characterName == savedSkin);
 
-        //Actualizar el personaje en pantalla
+        //Instanciar la cinta de correr
+        GameObject treadmill = Instantiate(treadmillPrefab, characterContainer.transform);
+
+        //Instanciar el personaje como hijo de la cinta
         Destroy(characterContainer.transform.GetChild(0).gameObject);
-        Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, characterContainer.transform);
+        GameObject characterInstance = Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, treadmill.transform);
+        characterInstance.GetComponent<Animator>().SetBool("isRunning", true);
+
+        //Para alejarlo un poco de la camara
+        characterContainer.transform.position = new Vector3(0, 0, -2.91f);
     }
 }
