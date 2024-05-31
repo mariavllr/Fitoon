@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\usuario\Netcode Tests\venv"
+VIRTUAL_ENV="C:\Users\inituser\Documents\GitHub\Fitoon\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

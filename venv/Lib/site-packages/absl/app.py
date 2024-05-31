@@ -238,6 +238,7 @@ def _run_main(main, argv):
   elif FLAGS.run_with_profiling or FLAGS.profile_file:
     # Avoid import overhead since most apps (including performance-sensitive
     # ones) won't be run with profiling.
+    # pylint: disable=g-import-not-at-top
     import atexit
     if FLAGS.use_cprofile_for_profiling:
       import cProfile as profile
@@ -248,8 +249,7 @@ def _run_main(main, argv):
       atexit.register(profiler.dump_stats, FLAGS.profile_file)
     else:
       atexit.register(profiler.print_stats)
-    retval = profiler.runcall(main, argv)
-    sys.exit(retval)
+    sys.exit(profiler.runcall(main, argv))
   else:
     sys.exit(main(argv))
 

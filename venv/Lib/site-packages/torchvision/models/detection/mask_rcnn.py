@@ -84,8 +84,7 @@ class MaskRCNN(FasterRCNN):
             for computing the loss
         rpn_positive_fraction (float): proportion of positive anchors in a mini-batch during training
             of the RPN
-        rpn_score_thresh (float): during inference, only return proposals with a classification score
-            greater than rpn_score_thresh
+        rpn_score_thresh (float): only return proposals with an objectness score greater than rpn_score_thresh
         box_roi_pool (MultiScaleRoIAlign): the module which crops and resizes the feature maps in
             the locations indicated by the bounding boxes
         box_head (nn.Module): module that takes the cropped feature maps as input
@@ -501,7 +500,7 @@ def maskrcnn_resnet50_fpn(
     model = MaskRCNN(backbone, num_classes=num_classes, **kwargs)
 
     if weights is not None:
-        model.load_state_dict(weights.get_state_dict(progress=progress))
+        model.load_state_dict(weights.get_state_dict(progress=progress, check_hash=True))
         if weights == MaskRCNN_ResNet50_FPN_Weights.COCO_V1:
             overwrite_eps(model, 0.0)
 
@@ -582,6 +581,6 @@ def maskrcnn_resnet50_fpn_v2(
     )
 
     if weights is not None:
-        model.load_state_dict(weights.get_state_dict(progress=progress))
+        model.load_state_dict(weights.get_state_dict(progress=progress, check_hash=True))
 
     return model

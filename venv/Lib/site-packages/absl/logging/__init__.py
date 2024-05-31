@@ -88,7 +88,6 @@ import struct
 import sys
 import tempfile
 import threading
-import tempfile
 import time
 import timeit
 import traceback
@@ -98,11 +97,13 @@ import warnings
 from absl import flags
 from absl.logging import converter
 
+# pylint: disable=g-import-not-at-top
 try:
   from typing import NoReturn
 except ImportError:
   pass
 
+# pylint: enable=g-import-not-at-top
 
 FLAGS = flags.FLAGS
 
@@ -295,44 +296,76 @@ class _StderrthresholdFlag(flags.Flag):
     self._value = v
 
 
-flags.DEFINE_boolean('logtostderr',
-                     False,
-                     'Should only log to stderr?', allow_override_cpp=True)
-flags.DEFINE_boolean('alsologtostderr',
-                     False,
-                     'also log to stderr?', allow_override_cpp=True)
-flags.DEFINE_string('log_dir',
-                    os.getenv('TEST_TMPDIR', ''),
-                    'directory to write logfiles into',
-                    allow_override_cpp=True)
-flags.DEFINE_flag(_VerbosityFlag(
-    'verbosity', -1,
-    'Logging verbosity level. Messages logged at this level or lower will '
-    'be included. Set to 1 for debug logging. If the flag was not set or '
-    'supplied, the value will be changed from the default of -1 (warning) to '
-    '0 (info) after flags are parsed.',
-    short_name='v', allow_hide_cpp=True))
-flags.DEFINE_flag(
+LOGTOSTDERR = flags.DEFINE_boolean(
+    'logtostderr',
+    False,
+    'Should only log to stderr?',
+    allow_override_cpp=True,
+)
+ALSOLOGTOSTDERR = flags.DEFINE_boolean(
+    'alsologtostderr',
+    False,
+    'also log to stderr?',
+    allow_override_cpp=True,
+)
+LOG_DIR = flags.DEFINE_string(
+    'log_dir',
+    os.getenv('TEST_TMPDIR', ''),
+    'directory to write logfiles into',
+    allow_override_cpp=True,
+)
+VERBOSITY = flags.DEFINE_flag(
+    _VerbosityFlag(
+        'verbosity',
+        -1,
+        (
+            'Logging verbosity level. Messages logged at this level or lower'
+            ' will be included. Set to 1 for debug logging. If the flag was not'
+            ' set or supplied, the value will be changed from the default of -1'
+            ' (warning) to 0 (info) after flags are parsed.'
+        ),
+        short_name='v',
+        allow_hide_cpp=True,
+    )
+)
+LOGGER_LEVELS = flags.DEFINE_flag(
     _LoggerLevelsFlag(
-        'logger_levels', {},
-        'Specify log level of loggers. The format is a CSV list of '
-        '`name:level`. Where `name` is the logger name used with '
-        '`logging.getLogger()`, and `level` is a level name  (INFO, DEBUG, '
-        'etc). e.g. `myapp.foo:INFO,other.logger:DEBUG`'))
-flags.DEFINE_flag(_StderrthresholdFlag(
-    'stderrthreshold', 'fatal',
-    'log messages at this level, or more severe, to stderr in '
-    'addition to the logfile.  Possible values are '
-    "'debug', 'info', 'warning', 'error', and 'fatal'.  "
-    'Obsoletes --alsologtostderr. Using --alsologtostderr '
-    'cancels the effect of this flag. Please also note that '
-    'this flag is subject to --verbosity and requires logfile '
-    'not be stderr.', allow_hide_cpp=True))
-flags.DEFINE_boolean('showprefixforinfo', True,
-                     'If False, do not prepend prefix to info messages '
-                     'when it\'s logged to stderr, '
-                     '--verbosity is set to INFO level, '
-                     'and python logging is used.')
+        'logger_levels',
+        {},
+        (
+            'Specify log level of loggers. The format is a CSV list of '
+            '`name:level`. Where `name` is the logger name used with '
+            '`logging.getLogger()`, and `level` is a level name  (INFO, DEBUG, '
+            'etc). e.g. `myapp.foo:INFO,other.logger:DEBUG`'
+        ),
+    )
+)
+STDERRTHRESHOLD = flags.DEFINE_flag(
+    _StderrthresholdFlag(
+        'stderrthreshold',
+        'fatal',
+        (
+            'log messages at this level, or more severe, to stderr in '
+            'addition to the logfile.  Possible values are '
+            "'debug', 'info', 'warning', 'error', and 'fatal'.  "
+            'Obsoletes --alsologtostderr. Using --alsologtostderr '
+            'cancels the effect of this flag. Please also note that '
+            'this flag is subject to --verbosity and requires logfile '
+            'not be stderr.'
+        ),
+        allow_hide_cpp=True,
+    )
+)
+SHOWPREFIXFORINFO = flags.DEFINE_boolean(
+    'showprefixforinfo',
+    True,
+    (
+        'If False, do not prepend prefix to info messages '
+        "when it's logged to stderr, "
+        '--verbosity is set to INFO level, '
+        'and python logging is used.'
+    ),
+)
 
 
 def get_verbosity():
@@ -414,9 +447,9 @@ def debug(msg, *args, **kwargs):
   log(DEBUG, msg, *args, **kwargs)
 
 
-def exception(msg, *args, **kwargs):
+def exception(msg, *args, exc_info=True, **kwargs):
   """Logs an exception, with traceback and message."""
-  error(msg, *args, **kwargs, exc_info=True)
+  error(msg, *args, exc_info=exc_info, **kwargs)
 
 
 # Counter to keep track of number of log entries per token.
@@ -862,7 +895,8 @@ class PythonHandler(logging.StreamHandler):
     """Flushes all log files."""
     self.acquire()
     try:
-      self.stream.flush()
+      if self.stream and hasattr(self.stream, 'flush'):
+        self.stream.flush()
     except (EnvironmentError, ValueError):
       # A ValueError is thrown if we try to flush a closed file.
       pass
@@ -1178,11 +1212,13 @@ def _get_thread_id():
 
 def get_absl_logger():
   """Returns the absl logger instance."""
+  assert _absl_logger is not None
   return _absl_logger
 
 
 def get_absl_handler():
   """Returns the absl handler instance."""
+  assert _absl_handler is not None
   return _absl_handler
 
 

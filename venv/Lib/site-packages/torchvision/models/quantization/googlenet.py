@@ -108,7 +108,7 @@ class QuantizableGoogLeNet(GoogLeNet):
 
 class GoogLeNet_QuantizedWeights(WeightsEnum):
     IMAGENET1K_FBGEMM_V1 = Weights(
-        url="https://download.pytorch.org/models/quantized/googlenet_fbgemm-c00238cf.pth",
+        url="https://download.pytorch.org/models/quantized/googlenet_fbgemm-c81f6644.pth",
         transforms=partial(ImageClassification, crop_size=224),
         meta={
             "num_params": 6624904,
@@ -197,7 +197,7 @@ def googlenet(
         quantize_model(model, backend)
 
     if weights is not None:
-        model.load_state_dict(weights.get_state_dict(progress=progress))
+        model.load_state_dict(weights.get_state_dict(progress=progress, check_hash=True))
         if not original_aux_logits:
             model.aux_logits = False
             model.aux1 = None  # type: ignore[assignment]

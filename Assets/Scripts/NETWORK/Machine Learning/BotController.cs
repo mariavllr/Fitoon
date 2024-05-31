@@ -7,10 +7,10 @@ using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class BotController : NetworkBehaviour
+public class BotController : MonoBehaviour
 {
-    public Animator anim;
-    public GameObject trailBoost;
+    //public Animator anim;
+    //public GameObject trailBoost;
 
     private float movementSpeed = 7f;
     private float speedMultiplier = 1f;
@@ -21,7 +21,7 @@ public class BotController : NetworkBehaviour
     private float moveH;
     private bool isFrozen = false;
 
-    private Transform charModel;
+    //private Transform charModel;
     private Rigidbody rB;
     private Countdown countdownTimer;
     private GoalController goal;
@@ -33,7 +33,7 @@ public class BotController : NetworkBehaviour
 
     private void Awake()
     {
-        charModel = anim.transform;
+        //charModel = anim.transform;
 
         countdownTimer = FindObjectOfType<Countdown>();
         goal = FindObjectOfType<GoalController>();
@@ -53,31 +53,31 @@ public class BotController : NetworkBehaviour
         movementSpeed -= UnityEngine.Random.Range(0f, movementSpeed / 3);
     }
 
-    public override void OnNetworkDespawn()
-    {
-        base.OnNetworkDespawn();
-        Destroy(gameObject);
-    }
+    //public override void OnNetworkDespawn()
+    //{
+    //    base.OnNetworkDespawn();
+    //    Destroy(gameObject);
+    //}
 
     private void Update()
     {
-        if (IsServer)
-        {
-            if (anim.gameObject.activeSelf)
-            {
-                if (rB.velocity != Vector3.zero)
-                {
-                    anim.SetBool("isRunning", true);
-                    anim.SetFloat("playerSpeed", 0.3f + new Vector3(rB.velocity.x, 0, rB.velocity.z).magnitude / 10);
-                    UpdateAnimationParametersClientRpc(anim.GetBool("isRunning"), anim.GetFloat("playerSpeed"));
-                }
-                else
-                {
-                    anim.SetBool("isRunning", false);
-                    UpdateAnimationParametersClientRpc(anim.GetBool("isRunning"), anim.GetFloat("playerSpeed"));
-                }
-            }
-        }
+        //if (IsServer)
+        //{
+        //    if (anim.gameObject.activeSelf)
+        //    {
+        //        if (rB.velocity != Vector3.zero)
+        //        {
+        //            anim.SetBool("isRunning", true);
+        //            anim.SetFloat("playerSpeed", 0.3f + new Vector3(rB.velocity.x, 0, rB.velocity.z).magnitude / 10);
+        //            UpdateAnimationParametersClientRpc(anim.GetBool("isRunning"), anim.GetFloat("playerSpeed"));
+        //        }
+        //        else
+        //        {
+        //            anim.SetBool("isRunning", false);
+        //            UpdateAnimationParametersClientRpc(anim.GetBool("isRunning"), anim.GetFloat("playerSpeed"));
+        //        }
+        //    }
+        //}
 
         if (speedBoost > 1f)
         {
@@ -86,18 +86,18 @@ public class BotController : NetworkBehaviour
         }
         else
         {
-            if (trailBoost.GetComponent<TrailRenderer>().emitting) trailBoost.GetComponent<TrailRenderer>().emitting = false;
-            if (trailBoost.GetComponentInChildren<ParticleSystem>().isPlaying) trailBoost.GetComponentInChildren<ParticleSystem>().Stop();
+            //if (trailBoost.GetComponent<TrailRenderer>().emitting) trailBoost.GetComponent<TrailRenderer>().emitting = false;
+            //if (trailBoost.GetComponentInChildren<ParticleSystem>().isPlaying) trailBoost.GetComponentInChildren<ParticleSystem>().Stop();
         }
 
     }
 
-    [ClientRpc]
-    private void UpdateAnimationParametersClientRpc(bool isRunning, float speed)
-    {
-        anim.SetBool("isRunning", isRunning);
-        anim.SetFloat("playerSpeed", speed);
-    }
+    //[ClientRpc]
+    //private void UpdateAnimationParametersClientRpc(bool isRunning, float speed)
+    //{
+    //    anim.SetBool("isRunning", isRunning);
+    //    anim.SetFloat("playerSpeed", speed);
+    //}
 
     void FixedUpdate()
     {
@@ -112,14 +112,14 @@ public class BotController : NetworkBehaviour
             else rB.velocity = fwd + new Vector3(0, rB.velocity.y, 0);
 
             rB.MoveRotation(Quaternion.Euler(currentRotation + rotation));
-            charModel.transform.rotation = Quaternion.Euler(currentRotation + rotation);
+            //charModel.transform.rotation = Quaternion.Euler(currentRotation + rotation);
         }
 
         //Add extra gravity force
         rB.AddForce(new Vector3(0, Physics.gravity.y * 2, 0), ForceMode.Acceleration);
 
 
-        //charModel.transform.rotation = Quaternion.LookRotation(new Vector3(rB.velocity.x, 0, rB.velocity.z));
+        //charModel.transform.rotation = Quaternion.LookRotation(new Vector3(rB.velocity.x, 0, rB.velocity.z)); //Este ya estaba comentado
     }
     
     public void SetMovement(float moveV, float moveH)
@@ -135,8 +135,8 @@ public class BotController : NetworkBehaviour
     {
         if (collider.gameObject.GetComponent<SpeedBoost>() != null)
         {
-            trailBoost.GetComponent<TrailRenderer>().emitting = true;
-            trailBoost.GetComponentInChildren<ParticleSystem>().Play();
+            //trailBoost.GetComponent<TrailRenderer>().emitting = true;
+            //trailBoost.GetComponentInChildren<ParticleSystem>().Play();
             SpeedBoost sB = collider.gameObject.GetComponent<SpeedBoost>();
             speedBoost = sB.speedBoost;
             sB.FadeAndRespawn();
