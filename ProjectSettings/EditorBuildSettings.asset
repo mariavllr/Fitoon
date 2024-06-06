@@ -38,6 +38,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FinPartida.unity
     guid: 8146d4752f8b207499ef242e5797d501
+  - enabled: 1
+    path: Assets/Scenes/NivelesAR/DragonRoadsAR.unity
+    guid: 325b9f9acc5a0644baf72fa932f8d087
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: c175f3a20621136409bd2d6e59083b3e, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b123ce9c7d8290e46941b9c117443e47, type: 2}
