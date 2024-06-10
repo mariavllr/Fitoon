@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+//using TMPro;
 using UnityEngine;
 
 public class NPCController : MonoBehaviour
@@ -9,16 +9,21 @@ public class NPCController : MonoBehaviour
     public bool testing;
 
     Rigidbody rb;
-    PlayerControl playerControl;
-    Animator anim;
+    //PlayerControl playerControl;
+    //Animator anim;
     float horizontal;
     float vertical;
 
+    private float moveV;
+    private float moveH;
+    //private bool isFrozen = false;
+    private float speedBoost = 1f;
+
     [Header("Movement")]
-    public float moveSpeed;
-    public float rotationSpeed;
+    public float moveSpeed = 7f;
+    public float rotationSpeed = 1f;
     Vector3 moveDirection;
-    [SerializeField] TextMeshProUGUI velocityText;
+    //[SerializeField] TextMeshProUGUI velocityText;
 
     [Header("Ground check")]
     public float playerHeight;
@@ -29,16 +34,8 @@ public class NPCController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        playerControl = GetComponent<PlayerControl>();
-        anim = GetComponentInChildren<Animator>();
-
-        if (!testing)
-        {
-            //Activate face tracking
-            GetComponent<FaceTrackingToMovement>().enabled = true;
-            GetComponent<WriteDataToCSV>().enabled = true;
-            GetComponent<DominantFrequencyCounter>().enabled = true;
-        }
+        //playerControl = GetComponent<PlayerControl>();
+        //anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -61,41 +58,78 @@ public class NPCController : MonoBehaviour
         {
             rb.drag = 0;
         }
-        velocityText.text = $"In game velocity: {Math.Round(rb.velocity.magnitude, 2, MidpointRounding.AwayFromZero)} ({Math.Round(rb.velocity.magnitude * 3.6, 2, MidpointRounding.AwayFromZero)}) km/h";
+        //velocityText.text = $"In game velocity: {Math.Round(rb.velocity.magnitude, 2, MidpointRounding.AwayFromZero)} ({Math.Round(rb.velocity.magnitude * 3.6, 2, MidpointRounding.AwayFromZero)}) km/h";
     }
 
     private void FixedUpdate()
     {
         //MOVEMENT
-        if (playerControl.MovementAllowed())
-        {
-            anim.SetBool("isRunning", true);
-            if (testing) MovePlayerInEditor();
-            else MovePlayer();
-        }
+        //if (playerControl.MovementAllowed())
+        //{
+        //    anim.SetBool("isRunning", true);
+        //    if (testing) MovePlayerInEditor();
+        //    else MovePlayer();
+        //}
+        MovePlayer();
 
-        if (rb.velocity.magnitude < 0.3f) anim.SetBool("isRunning", false);
+        //if (rb.velocity.magnitude < 0.3f) anim.SetBool("isRunning", false);
 
     }
 
-    private void MovePlayerInEditor()
+    //private void MovePlayerInEditor()
+    //{
+    //    //Rotate Player based on Horizontal input
+    //    Vector3 rotation = new Vector3(0, horizontal * rotationSpeed, 0);
+    //    Vector3 currentRotation = transform.rotation.eulerAngles;
+    //    rb.MoveRotation(Quaternion.Euler(currentRotation + rotation));
+
+
+    //    moveDirection = transform.forward * vertical + transform.right * horizontal;
+    //    if (vertical != 0) rb.AddForce(moveDirection.normalized * moveSpeed * 10f * playerControl.speedMultiplier * playerControl.speedBoost, ForceMode.Force);
+    //}
+
+    public void SetMovement(float moveV, float moveH)
     {
-        //Rotate Player based on Horizontal input
-        Vector3 rotation = new Vector3(0, horizontal * rotationSpeed, 0);
-        Vector3 currentRotation = transform.rotation.eulerAngles;
-        rb.MoveRotation(Quaternion.Euler(currentRotation + rotation));
+        //if (countdownTimer.HasFinished())
+        //{
+        //    this.moveV = moveV;
+        //    this.moveH = moveH;
+        //}
 
+        //Luego borrar estas 2 lineas
+        this.moveV = moveV;
+        this.moveH = moveH;
+    }
 
-        moveDirection = transform.forward * vertical + transform.right * horizontal;
-        if (vertical != 0) rb.AddForce(moveDirection.normalized * moveSpeed * 10f * playerControl.speedMultiplier * playerControl.speedBoost, ForceMode.Force);
+    public void SetBoost(float boost)
+    {
+        speedBoost = boost;
     }
 
     private void MovePlayer()
     {
         //Rotation in "FaceTrackingToMovement.cs"
 
-        rb.AddForce(transform.forward * moveSpeed * 10f, ForceMode.Force);
+        //rb.AddForce(transform.forward * moveSpeed * 10f, ForceMode.Force);
 
+        Vector3 fwd = transform.forward * moveV * moveSpeed * speedBoost;
+        Vector3 rotation = new Vector3(0, moveH * rotationSpeed, 0);
+
+        Vector3 currentRotation = transform.rotation.eulerAngles;
+
+        if (rb.velocity.y > 0) rb.velocity = fwd + new Vector3(0, rb.velocity.y, 0);
+        else rb.velocity = fwd + new Vector3(0, rb.velocity.y, 0);
+
+        rb.MoveRotation(Quaternion.Euler(currentRotation + rotation));
+
+        //if (!isFrozen)
+        //{
+        //    if (rb.velocity.y > 0) rb.velocity = fwd + new Vector3(0, rb.velocity.y, 0);
+        //    else rb.velocity = fwd + new Vector3(0, rb.velocity.y, 0);
+
+        //    rb.MoveRotation(Quaternion.Euler(currentRotation + rotation));
+        //    //charModel.transform.rotation = Quaternion.Euler(currentRotation + rotation);
+        //}
     }
 
     private void SpeedControl()

@@ -22,7 +22,7 @@ public class SpeedBoost : MonoBehaviour
         coll = GetComponent<Collider>();
 
         defaultMaterials.Capacity = mrBoost.Count;
-        for (int i=0; i< mrBoost.Count; i++)
+        for (int i = 0; i < mrBoost.Count; i++)
         {
             defaultMaterials.Add(mrBoost[i].material);
         }
@@ -49,7 +49,6 @@ public class SpeedBoost : MonoBehaviour
                 isRespawning = false;
             }
         }
-        
     }
 
     public void FadeAndRespawn()
@@ -65,5 +64,9 @@ public class SpeedBoost : MonoBehaviour
         isRespawning = true;
     }
 
-
+    //BORRAR LUEGO, SOLO ML
+    void OnTriggerEnter(Collider other)
+    {
+        FadeAndRespawn();
+    }
 }

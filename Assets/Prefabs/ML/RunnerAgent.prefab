@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 6000196551813711608}
   - component: {fileID: 6000196551813711615}
   - component: {fileID: 6000196551813711614}
-  - component: {fileID: 6000196551813711613}
+  - component: {fileID: 7110660299574944892}
   - component: {fileID: 6000196551813711600}
   - component: {fileID: 6000196551813711605}
   - component: {fileID: 6000196551813711604}
@@ -414,7 +414,7 @@ Transform:
   m_GameObject: {fileID: 6000196551813711587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6000196552048818494}
@@ -489,8 +489,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 1
---- !u!65 &6000196551813711613
-BoxCollider:
+--- !u!136 &7110660299574944892
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -499,8 +499,9 @@ BoxCollider:
   m_Material: {fileID: 13400000, guid: 9b992dc3fb75ba745995377ce4514b1d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6000196551813711600
 MonoBehaviour:
@@ -509,20 +510,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6000196551813711587}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d0afe5fc6118d14eaa8474fc341a11f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   testing: 0
-  moveSpeed: 0
-  rotationSpeed: 0
-  velocityText: {fileID: 0}
-  playerHeight: 0
+  moveSpeed: 7
+  rotationSpeed: 1
+  playerHeight: 1
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
-  groundDrag: 0
+    m_Bits: 64
+  groundDrag: 5
 --- !u!114 &6000196551813711605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,9 +545,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: a218ce7055aee7845ad0172ed89ec2f8, type: 3}
   m_InferenceDevice: 3
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: RunnerAgent
   TeamId: 0
   m_UseChildSensors: 1
@@ -569,8 +569,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 70000
-  movementSpeed: 15
-  rotationSpeed: 0.7
   target: {fileID: 0}
   checkpointsPassedList: []
 --- !u!114 &6000196551813711611
@@ -587,7 +585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Record: 0
   NumStepsToRecord: 0
-  DemonstrationName: RunnerAgentDemo
+  DemonstrationName: RunnerObstacles
   DemonstrationDirectory: Demos
 --- !u!114 &6000196551813711610
 MonoBehaviour:
@@ -621,6 +619,7 @@ MonoBehaviour:
   - Wall
   - POI
   - Goal
+  - Obstacle
   m_RaysPerDirection: 3
   m_MaxRayDegrees: 50
   m_SphereCastRadius: 0.5
@@ -651,6 +650,7 @@ MonoBehaviour:
   - Wall
   - POI
   - Goal
+  - Obstacle
   m_RaysPerDirection: 3
   m_MaxRayDegrees: 50
   m_SphereCastRadius: 0.5
@@ -799,7 +799,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7445465761178292550}
   m_LocalRotation: {x: 0.24701531, y: -0.000000018641185, z: 0.0000000047519118, w: 0.9690116}
-  m_LocalPosition: {x: 0, y: 4.35, z: -6.8}
+  m_LocalPosition: {x: 0, y: 2.175, z: -6.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

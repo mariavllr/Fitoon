@@ -7,25 +7,25 @@ using Unity.MLAgents.Sensors;
 
 public class RunnerAgent : Agent
 {
-    [SerializeField] private float movementSpeed = 7f;
-    [SerializeField] private float rotationSpeed = 1f;
+    //[SerializeField] private float movementSpeed = 7f;
+    //[SerializeField] private float rotationSpeed = 1f;
     [SerializeField] private Transform target;
     //[SerializeField] private List<GameObject> spawnpointsList;
     [SerializeField] private List<GameObject> checkpointsPassedList;
 
-    //private BotControl controller;
+    private NPCController controller;
     private Vector3 diff;
     private Vector3 lastDiff;
 
     public override void Initialize()
     {
-        //controller = GetComponent<BotControl>();
+        controller = GetComponent<NPCController>();
     }
 
     public override void OnEpisodeBegin()
     {
-        //controller.enabled = true;
-        //controller.SetBoost(1f);
+        controller.enabled = true;
+        controller.SetBoost(1f);
         target.GetComponent<Collider>().enabled = true;
         checkpointsPassedList.Clear();
 
@@ -34,7 +34,7 @@ public class RunnerAgent : Agent
         //int randSP = Random.Range(0, spawnpointsList.Count - 1);
         //transform.localPosition = new Vector3(spawnpointsList[randSP].transform.localPosition.x, spawnpointsList[randSP].transform.localPosition.y + 1, spawnpointsList[randSP].transform.localPosition.z);
 
-        transform.localPosition = new Vector3(Random.Range(-20f, 20f), 0.5f, 0f);
+        transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1f, 0f);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -56,9 +56,10 @@ public class RunnerAgent : Agent
 
         float moveV = ScaleAction(actions.ContinuousActions[0], 0.0f, 1.0f);
         float moveH = ScaleAction(actions.ContinuousActions[1], -1.0f, 1.0f);
-        //controller.SetMovement(moveV, moveH);
+        controller.SetMovement(moveV, moveH);
 
-        transform.localPosition += new Vector3(moveH, 0, moveV) * Time.deltaTime * movementSpeed;
+        //Solo si no hay controller
+        //transform.localPosition += new Vector3(moveH, 0, moveV) * Time.deltaTime * movementSpeed;
 
         //Penalize for staying still
         if (moveV <= 0)
@@ -66,7 +67,12 @@ public class RunnerAgent : Agent
             AddReward(-10f);
         }
 
-        if (GetCumulativeReward() < -10) EndEpisode();
+        //Reiniciaba demasiado
+        if (GetCumulativeReward() < -10)
+        {
+            checkpointsPassedList.Clear();
+            EndEpisode();
+        }
     }
 
 
@@ -95,6 +101,7 @@ public class RunnerAgent : Agent
                 if (go == collider.gameObject)
                 {
                     AddReward(-100f); //Penalize for reaching a repeated CheckPoint
+                    checkpointsPassedList.Clear(); //No lo estaba haciendo en onepisodebegin
                     EndEpisode();
                     //Debug.Log("REPEATED CP");
                 }
@@ -113,11 +120,19 @@ public class RunnerAgent : Agent
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            AddReward(-10f); //Penalization for colliding with a wall
-        }
-    }
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Wall"))
+    //    {
+    //        AddReward(-5f); //Penalization for colliding with a wall
+    //    }
+    //    if (collision.gameObject.CompareTag("Obstacle"))
+    //    {
+    //        AddReward(-5f); //Penalization for colliding with an obstacle
+    //    }
+    //    if (collision.gameObject.CompareTag("Character"))
+    //    {
+    //        AddReward(-1f); //Penalization for colliding with another NPC too much time
+    //    }
+    //}
 }
