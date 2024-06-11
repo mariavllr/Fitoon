@@ -72,6 +72,7 @@ public class FaceTrackingToMovement : MonoBehaviour
     private void OnDisable()
     {
         faceManager.facesChanged -= CaraDetectada;
+        CuentaPasos.onPasoEvent -= ContarPaso;
     }
 
 

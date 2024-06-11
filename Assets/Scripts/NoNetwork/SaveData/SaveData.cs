@@ -10,6 +10,7 @@ public class SaveData : MonoBehaviour
     
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         player  = new PlayerData();
         ReadFromJson();
     }

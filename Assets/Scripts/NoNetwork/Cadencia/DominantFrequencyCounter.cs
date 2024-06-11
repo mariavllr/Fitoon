@@ -9,7 +9,6 @@ public class DominantFrequencyCounter : MonoBehaviour
 {
     //Datos reales
     public List<float> data;
-    string rutaPrueba = "Assets/Scripts/NoNetwork/Cadencia/datosPrueba_rapido.json";
     [SerializeField] string fileName;
 
 
@@ -18,40 +17,74 @@ public class DominantFrequencyCounter : MonoBehaviour
     int maxFFTIndex; //El indice en la FFT donde está el pico (la frecuencia)
 
     float frequency;
+    float totalCadence;
 
     void Start()
     {
-        //ReadJSONFile();
         ReadCSVFile(fileName);
 
         //Calculo del coste
         //Stopwatch stopwatch = new Stopwatch();
         //stopwatch.Start();
 
-         AdjustListLengthToPowerOfTwo(data);
-         inputData = data.ToArray();
-         DoFFT(inputData);
+        //Eliminar hasta el dato 300
+        data = data.GetRange(300, data.Count - 300);
 
-         // Calcula la frecuencia de prueba
-         Debug.Log("----FRECUENCIA MEDIA DATOS PRUEBA: METODO TRANSFORMADA RÁPIDA DE FOURIER-----");
-         Debug.Log("[FFT] Frecuencia dominante: " + frequency);
-         Debug.Log("[FFT] Cadencia: " + frequency*60f);
-        
+        //----------------POR TRAMOS---------------------
 
-        
-        // Dividir la lista en sublistas de tamaño fijo
-       /* List<List<float>> sublists = SplitList(data, 256);
+        string filePath = Application.persistentDataPath + Path.DirectorySeparatorChar + fileName + "_FFT.csv";
+        Debug.Log($"Ruta: {filePath}");
+        using (StreamWriter writer = new StreamWriter(filePath))
+        {
+            writer.WriteLine("Nombre;Intervalo 128;FFT;Cadencia");
 
-         for (int i = 0; i < sublists.Count; i++)
-         {
-             inputData = sublists[i].ToArray();
-             DoFFT(inputData);
-             // Calcula la frecuencia de prueba
-             Debug.Log("----FRECUENCIA MEDIA DATOS PRUEBA: METODO TRANSFORMADA RÁPIDA DE FOURIER-----");
-             Debug.Log("[FFT] Frecuencia dominante: " + frequency);
-             Debug.Log("[FFT] Cadencia: " + frequency * 60f);
-        }*/
-         
+            // Procesar los datos en intervalos de 128
+            for (int i = 0; i < data.Count; i += 128)
+            {
+                // Determinar el tamaño del bloque 
+                int blockSize = Mathf.Min(128, data.Count - i);
+
+                // Obtener el bloque actual de datos
+                List<float> block = data.GetRange(i, blockSize);
+
+                // Calcular los índices del intervalo
+                int startInterval = 300 + i;
+                int endInterval = startInterval + blockSize;
+
+                // Imprimir el intervalo
+                Debug.Log($"Intervalo: {startInterval}-{endInterval}");
+
+                if (startInterval == 1580)
+                {
+                    Debug.Log("FIN");
+
+                    //------------------ENTERO----------------------
+
+                    AdjustListLengthToPowerOfTwo(data);
+                    inputData = data.ToArray();
+                    DoFFT(inputData);
+                    totalCadence = frequency * 60f;
+                    // Calcula la frecuencia de prueba
+                    Debug.Log("----FRECUENCIA TOTAL-----");
+                    Debug.Log("[FFT] Frecuencia dominante: " + frequency);
+                    Debug.Log("[FFT] Cadencia: " + totalCadence);
+                    writer.WriteLine($"Cadencia total;1024(300-1324);{frequency};{totalCadence}");
+                    break;
+                }
+                else
+                {
+                    inputData = block.ToArray();
+                    DoFFT(inputData);
+                    // Calcula la frecuencia de prueba
+                    Debug.Log("----FRECUENCIA MEDIA DATOS PRUEBA: METODO TRANSFORMADA RÁPIDA DE FOURIER-----");
+                    Debug.Log("[FFT] Frecuencia dominante: " + frequency);
+                    Debug.Log("[FFT] Cadencia: " + frequency * 60f);
+                    writer.WriteLine($"{fileName};{startInterval} - {endInterval};{frequency};{frequency * 60f}");
+                }
+                
+            }
+
+        }
 
         //stopwatch.Stop();
 
@@ -100,15 +133,6 @@ public class DominantFrequencyCounter : MonoBehaviour
         list.RemoveRange(newLength, list.Count - newLength);
 
         Debug.Log("Lista recortada a la longitud más cercana que es potencia de 2: " + newLength);
-    }
-
-    void ReadJSONFile()
-    {
-        // Lee el archivo JSON y carga los datos
-        string jsonString = File.ReadAllText(rutaPrueba);
-        DatosJSON datosJSON = JsonUtility.FromJson<DatosJSON>(jsonString);
-        data = new List<float>(datosJSON.data);
-        inputData = data.ToArray();
     }
 
     void ReadCSVFile(string fileName)
