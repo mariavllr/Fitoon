@@ -18,7 +18,7 @@ public class DominantFrequencyCounter : MonoBehaviour
 
     float frequency;
     float totalCadence;
-
+/*
     void Start()
     {
         ReadCSVFile(fileName);
@@ -91,7 +91,7 @@ public class DominantFrequencyCounter : MonoBehaviour
 
         // Debug.Log("Coste del algoritmo: " + stopwatch.ElapsedMilliseconds + " ms");
     }
-
+*/
     List<List<float>> SplitList(List<float> list, int chunkSize)
     {
         List<List<float>> chunks = new List<List<float>>();

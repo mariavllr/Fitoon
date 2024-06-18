@@ -37,11 +37,12 @@ public class CreateBots : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        GenerateSpawnpointsList();
     }
 
     private void Start()
     {
-        GenerateSpawnpointsList();
+        
     }
 
     public void InitializeBots()
@@ -53,6 +54,7 @@ public class CreateBots : MonoBehaviour
 
     public void GenerateSpawnpointsList()
     {
+        Debug.Log("se ejecuta CREATE BOTS");
         spawnpointData.Clear();
 
             foreach (var gO in FindObjectsOfType(typeof(GameObject)) as GameObject[])

@@ -21,7 +21,7 @@ public class GoalController : MonoBehaviour
     public delegate void OnRaceFinish();
     public static event OnRaceFinish onRaceFinishEvent;
 
-    private void Awake()
+    private void Start()
     {
         Reset();
     }

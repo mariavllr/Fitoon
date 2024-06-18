@@ -171,7 +171,7 @@ public class PlayerControl : MonoBehaviour
 
     private void SearchNextFreeSpawnPoint()
     {
-
+        Debug.Log("se ejecuta PLAYER CONTROL");
         for (int i = 0; i <= botSpawner.spawnpointData.Count; i++)
         {
             if (!botSpawner.spawnpointData[i]._isOccupied)
