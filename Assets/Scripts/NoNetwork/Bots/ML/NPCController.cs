@@ -1,29 +1,29 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using TMPro;
 using UnityEngine;
 
 public class NPCController : MonoBehaviour
 {
-    public bool testing;
-
     Rigidbody rb;
-    //PlayerControl playerControl;
-    //Animator anim;
-    float horizontal;
-    float vertical;
+    public Animator anim;
+    private Countdown countdownTimer;
+    private FinishController finishController;
+    private GoalController goalController;
+    public GameObject trailBoost;
+    private Transform charModel;
+    private CreateBots botSpawner;
+    private GameObject goal;
 
     private float moveV;
     private float moveH;
-    //private bool isFrozen = false;
+    private bool isFrozen = false;
     private float speedBoost = 1f;
 
     [Header("Movement")]
     public float moveSpeed = 7f;
     public float rotationSpeed = 1f;
     Vector3 moveDirection;
-    //[SerializeField] TextMeshProUGUI velocityText;
 
     [Header("Ground check")]
     public float playerHeight;
@@ -31,20 +31,57 @@ public class NPCController : MonoBehaviour
     bool grounded;
     public float groundDrag;
 
-    void Start()
+    private void OnEnable()
+    {
+        GoalController.onRaceFinishEvent += EndRace;
+    }
+
+    private void OnDisable()
+    {
+        GoalController.onRaceFinishEvent -= EndRace;
+    }
+
+    void EndRace()
+    {
+        LockMovement(true);
+        charModel.gameObject.SetActive(false);
+        anim.SetBool("isRunning", false);
+    }
+
+    private void StartCountdownClientRpc()
+    {
+        countdownTimer.StartCountdown();
+    }
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        //playerControl = GetComponent<PlayerControl>();
-        //anim = GetComponentInChildren<Animator>();
+        countdownTimer = FindObjectOfType<Countdown>();
+        finishController = FindObjectOfType<FinishController>();
+        botSpawner = FindObjectOfType<CreateBots>();
+        goalController = FindObjectOfType<GoalController>();
+
+        charModel = anim.transform;
+        goal = goalController.gameObject;
+    }
+
+    private void Start()
+    {
+        if (goalController != null) goalController.Reset();
+
+        LockMovement(false);
+
+        if (countdownTimer == null) countdownTimer = FindObjectOfType<Countdown>();
+        if (finishController == null) finishController = FindObjectOfType<FinishController>();
+        if (botSpawner == null) botSpawner = FindObjectOfType<CreateBots>();
+
+        countdownTimer.Reset();
     }
 
     void Update()
     {
         //Ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
 
         SpeedControl();
 
@@ -54,51 +91,91 @@ public class NPCController : MonoBehaviour
             rb.drag = groundDrag;
         }
 
-        else
+        else if(!grounded)
         {
             rb.drag = 0;
         }
-        //velocityText.text = $"In game velocity: {Math.Round(rb.velocity.magnitude, 2, MidpointRounding.AwayFromZero)} ({Math.Round(rb.velocity.magnitude * 3.6, 2, MidpointRounding.AwayFromZero)}) km/h";
+
+        if (MovementAllowed())
+        {
+            if (goalController != null)
+            {
+                goalController.AddPlayerToList(transform);
+                goalController.UpdatePosition(transform);
+            }
+        }
+
+        if (speedBoost > 1f)
+        {
+            trailBoost.GetComponent<TrailRenderer>().emitting = true;
+            trailBoost.GetComponentInChildren<ParticleSystem>().Play();
+            speedBoost -= 0.01f;
+            speedBoost = Mathf.Clamp(speedBoost, 1f, 10f);
+        }
+
+        else if (speedBoost <= 1f)
+        {
+            trailBoost.GetComponent<TrailRenderer>().emitting = false;
+            trailBoost.GetComponentInChildren<ParticleSystem>().Stop();
+        }
+    }
+
+    public void LockMovement(bool state)
+    {
+        isFrozen = state;
+    }
+
+    public bool MovementAllowed()
+    {
+        return (!isFrozen && countdownTimer.HasFinished() && !finishController.IsFinished());
     }
 
     private void FixedUpdate()
     {
         //MOVEMENT
-        //if (playerControl.MovementAllowed())
-        //{
-        //    anim.SetBool("isRunning", true);
-        //    if (testing) MovePlayerInEditor();
-        //    else MovePlayer();
-        //}
-        MovePlayer();
-
-        //if (rb.velocity.magnitude < 0.3f) anim.SetBool("isRunning", false);
-
+        if (MovementAllowed())
+        {
+            anim.SetBool("isRunning", true);
+            MoveNPC();
+        }
     }
 
-    //private void MovePlayerInEditor()
-    //{
-    //    //Rotate Player based on Horizontal input
-    //    Vector3 rotation = new Vector3(0, horizontal * rotationSpeed, 0);
-    //    Vector3 currentRotation = transform.rotation.eulerAngles;
-    //    rb.MoveRotation(Quaternion.Euler(currentRotation + rotation));
+    #region CollisionChecks
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            LockMovement(false); //Unfreeze movement when the player touches the floor
+        }
+    }
 
+    private void OnTriggerEnter(Collider collider)
+    {
+        SpeedBoost sB = collider.gameObject.GetComponent<SpeedBoost>();
+        if (sB != null)
+        {
+            SetBoost(sB.speedBoost);
+            sB.FadeAndRespawn();
+        }
 
-    //    moveDirection = transform.forward * vertical + transform.right * horizontal;
-    //    if (vertical != 0) rb.AddForce(moveDirection.normalized * moveSpeed * 10f * playerControl.speedMultiplier * playerControl.speedBoost, ForceMode.Force);
-    //}
+        if (goal != null && goal.CompareTag(collider.gameObject.tag))
+        {
+            Debug.Log("FINISHED!");
+            //finishController.Finish();
+            if (goalController != null) goalController.RemovePlayerFromList(transform);
+            //if (goalController != null) goalController.PlayerFinish();
+        }
+    }
+
+    #endregion
 
     public void SetMovement(float moveV, float moveH)
     {
-        //if (countdownTimer.HasFinished())
-        //{
-        //    this.moveV = moveV;
-        //    this.moveH = moveH;
-        //}
-
-        //Luego borrar estas 2 lineas
-        this.moveV = moveV;
-        this.moveH = moveH;
+        if (countdownTimer.HasFinished())
+        {
+            this.moveV = moveV;
+            this.moveH = moveH;
+        }
     }
 
     public void SetBoost(float boost)
@@ -106,30 +183,17 @@ public class NPCController : MonoBehaviour
         speedBoost = boost;
     }
 
-    private void MovePlayer()
+    private void MoveNPC()
     {
-        //Rotation in "FaceTrackingToMovement.cs"
+        rb.AddForce(transform.forward * moveSpeed * 10f, ForceMode.Force);
 
-        //rb.AddForce(transform.forward * moveSpeed * 10f, ForceMode.Force);
-
-        Vector3 fwd = transform.forward * moveV * moveSpeed * speedBoost;
+        //Rotate Player based on Horizontal input
         Vector3 rotation = new Vector3(0, moveH * rotationSpeed, 0);
-
         Vector3 currentRotation = transform.rotation.eulerAngles;
-
-        if (rb.velocity.y > 0) rb.velocity = fwd + new Vector3(0, rb.velocity.y, 0);
-        else rb.velocity = fwd + new Vector3(0, rb.velocity.y, 0);
-
         rb.MoveRotation(Quaternion.Euler(currentRotation + rotation));
 
-        //if (!isFrozen)
-        //{
-        //    if (rb.velocity.y > 0) rb.velocity = fwd + new Vector3(0, rb.velocity.y, 0);
-        //    else rb.velocity = fwd + new Vector3(0, rb.velocity.y, 0);
-
-        //    rb.MoveRotation(Quaternion.Euler(currentRotation + rotation));
-        //    //charModel.transform.rotation = Quaternion.Euler(currentRotation + rotation);
-        //}
+        moveDirection = transform.forward * moveV + transform.right * moveH;
+        if (moveV != 0) rb.AddForce(moveDirection.normalized * moveSpeed * 10f * speedBoost, ForceMode.Force);
     }
 
     private void SpeedControl()

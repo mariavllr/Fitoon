@@ -17,6 +17,7 @@ TagManager:
   - Bottom
   - Shoes
   - Character
+  - Obstacle
   layers:
   - Default
   - TransparentFX
