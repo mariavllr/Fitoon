@@ -28,6 +28,19 @@ public class ChangeCharacter : MonoBehaviour
 
     }
 
+    public void OnSkinClicked(string skinName)
+    {
+        //Buscar en qué índice de la lista de personajes está, segun el NOMBRE de la skin
+        characterActive = characters.FindIndex(character => character.characterName == skinName);
+        actualCharacter = characters[characterActive];
+
+        //Actualizar el personaje en pantalla
+        Destroy(container.transform.GetChild(0).gameObject);
+        GameObject instance = Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, container.transform);
+        instance.GetComponent<RotateCharacter>().enabled = true;
+        nameText.text = actualCharacter.characterName;
+    }
+
     public void OnArrowClicked(string direction)
     {
         Destroy(container.transform.GetChild(0).gameObject);
@@ -52,7 +65,8 @@ public class ChangeCharacter : MonoBehaviour
             }
         }
 
-        Instantiate(characters[characterActive].prefab, Vector3.zero, Quaternion.identity, container.transform);
+        GameObject instance = Instantiate(characters[characterActive].prefab, Vector3.zero, Quaternion.identity, container.transform);
+        instance.GetComponent<RotateCharacter>().enabled = true;
         nameText.text = characters[characterActive].characterName;
 
         actualCharacter = characters[characterActive];
@@ -93,7 +107,8 @@ public class ChangeCharacter : MonoBehaviour
 
         //Actualizar el personaje en pantalla
         Destroy(container.transform.GetChild(0).gameObject);
-        Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, container.transform);
+        GameObject instance = Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, container.transform);
+        instance.GetComponent<RotateCharacter>().enabled = true;
         nameText.text = actualCharacter.characterName;
 
         //Asignar colores guardados (cuando haga reset deben salir estos)

@@ -17,6 +17,7 @@ public class MoveThePlayer : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
     public float rotationSpeed;
+    float speedBoost = 1f;
     Vector3 moveDirection;
     [SerializeField] TextMeshProUGUI velocityText;
 
@@ -61,7 +62,7 @@ public class MoveThePlayer : MonoBehaviour
         {
             rb.drag = 0;
         }
-        velocityText.text = $"In game velocity: {Math.Round(rb.velocity.magnitude, 2, MidpointRounding.AwayFromZero)} ({Math.Round(rb.velocity.magnitude * 3.6, 2, MidpointRounding.AwayFromZero)}) km/h";
+        if(testing) velocityText.text = $"Velocity: {Math.Round(rb.velocity.magnitude/3, 2, MidpointRounding.AwayFromZero)} m/s ({Math.Round(rb.velocity.magnitude/3 * 3.6, 2, MidpointRounding.AwayFromZero)} km/h)";
     }
 
     private void FixedUpdate()
@@ -87,14 +88,14 @@ public class MoveThePlayer : MonoBehaviour
 
 
         moveDirection = transform.forward * vertical + transform.right * horizontal;
-        if(vertical != 0) rb.AddForce(moveDirection.normalized * moveSpeed * 10f * playerControl.speedMultiplier * playerControl.speedBoost, ForceMode.Force);
+        if(vertical != 0) rb.AddForce(moveDirection.normalized * moveSpeed * 10f * playerControl.speedBoost, ForceMode.Force);
     }
 
     private void MovePlayer()
     {
         //Rotation in "FaceTrackingToMovement.cs"
 
-        rb.AddForce(transform.forward * moveSpeed * 10f, ForceMode.Force);
+        rb.AddForce(transform.forward * moveSpeed * 10f * playerControl.speedBoost, ForceMode.Force);
 
     }
 

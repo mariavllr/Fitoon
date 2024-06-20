@@ -85,7 +85,7 @@ public class FaceTrackingToMovement : MonoBehaviour
             CalculateVelocity(face.transform);
         }
 
-        velocityText.text = $"Velocity: {Math.Round(velocidad, 2, MidpointRounding.AwayFromZero)} ({Math.Round(velocidad * 3.6, 2, MidpointRounding.AwayFromZero)} km/h)";
+        if(!playerMov.testing) velocityText.text = $"Velocity: {Math.Round(velocidad, 2, MidpointRounding.AwayFromZero)} ({Math.Round(velocidad * 3.6, 2, MidpointRounding.AwayFromZero)} km/h)";
         
         if (activarTimer) timer += Time.deltaTime;
     }

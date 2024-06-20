@@ -970,10 +970,8 @@ GameObject:
   - component: {fileID: 8998448321280030257}
   - component: {fileID: 521287158}
   - component: {fileID: 521287157}
-  - component: {fileID: 387245337376332441}
   - component: {fileID: 1356138895476756307}
   - component: {fileID: 2355253033629851648}
-  - component: {fileID: -6753064349242588311}
   m_Layer: 3
   m_Name: ChicoGorro
   m_TagString: Character
@@ -1057,20 +1055,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb5a9facaf4b4b4388a791c15db10a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &387245337376332441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2399034774071457521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
-  m_Animator: {fileID: 8998448321280030257}
 --- !u!114 &1356138895476756307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1101,25 +1085,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &-6753064349242588311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2399034774071457521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!1 &2490345629196703146
 GameObject:
   m_ObjectHideFlags: 0

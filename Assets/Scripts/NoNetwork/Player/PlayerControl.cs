@@ -201,11 +201,12 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
+        //Slow down character speed boost
         if (speedBoost > 1f)
         {
             trailBoost.GetComponent<TrailRenderer>().emitting = true;
             trailBoost.GetComponentInChildren<ParticleSystem>().Play();
-            speedBoost -= 0.01f;
+            speedBoost -= 0.04f;
             speedBoost = Mathf.Clamp(speedBoost, 1f, 10f);
         }
         else
@@ -236,6 +237,7 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    //SPEED BOOST && GOAL CHECK
     private void OnTriggerEnter(Collider collider)
     {
         SpeedBoost sB = collider.gameObject.GetComponent<SpeedBoost>();
@@ -263,8 +265,6 @@ public class PlayerControl : MonoBehaviour
         rB.rotation = Quaternion.identity;
         rB.detectCollisions = false;
         anim.SetBool("isRunning", false);
-        // charModel.gameObject.SetActive(false);
-        //  GetComponent<PlayerNameHolder>().textHolder.SetActive(false);
     }
 
     private void OnTriggerStay(Collider collider)

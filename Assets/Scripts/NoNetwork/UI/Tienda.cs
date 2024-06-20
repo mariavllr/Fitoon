@@ -10,13 +10,9 @@ public class Tienda : MonoBehaviour
     public GameObject gameManager;
     SaveData save;
     public GameObject container;
-    public TextMeshProUGUI coinsText;
-    public TextMeshProUGUI diamondsText;
     void Start()
     {
         save = gameManager.GetComponent<SaveData>();
-        coinsText.text = save.player.normalCoins.ToString();
-        diamondsText.text = save.player.diamondsCoins.ToString();
         CleanShop();
         CreateShop();
     }

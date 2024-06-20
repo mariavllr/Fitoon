@@ -767,7 +767,6 @@ GameObject:
   - component: {fileID: 5347918372887543242}
   - component: {fileID: 919132149528074726}
   - component: {fileID: 919132149528074727}
-  - component: {fileID: 379358899083512357}
   - component: {fileID: 173473037312096231}
   m_Layer: 3
   m_Name: ChicaDorsal
@@ -867,20 +866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb5a9facaf4b4b4388a791c15db10a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &379358899083512357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1701343700689534218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
-  m_Animator: {fileID: 5347918372887543242}
 --- !u!114 &173473037312096231
 MonoBehaviour:
   m_ObjectHideFlags: 0

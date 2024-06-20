@@ -1290,7 +1290,6 @@ GameObject:
   - component: {fileID: 8491866497008172161}
   - component: {fileID: 4367221086394700878}
   - component: {fileID: 919132149221974587}
-  - component: {fileID: -4067882040507452727}
   - component: {fileID: -1196935118801125242}
   m_Layer: 3
   m_Name: ChicoSudadera
@@ -1377,20 +1376,6 @@ CapsuleCollider:
   m_Height: 5.678772
   m_Direction: 1
   m_Center: {x: -0.009077072, y: 3.1442947, z: 0}
---- !u!114 &-4067882040507452727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2914629327372680257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
-  m_Animator: {fileID: 8491866497008172161}
 --- !u!114 &-1196935118801125242
 MonoBehaviour:
   m_ObjectHideFlags: 0
