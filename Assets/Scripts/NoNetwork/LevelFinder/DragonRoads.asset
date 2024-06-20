@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DragonRoads
   m_EditorClassIdentifier: 
   imagenEscenario: {fileID: 21300000, guid: c5a7bbb98c3497549bc9a142396f9bc6, type: 3}
-  nombreEscenario: Dragon Roads
+  nombreEscenario: DragonRoadsAR

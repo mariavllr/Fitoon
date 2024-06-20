@@ -197,7 +197,7 @@ public class PlayerControl : MonoBehaviour
             if (goalController != null)
             {
                 goalController.AddPlayerToList(transform);
-                goalController.UpdatePosition(transform);
+                goalController.UpdatePosition();
             }
         }
 

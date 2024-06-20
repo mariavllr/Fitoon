@@ -34,7 +34,7 @@ public class GoalController : MonoBehaviour
                 players.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));*/
     }
 
-    public void UpdatePosition(Transform player)
+    public void UpdatePosition()
     {
         //if (players.Contains(player)) playerPosition = finishedPlayers + (players.IndexOf(player) + 1);
 
@@ -59,7 +59,7 @@ public class GoalController : MonoBehaviour
         //players.Remove(player);
         finishedPlayers++;
         players.RemoveAll(p => p == null || p == player);
-        
+        UpdatePosition();
 
         if (player.GetChild(0).gameObject.tag == "Character")
         {

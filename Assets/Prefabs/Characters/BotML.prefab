@@ -5141,7 +5141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 8494882338557731173}
   trailBoost: {fileID: 8657391804162438242}
-  moveSpeed: 7
+  moveSpeed: 6
   rotationSpeed: 1
   playerHeight: 1
   whatIsGround:
@@ -5330,7 +5330,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5311672062374018382, guid: 7e649bf99f5a2a447bdc2247d9fc1871, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5374,8 +5374,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Bot-name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e649bf99f5a2a447bdc2247d9fc1871, type: 2}
+  m_sharedMaterial: {fileID: -5311672062374018382, guid: 7e649bf99f5a2a447bdc2247d9fc1871, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -216,7 +216,7 @@ public class PlayerController : NetworkBehaviour
         //The client owner controls his player with the input
         if (IsOwner)
         {
-            if (MovementAllowed()) goalController.UpdatePosition(transform);
+            if (MovementAllowed()) goalController.UpdatePosition();
 
             //The player moves instantly on his client
             movementV = Math.Clamp( Mathf.Round(joystick.Vertical * 10) / 10 + Mathf.Round(Input.GetAxis("Vertical") * 10) / 10 , 0, 1 );

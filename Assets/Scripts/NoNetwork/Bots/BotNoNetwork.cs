@@ -138,7 +138,7 @@ public class BotNoNetwork : MonoBehaviour
             trailBoost.GetComponent<TrailRenderer>().emitting = true;
             trailBoost.GetComponentInChildren<ParticleSystem>().Play();
             SpeedBoost sB = collider.gameObject.GetComponent<SpeedBoost>();
-            speedBoost = sB.speedBoost;
+            speedBoost = 2; //Temporal pa que no vayan super rapido
             sB.FadeAndRespawn();
         }
         if (goal.CompareTag(collider.gameObject.tag))

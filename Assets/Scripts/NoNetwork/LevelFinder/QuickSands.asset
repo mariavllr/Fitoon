@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: QuickSands
   m_EditorClassIdentifier: 
   imagenEscenario: {fileID: 21300000, guid: 44e3f90bad3179347acdeeebb77a038c, type: 3}
-  nombreEscenario: Quick Sands
+  nombreEscenario: QuickSandsAR
