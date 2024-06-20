@@ -7,12 +7,8 @@ using Unity.MLAgents.Sensors;
 
 public class RunnerAgent : Agent
 {
-    //[SerializeField] private float movementSpeed = 7f;
-    //[SerializeField] private float rotationSpeed = 1f;
     [SerializeField] private Transform target;
     [SerializeField] private bool training = false;
-    //[SerializeField] private List<GameObject> spawnpointsList;
-    //[SerializeField] private List<GameObject> checkpointsPassedList;
 
     private NPCController controller;
     private Vector3 diff;
@@ -23,6 +19,7 @@ public class RunnerAgent : Agent
     {
         controller = GetComponent<NPCController>();
         checkpointsPassedSet = new HashSet<GameObject>();
+        target = FindObjectOfType<GoalController>().transform;
     }
 
     public override void OnEpisodeBegin()
@@ -33,11 +30,6 @@ public class RunnerAgent : Agent
         checkpointsPassedSet.Clear();
 
         lastDiff = (target.transform.localPosition - transform.localPosition) / 20;
-        transform.localRotation = Quaternion.identity;
-        //int randSP = Random.Range(0, spawnpointsList.Count - 1);
-        //transform.localPosition = new Vector3(spawnpointsList[randSP].transform.localPosition.x, spawnpointsList[randSP].transform.localPosition.y + 1, spawnpointsList[randSP].transform.localPosition.z);
-
-        transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1f, 0f);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -45,11 +37,9 @@ public class RunnerAgent : Agent
         diff = (target.transform.localPosition - transform.localPosition) / 20;
         sensor.AddObservation(diff);
 
-
         if (diff.magnitude < lastDiff.magnitude) AddReward(0.0001f);
         if (diff.magnitude > lastDiff.magnitude) AddReward(-0.01f);
         lastDiff = diff;
-
 
         //AddReward(-0.001f); //Encourage the player to move faster
     }
@@ -61,23 +51,19 @@ public class RunnerAgent : Agent
         float moveH = ScaleAction(actions.ContinuousActions[1], -1.0f, 1.0f);
         controller.SetMovement(moveV, moveH);
 
-        //Solo si no hay controller
-        //transform.localPosition += new Vector3(moveH, 0, moveV) * Time.deltaTime * movementSpeed;
-
         //Penalize for staying still
         if (moveV <= 0)
         {
             AddReward(-10f);
         }
 
-        //Reiniciaba demasiado
+        //Reiniciar si va mal
         if (GetCumulativeReward() < -2000)
         {
             checkpointsPassedSet.Clear();
             EndEpisode();
         }
     }
-
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
@@ -86,7 +72,6 @@ public class RunnerAgent : Agent
         continuousActions[0] = Input.GetAxisRaw("Vertical");
         continuousActions[1] = Input.GetAxisRaw("Horizontal");
     }
-
 
     private void OnTriggerEnter(Collider collider)
     {
@@ -100,52 +85,14 @@ public class RunnerAgent : Agent
             if (checkpointsPassedSet.Contains(collider.gameObject))
             {
                 AddReward(-100f); // Penalize for reaching a repeated CheckPoint
-                //checkpointsPassedSet.Clear(); // No lo estaba haciendo en onepisodebegin
                 EndEpisode();
-                Debug.Log("REPEATED CP");
             }
             else
             {
                 checkpointsPassedSet.Add(collider.gameObject);
                 AddReward(100f); // Reward for reaching a new CheckPoint
-                Debug.Log("NEW CP");
             }
         }
-        //if (collider.gameObject.CompareTag("Checkpoint"))
-        //{
-        //    int counter = 0;
-
-
-        //    bool shouldEndEpisode = false;
-        //    for (int i = 0; i < checkpointsPassedList.Count; i++)
-        //    {
-        //        GameObject go = checkpointsPassedList[i];
-        //        if (go == collider.gameObject)
-        //        {
-        //            AddReward(-100f); // Penalize for reaching a repeated CheckPoint
-        //            shouldEndEpisode = true;
-        //            break;
-        //        }
-        //        else
-        //        {
-        //            counter++;
-        //        }
-        //    }
-
-        //    if (shouldEndEpisode)
-        //    {
-        //        checkpointsPassedList.Clear(); // No lo estaba haciendo en onepisodebegin
-        //        EndEpisode();
-        //        // Debug.Log("REPEATED CP");
-        //    }
-
-        //    if (counter == checkpointsPassedList.Count)
-        //    {
-        //        checkpointsPassedList.Add(collider.gameObject);
-        //        AddReward(100f); //Reward for reaching a CheckPoint
-        //        //Debug.Log("NEW CP");
-        //    }
-        //}
     }
 
     private void OnCollisionStay(Collision collision)
