@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.5897458, g: 0.8574647, b: 0.9798402, a: 1}
+  m_IndirectSpecularColor: {r: 0.5901111, g: 0.8572175, b: 0.9774028, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -186,7 +186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &10091192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,7 +301,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -41.289978, y: 24.78003}
+  m_AnchoredPosition: {x: -41.29004, y: 24.78003}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &10091195
@@ -9476,7 +9476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2d9eba289141b4b9d1678f50891648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botPrefab: {fileID: 3155978158771037683, guid: 9c4625da042d16442b064fdf38f4e340, type: 3}
+  botPrefab: {fileID: 3155978158771037683, guid: 877cde410aff6234b83e295b61a6ef36, type: 3}
   botsFolder: {fileID: 297712550}
   countdownTimer: {fileID: 1492641462}
 --- !u!1 &298313301
@@ -14828,8 +14828,16 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7376612727078268794, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
+      propertyPath: speed
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376612727078268794, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
+      propertyPath: height
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376612727078268794, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
       propertyPath: offset
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7376612727078268795, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
       propertyPath: m_Layer
@@ -23472,7 +23480,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7376612727078268794, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
       propertyPath: speed
-      value: 1
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376612727078268794, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
+      propertyPath: height
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376612727078268794, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
+      propertyPath: offset
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7376612727078268795, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
       propertyPath: m_Name
@@ -43920,23 +43936,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5808098866864636674, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5808098866864636674, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5808098866864636674, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 925.17
       objectReference: {fileID: 0}
     - target: {fileID: 5808098866864636674, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -21.5
       objectReference: {fileID: 0}
     - target: {fileID: 5808098867136863822, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5808098867565789509, guid: 8a0940017a613c64ab128cc693152d99, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -52956,11 +52972,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7376612727078268794, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
       propertyPath: speed
-      value: 1
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376612727078268794, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
+      propertyPath: height
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7376612727078268794, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
       propertyPath: offset
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7376612727078268795, guid: 6f417d51993ba3a4ba5780c26716e60c, type: 3}
       propertyPath: m_Name
@@ -79568,6 +79588,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3094052394003741245, guid: 3b84182e1fc69834f8585acbb587cabb, type: 3}
+      propertyPath: speed
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3094052394003741245, guid: 3b84182e1fc69834f8585acbb587cabb, type: 3}
+      propertyPath: height
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3094052394003741245, guid: 3b84182e1fc69834f8585acbb587cabb, type: 3}
+      propertyPath: offset
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b84182e1fc69834f8585acbb587cabb, type: 3}
 --- !u!23 &5546805723801080830
@@ -81490,7 +81522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5328d53ecbeb5749807d279de4886f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 1
+  testing: 0
   moveSpeed: 7
   rotationSpeed: 2
   velocityText: {fileID: 1637405505}
