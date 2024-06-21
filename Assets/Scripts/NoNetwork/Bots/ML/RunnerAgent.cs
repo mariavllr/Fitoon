@@ -11,6 +11,7 @@ public class RunnerAgent : Agent
     [SerializeField] private bool training = false;
 
     private NPCController controller;
+    //[SerializeField] private CreateBots createBots;
     private Vector3 diff;
     private Vector3 lastDiff;
     [SerializeField] private HashSet<GameObject> checkpointsPassedSet;
@@ -20,10 +21,12 @@ public class RunnerAgent : Agent
         controller = GetComponent<NPCController>();
         checkpointsPassedSet = new HashSet<GameObject>();
         target = FindObjectOfType<GoalController>().transform;
+        //createBots = GetComponentInParent<CreateBots>();
     }
 
     public override void OnEpisodeBegin()
     {
+        //createBots.SpawnBots();
         controller.enabled = true;
         controller.SetBoost(1f);
         target.GetComponent<Collider>().enabled = true;
@@ -41,7 +44,7 @@ public class RunnerAgent : Agent
         if (diff.magnitude > lastDiff.magnitude) AddReward(-0.01f);
         lastDiff = diff;
 
-        //AddReward(-0.001f); //Encourage the player to move faster
+        AddReward(-0.001f); //Encourage the player to move faster
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -110,6 +113,10 @@ public class RunnerAgent : Agent
             if (collision.gameObject.CompareTag("Character"))
             {
                 AddReward(-1f); //Penalization for colliding with another NPC too much time
+            }
+            if (collision.gameObject.CompareTag("StuckPoint"))
+            {
+                AddReward(-30f); //Penalization for going to points where they get stuck
             }
         }
     }

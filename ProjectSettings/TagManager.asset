@@ -18,6 +18,7 @@ TagManager:
   - Shoes
   - Character
   - Obstacle
+  - StuckPoint
   layers:
   - Default
   - TransparentFX
