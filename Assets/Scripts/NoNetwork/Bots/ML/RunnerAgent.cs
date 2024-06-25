@@ -26,6 +26,11 @@ public class RunnerAgent : Agent
 
     public override void OnEpisodeBegin()
     {
+        //if (training)
+        //{
+        //    transform.localRotation = Quaternion.identity;
+        //    transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1f, 0f);
+        //}
         //createBots.SpawnBots();
         controller.enabled = true;
         controller.SetBoost(1f);
