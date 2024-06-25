@@ -12007,7 +12007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5328d53ecbeb5749807d279de4886f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 0
+  testing: 1
   moveSpeed: 7
   rotationSpeed: 2
   velocityText: {fileID: 932034250}
@@ -34362,6 +34362,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 722627282}
+  - component: {fileID: 722627285}
   - component: {fileID: 722627284}
   - component: {fileID: 722627283}
   m_Layer: 3
@@ -34525,6 +34526,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &722627285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722627281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5de62171e43e441b561f211272b4ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1337785136}
 --- !u!1001 &723090553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59994,7 +60008,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212011830}
-  m_LocalRotation: {x: 0.22361772, y: -0.000000008385332, z: 0.0000000019238262, w: 0.97467697}
+  m_LocalRotation: {x: 0.22361772, y: 0.000000008385331, z: -0.0000000019238255, w: 0.97467697}
   m_LocalPosition: {x: -10.903744, y: 4.5699987, z: -8.507654}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -65268,7 +65282,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337785136}
-  m_LocalRotation: {x: 0.22361772, y: -0.000000008385332, z: 0.0000000019238262, w: 0.97467697}
+  m_LocalRotation: {x: 0.22361772, y: 0.000000008385331, z: -0.0000000019238255, w: 0.97467697}
   m_LocalPosition: {x: 0, y: 3.0466666, z: -3.5666664}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
