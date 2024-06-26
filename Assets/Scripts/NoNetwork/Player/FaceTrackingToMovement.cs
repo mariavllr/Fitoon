@@ -12,6 +12,7 @@ public class FaceTrackingToMovement : MonoBehaviour
     ARFaceManager faceManager;
     ARFace face;
     Animator animator;
+    private GoalController goal;
     private bool detectado = false;
     private FadeCamera fadeCamera;
 
@@ -36,8 +37,7 @@ public class FaceTrackingToMovement : MonoBehaviour
 
     [Header("Debug")]
     public TMP_InputField enter_intensity;
-    public Transform debugCube;
-    private GoalController goal;
+    
 
     //EVENTOS (Para el movimiento del personaje)
     public delegate void OnCaraDetectada();
@@ -234,30 +234,6 @@ public class FaceTrackingToMovement : MonoBehaviour
     }
 
 
-    private void DebugMovement()
-    {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        // Rotate the character based on horizontal input
-        transform.Rotate(Vector3.up, horizontalInput * 100f * Time.deltaTime);
-
-        // Move the character forward based on vertical input
-        if (verticalInput != 0)
-        {
-            // Get the forward vector of the character
-            Vector3 moveDirection = transform.forward * Time.deltaTime;
-
-            // Move the character
-            rb.AddForce(moveDirection * 700f, ForceMode.Acceleration);
-            animator.SetBool("isRunning", true);
-        }
-
-        else
-        {
-            animator.SetBool("isRunning", false);
-        }
-    }
 
 
 
