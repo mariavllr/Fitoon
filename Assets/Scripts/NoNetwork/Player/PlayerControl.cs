@@ -51,13 +51,13 @@ public class PlayerControl : MonoBehaviour
     void caraDetectada()
     {
         faceDetected = true;
-        if (MovementAllowed()) anim.SetBool("isRunning", true);
+        //if (MovementAllowed()) anim.SetBool("isRunning", true);
     }
 
     void caraNoDetectada()
     {
         faceDetected = false;
-        anim.SetBool("isRunning", false);
+        //anim.SetBool("isRunning", false);
     }
     //If the player looses
     void EndRace()
@@ -171,7 +171,6 @@ public class PlayerControl : MonoBehaviour
 
     private void SearchNextFreeSpawnPoint()
     {
-        Debug.Log("se ejecuta PLAYER CONTROL");
         for (int i = 0; i <= botSpawner.spawnpointData.Count; i++)
         {
             if (!botSpawner.spawnpointData[i]._isOccupied)

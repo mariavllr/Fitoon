@@ -45,8 +45,9 @@ public class MoveThePlayer : MonoBehaviour
     void Update()
     {
         //Ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
+        RaycastHit hit;
+        grounded = Physics.Raycast(transform.position, Vector3.down, out hit, playerHeight * 0.5f + 1.5f, whatIsGround);
+        //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * (playerHeight * 0.5f + 0.8f), Color.yellow);
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
@@ -56,11 +57,13 @@ public class MoveThePlayer : MonoBehaviour
         if (grounded)
         {
             rb.drag = groundDrag;
+            anim.SetBool("isFalling", false);
         }
 
         else
         {
             rb.drag = 0;
+            anim.SetBool("isFalling", true);
         }
         if(testing) velocityText.text = $"Velocity: {Math.Round(rb.velocity.magnitude/3, 2, MidpointRounding.AwayFromZero)} m/s ({Math.Round(rb.velocity.magnitude/3 * 3.6, 2, MidpointRounding.AwayFromZero)} km/h)";
     }
@@ -75,7 +78,11 @@ public class MoveThePlayer : MonoBehaviour
             else MovePlayer();
         }
 
-        if (rb.velocity.magnitude < 0.3f) anim.SetBool("isRunning", false);
+        if (rb.velocity.magnitude < 0.3f && grounded)
+        {
+            anim.SetBool("isRunning", false);
+        }
+        
 
     }
 

@@ -54,7 +54,6 @@ public class CreateBots : MonoBehaviour
 
     public void GenerateSpawnpointsList()
     {
-        Debug.Log("se ejecuta CREATE BOTS");
         spawnpointData.Clear();
 
             foreach (var gO in FindObjectsOfType(typeof(GameObject)) as GameObject[])
