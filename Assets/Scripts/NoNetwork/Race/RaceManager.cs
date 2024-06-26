@@ -12,6 +12,8 @@ public class RaceManager : MonoBehaviour
 
     private void Awake()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep; //Para que no se apague el telefono
+
         if (Instance != null)
         {
             Destroy(gameObject);
