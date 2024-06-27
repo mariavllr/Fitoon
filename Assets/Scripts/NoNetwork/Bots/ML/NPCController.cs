@@ -6,7 +6,7 @@ using UnityEngine;
 public class NPCController : MonoBehaviour
 {
     Rigidbody rb;
-    public Animator anim;
+    [SerializeField] Animator anim;
     private Countdown countdownTimer;
     private FinishController finishController;
     private GoalController goalController;
@@ -67,6 +67,8 @@ public class NPCController : MonoBehaviour
 
     private void Start()
     {
+        anim = transform.GetChild(0).GetChild(0).GetComponentInChildren<Animator>();
+
         if (goalController != null) goalController.Reset();
 
         LockMovement(false);
@@ -81,7 +83,8 @@ public class NPCController : MonoBehaviour
     void Update()
     {
         //Ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        RaycastHit hit;
+        grounded = Physics.Raycast(transform.position, Vector3.down, out hit, playerHeight * 0.5f + 3f, whatIsGround);
 
         SpeedControl();
 
@@ -89,11 +92,13 @@ public class NPCController : MonoBehaviour
         if (grounded)
         {
             rb.drag = groundDrag;
+            anim.SetBool("isFalling", false);
         }
 
         else if(!grounded)
         {
             rb.drag = 0;
+            anim.SetBool("isFalling", true);
         }
 
         if (MovementAllowed())

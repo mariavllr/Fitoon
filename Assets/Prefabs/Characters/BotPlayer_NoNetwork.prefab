@@ -5159,7 +5159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 8494882338557731173}
   trailBoost: {fileID: 8657391804162438242}
-  movementSpeed: 9
+  movementSpeed: 7
 --- !u!1 &5554145230331816448
 GameObject:
   m_ObjectHideFlags: 0
