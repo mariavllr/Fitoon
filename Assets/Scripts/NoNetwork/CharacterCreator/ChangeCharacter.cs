@@ -24,8 +24,6 @@ public class ChangeCharacter : MonoBehaviour
         saveData = GetComponent<SaveData>();
         saveData.ReadFromJson();
         ReadCharacter();
-        
-
     }
 
     public void OnSkinClicked(string skinName)
@@ -38,6 +36,7 @@ public class ChangeCharacter : MonoBehaviour
         Destroy(container.transform.GetChild(0).gameObject);
         GameObject instance = Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, container.transform);
         instance.GetComponent<RotateCharacter>().enabled = true;
+        instance.GetComponent<Outline>().enabled = false;
         nameText.text = actualCharacter.characterName;
     }
 
@@ -109,6 +108,7 @@ public class ChangeCharacter : MonoBehaviour
         Destroy(container.transform.GetChild(0).gameObject);
         GameObject instance = Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, container.transform);
         instance.GetComponent<RotateCharacter>().enabled = true;
+        instance.GetComponent<Outline>().enabled = false;
         nameText.text = actualCharacter.characterName;
 
         //Asignar colores guardados (cuando haga reset deben salir estos)

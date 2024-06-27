@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: camiseta2
+  m_Name: NegroZapatillas
   m_Shader: {fileID: 4800000, guid: 8fa84e1c8f3a97b4bb416e8eb087630e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -74,27 +74,27 @@ Material:
     - _FresnelPower: 0
     - _FresnelShadowDropoff: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.258
+    - _Glossiness: 0.538
     - _GlossyReflections: 1
-    - _HighIntensity: 1.5
-    - _LightScalar: 1
-    - _LowIntensity: 1
+    - _HighIntensity: 8.77
+    - _LightScalar: 1.06
+    - _LowIntensity: 1.45
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineSize: 20
+    - _OutlineSize: 17.46
     - _Parallax: 0.02
     - _RampLevels: 3
-    - _RimAlpha: 0
+    - _RimAlpha: 0.15
     - _RimDropOff: 0
-    - _RimPower: 0
+    - _RimPower: 0.513
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.101960786, g: 0.47843137, b: 0.24313726, a: 1}
+    - _Color: {r: 0.103773594, g: 0.1023051, b: 0.1023051, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _HighColor: {r: 1, g: 1, b: 1, a: 1}

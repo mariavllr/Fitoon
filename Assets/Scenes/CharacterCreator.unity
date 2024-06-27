@@ -2046,6 +2046,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2355253033629851648, guid: 9e8509871f06db943a76ba79219c56a3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2399034774071457521, guid: 9e8509871f06db943a76ba79219c56a3, type: 3}
       propertyPath: m_Name
       value: ChicoGorro

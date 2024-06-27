@@ -22,11 +22,8 @@ public class BotSkins : MonoBehaviour
 
     void RandomizeSkin()
     {
-        //int rand = Random.Range(0, transform.childCount);
-        //skin = transform.GetChild(rand).gameObject;
-        //skin.SetActive(true);
-
-        skin = transform.GetChild(0).gameObject;
+        int rand = Random.Range(0, transform.childCount);
+        skin = transform.GetChild(rand).gameObject;
         skin.SetActive(true);
     }
 
@@ -36,6 +33,6 @@ public class BotSkins : MonoBehaviour
         Transform container = skin.transform.GetChild(type);
         int rand = Random.Range(0, container.childCount);
 
-        container.GetChild(rand).gameObject.SetActive(true);
+        if(container.childCount != 0) container.GetChild(rand).gameObject.SetActive(true);
     }
 }

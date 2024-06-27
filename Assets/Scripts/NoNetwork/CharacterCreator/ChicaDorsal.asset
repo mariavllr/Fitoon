@@ -16,10 +16,10 @@ MonoBehaviour:
   prefab: {fileID: 1701343700689534218, guid: 12215f1dc0b230a439907169291eacb2, type: 3}
   hair: {fileID: 2100000, guid: 0d761a28982457245a03cd3df080cd55, type: 2}
   skin: {fileID: 2100000, guid: 0f01802839464354894880d66b0ea9f2, type: 2}
-  top: {fileID: 2100000, guid: eed00c8370f819343b97c507b2cc1c19, type: 2}
+  top: {fileID: 2100000, guid: 631885d011ecf6449b9a195e1fccbc2e, type: 2}
   bottom: {fileID: 2100000, guid: 0e65f30c34fb61f4198726f6a4dbc5b1, type: 2}
   hairColor: {r: 0.75471693, g: 0.5881914, b: 0.1815592, a: 1}
   skinColor: {r: 0.99607843, g: 0.7254902, b: 0.5803921, a: 1}
-  topColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  topColor: {r: 0.31764707, g: 0.3882353, b: 1, a: 1}
   bottomColor: {r: 0.6500017, g: 0.23971203, b: 0.45782113, a: 1}
   shoes: {fileID: 11400000, guid: 45e162a67199dbd46b847c1d9c3ddbe9, type: 2}
