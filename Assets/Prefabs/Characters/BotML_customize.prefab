@@ -15482,7 +15482,7 @@ MonoBehaviour:
   trailBoost: {fileID: 8657391804162438242}
   moveSpeed: 6
   rotationSpeed: 1
-  playerHeight: 1
+  playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64

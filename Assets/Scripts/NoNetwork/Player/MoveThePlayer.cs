@@ -37,7 +37,7 @@ public class MoveThePlayer : MonoBehaviour
         {
             //Activate face tracking
             GetComponent<FaceTrackingToMovement>().enabled = true;
-            GetComponent<WriteDataToCSV>().enabled = true;
+            //GetComponent<WriteDataToCSV>().enabled = true;
             GetComponent<DominantFrequencyCounter>().enabled = true;
         }
     }
