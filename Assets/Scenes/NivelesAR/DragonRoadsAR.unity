@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39740288, g: 0.8082734, b: 0.97558665, a: 1}
+  m_IndirectSpecularColor: {r: 0.3965094, g: 0.80867565, b: 0.9787319, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -55116,7 +55116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2d9eba289141b4b9d1678f50891648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botPrefab: {fileID: 3155978158771037683, guid: 877cde410aff6234b83e295b61a6ef36, type: 3}
+  botPrefab: {fileID: 3155978158771037683, guid: 8fca7b125fc15ee4888ae5350ba88c69, type: 3}
   botsFolder: {fileID: 1128716920}
   countdownTimer: {fileID: 811487440}
 --- !u!1001 &1134744086
@@ -103172,6 +103172,14 @@ PrefabInstance:
     - target: {fileID: 7446069835902272020, guid: 8e314a4df3d28294d905f2ec409f242f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446069837009722735, guid: 8e314a4df3d28294d905f2ec409f242f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -24.090088
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446069837009722735, guid: 8e314a4df3d28294d905f2ec409f242f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15.659912
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e314a4df3d28294d905f2ec409f242f, type: 3}
