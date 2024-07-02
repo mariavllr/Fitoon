@@ -88,6 +88,10 @@ public class RunnerAgent : Agent
             AddReward(1000f);
             EndEpisode();
         }
+        if (collider.gameObject.CompareTag("POI"))
+        {
+            AddReward(200f);
+        }
         if (collider.gameObject.CompareTag("Checkpoint"))
         {
             if (checkpointsPassedSet.Contains(collider.gameObject))
@@ -118,10 +122,6 @@ public class RunnerAgent : Agent
             if (collision.gameObject.CompareTag("Character"))
             {
                 AddReward(-1f); //Penalization for colliding with another NPC too much time
-            }
-            if (collision.gameObject.CompareTag("StuckPoint"))
-            {
-                AddReward(-30f); //Penalization for going to points where they get stuck
             }
         }
     }
