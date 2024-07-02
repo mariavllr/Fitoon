@@ -78751,6 +78751,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 61929e2d12e1855459c6d5085e64d7e6, type: 2}
   - {fileID: 11400000, guid: 6f25130db9a5749408d3dd3f76d34610, type: 2}
   - {fileID: 11400000, guid: 3500b0f443d6c01438652ed81533ba29, type: 2}
+  - {fileID: 11400000, guid: 723b8df3ce551ec41a9cb8c6935dc3f5, type: 2}
 --- !u!114 &6982815411315896644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78818,7 +78819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5328d53ecbeb5749807d279de4886f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 0
+  testing: 1
   moveSpeed: 7
   rotationSpeed: 2
   velocityText: {fileID: 1637405505}

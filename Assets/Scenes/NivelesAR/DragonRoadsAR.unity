@@ -11638,6 +11638,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 61929e2d12e1855459c6d5085e64d7e6, type: 2}
   - {fileID: 11400000, guid: 6f25130db9a5749408d3dd3f76d34610, type: 2}
   - {fileID: 11400000, guid: 3500b0f443d6c01438652ed81533ba29, type: 2}
+  - {fileID: 11400000, guid: 723b8df3ce551ec41a9cb8c6935dc3f5, type: 2}
 --- !u!114 &285656446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55116,7 +55117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2d9eba289141b4b9d1678f50891648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botPrefab: {fileID: 3155978158771037683, guid: 877cde410aff6234b83e295b61a6ef36, type: 3}
+  botPrefab: {fileID: 3155978158771037683, guid: df95d5b8ea591814ba86c3ebf955c3f1, type: 3}
   botsFolder: {fileID: 1128716920}
   countdownTimer: {fileID: 811487440}
 --- !u!1001 &1134744086
@@ -58263,7 +58264,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1217735255
 GameObject:
@@ -103099,7 +103100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7446069835902272020, guid: 8e314a4df3d28294d905f2ec409f242f, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7446069835902272020, guid: 8e314a4df3d28294d905f2ec409f242f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -103172,6 +103173,14 @@ PrefabInstance:
     - target: {fileID: 7446069835902272020, guid: 8e314a4df3d28294d905f2ec409f242f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446069837009722735, guid: 8e314a4df3d28294d905f2ec409f242f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -24.090088
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446069837009722735, guid: 8e314a4df3d28294d905f2ec409f242f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15.659912
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e314a4df3d28294d905f2ec409f242f, type: 3}

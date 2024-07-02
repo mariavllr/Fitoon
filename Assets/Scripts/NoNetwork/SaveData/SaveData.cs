@@ -10,7 +10,8 @@ public class SaveData : MonoBehaviour
     
     private void Awake()
     {
-        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = Screen.currentResolution.refreshRate;
         player  = new PlayerData();
         ReadFromJson();
     }

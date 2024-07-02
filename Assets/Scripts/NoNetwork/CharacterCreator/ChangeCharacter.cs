@@ -66,6 +66,7 @@ public class ChangeCharacter : MonoBehaviour
 
         GameObject instance = Instantiate(characters[characterActive].prefab, Vector3.zero, Quaternion.identity, container.transform);
         instance.GetComponent<RotateCharacter>().enabled = true;
+        instance.GetComponent<Outline>().enabled = false;
         nameText.text = characters[characterActive].characterName;
 
         actualCharacter = characters[characterActive];

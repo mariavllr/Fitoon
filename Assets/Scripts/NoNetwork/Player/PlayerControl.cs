@@ -88,6 +88,7 @@ public class PlayerControl : MonoBehaviour
 
         //Buscar en qué índice de la lista de personajes está, segun el NOMBRE de la skin
         int characterActive = charactersList.FindIndex(character => character.characterName == savedSkin);
+        print(characterActive);
         actualCharacter = charactersList[characterActive];
 
         //Asignar colores guardados

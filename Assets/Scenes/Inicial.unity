@@ -212,6 +212,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3dee8a9500c042247ab3598f63f10977, type: 2}
   - {fileID: 11400000, guid: 3500b0f443d6c01438652ed81533ba29, type: 2}
   - {fileID: 11400000, guid: 6f25130db9a5749408d3dd3f76d34610, type: 2}
+  - {fileID: 11400000, guid: 723b8df3ce551ec41a9cb8c6935dc3f5, type: 2}
   treadmillPrefab: {fileID: 8755319720673114163, guid: 4f0e3029af706b84a96a7f5d6757f7f9, type: 3}
 --- !u!114 &146489847
 MonoBehaviour:
