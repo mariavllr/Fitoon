@@ -19,7 +19,6 @@ public class ChangeCharacter : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 60;
         //Leer el personaje guardado
         saveData = GetComponent<SaveData>();
         saveData.ReadFromJson();

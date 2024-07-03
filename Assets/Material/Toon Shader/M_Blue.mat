@@ -77,8 +77,8 @@ Material:
     - _GlossMapScale: 0.8
     - _Glossiness: 0.845
     - _GlossyReflections: 1
-    - _HighIntensity: 5.94
-    - _LightScalar: 1
+    - _HighIntensity: 7.21
+    - _LightScalar: 1.04
     - _LowIntensity: 1.81
     - _Metallic: 0
     - _Mode: 0
@@ -95,7 +95,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0, g: 0.28051937, b: 0.46226418, a: 1}
+    - _Color: {r: 0, g: 0.41767254, b: 0.6792453, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _HighColor: {r: 1, g: 1, b: 1, a: 1}

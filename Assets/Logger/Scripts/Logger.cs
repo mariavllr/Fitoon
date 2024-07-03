@@ -96,7 +96,7 @@ namespace EasyUI{
 
 
         private void OnDisable() {
-            Application.logMessageReceived += LogCallback;
+            Application.logMessageReceived -= LogCallback;
             uiToggleButton.onClick.RemoveListener(ToggleLogUI);
         }
     }

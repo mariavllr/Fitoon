@@ -10,11 +10,10 @@ public class SaveData : MonoBehaviour
     
     private void Awake()
     {
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = Screen.currentResolution.refreshRate;
         player  = new PlayerData();
         ReadFromJson();
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))

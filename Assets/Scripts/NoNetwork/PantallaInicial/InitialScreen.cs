@@ -37,7 +37,7 @@ public class InitialScreen : MonoBehaviour
         characterInstance.GetComponent<Animator>().SetBool("isRunning", true);
         //Colocar a personaje adecuadamente en la cinta
         characterInstance.transform.Rotate(transform.up, 180f);
-        characterInstance.transform.position = new Vector3(0, 0.76f, 1.6f);
+        characterInstance.transform.position = new Vector3(0, 0.54f, 1.6f);
 
         //Para alejarlo un poco de la camara
         characterContainer.transform.position = new Vector3(0, 0, -2.91f);

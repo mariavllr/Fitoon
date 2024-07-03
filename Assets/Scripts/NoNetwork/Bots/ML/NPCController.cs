@@ -67,7 +67,16 @@ public class NPCController : MonoBehaviour
 
     private void Start()
     {
-        anim = transform.GetChild(0).GetChild(0).GetComponentInChildren<Animator>();
+        try
+        {
+            //si es botML_customizable
+            anim = transform.GetChild(0).GetChild(0).GetComponentInChildren<Animator>();
+        }
+        catch
+        {
+            //si es botML
+            anim = transform.GetChild(0).GetComponent<Animator>();
+        }
 
         if (goalController != null) goalController.Reset();
 
