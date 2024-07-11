@@ -6,26 +6,24 @@ using TMPro;
 
 public class PunteroUI : MonoBehaviour
 {
-    [SerializeField] GameObject cubo;
     ARFaceManager faceManager;
     ARFace face;
     public Camera ARCamera;
     LineRenderer line;
     bool detectado = false;
-    Vector3 direction;
 
     public RectTransform canvasRect; // Referencia al RectTransform del Canvas
     public RectTransform pointer; // Referencia al RectTransform del punto
     public float sensibility;
-    public TMP_InputField enter_sensibility;
+  //  public TMP_InputField enter_sensibility;
 
-    [SerializeField] TextMeshProUGUI canvasText;
+  //  [SerializeField] TextMeshProUGUI canvasText;
 
     void Awake()
     {
         faceManager = FindFirstObjectByType<ARFaceManager>();
         line = GetComponent<LineRenderer>();
-        Debug.Log($"Canvas min x: {canvasRect.rect.xMin}, max x: {canvasRect.rect.xMax}, min y: {canvasRect.rect.yMin}, max y: {canvasRect.rect.yMax})");
+        //Debug.Log($"Canvas min x: {canvasRect.rect.xMin}, max x: {canvasRect.rect.xMax}, min y: {canvasRect.rect.yMin}, max y: {canvasRect.rect.yMax})");
     }
 
     private void OnEnable()
@@ -37,15 +35,14 @@ public class PunteroUI : MonoBehaviour
     {
         faceManager.facesChanged -= CaraDetectada;
     }
-    public void ChangeSensibility()
+    /*public void ChangeSensibility()
     {
         string sensText = enter_sensibility.text;
         float.TryParse(sensText, out sensibility);
-    }
+    }*/
 
     private void Update()
     {
-       // Prueba();
         if (detectado)
         {
             if (face != null)
@@ -56,31 +53,10 @@ public class PunteroUI : MonoBehaviour
 
         else
         {
-            pointer.localPosition = Vector2.zero;
+           pointer.localPosition = Vector2.zero;
         }
     }
 
-    void Prueba()
-    {
-        Vector3 midPoint = cubo.transform.position;//face.transform.position;
-        Vector3 direction = -cubo.transform.forward;//-face.transform.forward;
-        Ray ray = new Ray(midPoint, direction);
-        float distance = Vector3.Distance(midPoint, ARCamera.transform.position);
-        distance -= ARCamera.nearClipPlane;
-        Vector3 lookAtWorldPos = ray.GetPoint(distance);
-
-        line.SetPosition(0, midPoint);
-        line.SetPosition(1, lookAtWorldPos);
-
-        Vector2 screenPoint = Camera.main.WorldToScreenPoint(lookAtWorldPos);
-        // Clampleamos la posición dentro de los límites del canvas
-       // screenPoint.x = Mathf.Clamp(screenPoint.x, canvasRect.rect.xMin, canvasRect.rect.xMax);
-       // screenPoint.y = Mathf.Clamp(screenPoint.y, canvasRect.rect.yMin, canvasRect.rect.yMax);
-
-
-        pointer.position = Vector3.Lerp(pointer.position, screenPoint, sensibility);
-        canvasText.text = $"Canvas min x: {canvasRect.rect.xMin}, max x: {canvasRect.rect.xMax}, min y: {canvasRect.rect.yMin}, max y: {canvasRect.rect.yMax}\nLocal position: {pointer.position}";
-    }
 
     void MovePointer()
     {
@@ -104,7 +80,7 @@ public class PunteroUI : MonoBehaviour
 
 
         pointer.position = Vector3.Lerp(pointer.position, screenPoint, sensibility);
-        canvasText.text = $"Canvas min x: {canvasRect.rect.xMin}, max x: {canvasRect.rect.xMax}, min y: {canvasRect.rect.yMin}, max y: {canvasRect.rect.yMax}\nLocal position: {pointer.position}";
+        //canvasText.text = $"Canvas min x: {canvasRect.rect.xMin}, max x: {canvasRect.rect.xMax}, min y: {canvasRect.rect.yMin}, max y: {canvasRect.rect.yMax}\nLocal position: {pointer.position}";
 
 
     }
