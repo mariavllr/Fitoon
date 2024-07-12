@@ -15535,7 +15535,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 80a5731cf0d4e0148af5c598862f412d, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: ef4b5041d03e2344283ca773de980b1d, type: 3}
   m_InferenceDevice: 3
   m_BehaviorType: 2
   m_BehaviorName: RunnerAgent

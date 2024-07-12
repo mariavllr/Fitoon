@@ -26,14 +26,6 @@ public class GoalController : MonoBehaviour
         Reset();
     }
 
-    private void LateUpdate()
-    {
-        //Order player list by distance to the goal. This only works for straight courses
-       /* if (!playerFinished)
-            if (players != null && players.Count > 1)
-                players.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));*/
-    }
-
     public void UpdatePosition()
     {
         //if (players.Contains(player)) playerPosition = finishedPlayers + (players.IndexOf(player) + 1);
@@ -56,47 +48,48 @@ public class GoalController : MonoBehaviour
 
     public void RemovePlayerFromList(Transform player)
     {
-        //players.Remove(player);
-        finishedPlayers++;
-        players.RemoveAll(p => p == null || p == player);
-        UpdatePosition();
-
-        if (player.GetChild(0).gameObject.tag == "Character")
+        if(finishedPlayers < maxPlayers)
         {
-            //Ha entrado el jugador
-            PlayerFinish();
-            FindObjectOfType<PlayerControl>().StopCharacterOnFinish();
-            FindObjectOfType<PlayerControl>().LockMovement(true);
-            FindObjectOfType<FinishController>().Finish(); //Animacion de acabar. To do: que diga You win!
+            finishedPlayers++;
+            players.RemoveAll(p => p == null || p == player);
+            UpdatePosition();
+
+            if (player.GetChild(0).gameObject.tag == "Character")
+            {
+                //Ha entrado el jugador
+                PlayerFinish();
+                FindObjectOfType<PlayerControl>().StopCharacterOnFinish();
+                FindObjectOfType<PlayerControl>().LockMovement(true);
+                FindObjectOfType<FinishController>().Finish(); //Animacion de acabar. To do: que diga You win!
+            }
+
+            else
+            {
+                //Ha entrado otro
+                //Hacer que desaparezca el bot
+                player.gameObject.SetActive(false);
+                //Añadirlo a una lista en race manager para la siguiente ronda
+                RaceManager.Instance.raceBots.Add(new RaceManager.RaceBotsData(player.name));
+                Debug.Log("HA ENTRADO " + player.name);
+            }
         }
 
-        else
-        {
-            //Ha entrado otro
-            //Hacer que desaparezca el bot
-            player.gameObject.SetActive(false);
-            //Añadirlo a una lista en race manager para la siguiente ronda
-
-        }
-
-        if (finishedPlayers == maxPlayers)
+        else if(finishedPlayers == maxPlayers)
         {
             //Fin de carrera
             EndRace();
-        }
-       
+        }      
     }
 
     private void EndRace()
     {
-        FindObjectOfType<FinishController>().Finish(); //Animacion de acabar
-
         //Lanzar evento fin de carrera a los que queden
         if (onRaceFinishEvent != null)
         {
             onRaceFinishEvent();
         }
 
+        FindObjectOfType<FinishController>().Finish(); //Animacion de acabar
 
         RaceManager.Instance.numberOfRace++;
         if (RaceManager.Instance.numberOfRace > RaceManager.Instance.maxRaces)
@@ -116,7 +109,7 @@ public class GoalController : MonoBehaviour
                 infoText.text = "You lost... Press exit to go back";
                 RaceManager.Instance.playerWon = false;
                 exitButton.gameObject.SetActive(true);
-                exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
+                exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("YouLose"); });
             }
         }
     }
@@ -130,7 +123,7 @@ public class GoalController : MonoBehaviour
             infoText.text = "You win!!! Press exit to go back";
             RaceManager.Instance.playerWon = true;
             exitButton.gameObject.SetActive(true);
-            exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
+            exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("YouWin"); });
         }
         else
         {
@@ -138,7 +131,7 @@ public class GoalController : MonoBehaviour
             infoText.text = "You lost!!! Press exit to go back";
             RaceManager.Instance.playerWon = false;
             exitButton.gameObject.SetActive(true);
-            exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("FinPartida"); });
+            exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("YouLose"); });
         }
     }
 
@@ -146,7 +139,7 @@ public class GoalController : MonoBehaviour
     {
         infoText.text = "You win! Next level...";
         yield return new WaitForSeconds(5f);
-        FindObjectOfType<ButtonFunctions>().LoadScene("FindingScenario");
+        FindObjectOfType<ButtonFunctions>().LoadScene("Classified");
     }
 
 

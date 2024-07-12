@@ -67,7 +67,9 @@ public class CreateBots : MonoBehaviour
 
     public void FillSpawnpointsWithBots()
     {
-
+        //SI es la primera carrera, llenar de bots
+        if(RaceManager.Instance.numberOfRace == 1)
+        {
             for (int i = 0; i < spawnpointData.Count; i++)
             {
                 if (!spawnpointData[i]._isOccupied)
@@ -81,6 +83,26 @@ public class CreateBots : MonoBehaviour
                     SpawnBot(spawnpointData[i]._spPosition + new Vector3(0, 1, 0));
                 }
             }
+        }
+
+        //SI NO, leer los que han pasado
+        else
+        {
+            //el primero lo ocupa el jugador, por eso se instancia i-1
+            for (int i = 0; i < spawnpointData.Count; i++)
+            {
+                if (i > RaceManager.Instance.raceBots.Count) break;
+
+                else if (!spawnpointData[i]._isOccupied)
+                {
+                    Debug.Log($"Bot {i}: {RaceManager.Instance.raceBots[i-1].botID}. SPD Count: {spawnpointData.Count}. Race bots count: {RaceManager.Instance.raceBots.Count}");
+                    UpdateSpawnpointsList(i, spawnpointData[i]._spPosition, true, RaceManager.Instance.raceBots[i-1].botID);
+                    SpawnExistingBot(spawnpointData[i]._spPosition + new Vector3(0, 1, 0), RaceManager.Instance.raceBots[i-1].botID);
+                }
+            }
+
+            RaceManager.Instance.raceBots.Clear();
+        }
     }
 
     public void UpdateSpawnpointsList(int index, Vector3 spPosition, bool isOccupied, string playerId)
@@ -100,10 +122,15 @@ public class CreateBots : MonoBehaviour
 
     public void SpawnBot(Vector3 spawnpointPosition)
     {
-        //Debug.Log("Bot Spawned");
         GameObject inst = Instantiate(botPrefab, spawnpointPosition, transform.rotation);
         inst.name = spawnedBotName;
-        //inst.GetComponent<NetworkObject>().Spawn();
+        inst.transform.parent = transform;
+    }
+
+    public void SpawnExistingBot(Vector3 spawnpointPosition, string botID)
+    {
+        GameObject inst = Instantiate(botPrefab, spawnpointPosition, transform.rotation);
+        inst.name = botID;
         inst.transform.parent = transform;
     }
 }

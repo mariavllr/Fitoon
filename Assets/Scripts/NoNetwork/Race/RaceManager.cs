@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class RaceManager : MonoBehaviour
 {
+    [System.Serializable]
     public struct RaceBotsData
     {
-        string botID, hairIndex, topIndex, bottomIndex, shoeIndex;
+        public string botID;//, hairIndex, topIndex, bottomIndex, shoeIndex;
+
+        public RaceBotsData(string _botID)
+        {
+            botID = _botID;
+        }
     }
 
     public static RaceManager Instance;
@@ -28,5 +34,7 @@ public class RaceManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        raceBots = new List<RaceBotsData>();
     }
 }

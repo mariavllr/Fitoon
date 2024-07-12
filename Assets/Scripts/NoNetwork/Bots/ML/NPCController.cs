@@ -44,7 +44,7 @@ public class NPCController : MonoBehaviour
     void EndRace()
     {
         LockMovement(true);
-        charModel.gameObject.SetActive(false);
+        //charModel.gameObject.SetActive(false);
         anim.SetBool("isRunning", false);
     }
 
@@ -157,7 +157,7 @@ public class NPCController : MonoBehaviour
     #region CollisionChecks
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor") && countdownTimer.HasFinished() && !finishController.IsFinished())
         {
             LockMovement(false); //Unfreeze movement when the player touches the floor
         }
@@ -174,7 +174,7 @@ public class NPCController : MonoBehaviour
 
         if (goal != null && goal.CompareTag(collider.gameObject.tag))
         {
-            Debug.Log("FINISHED!");
+            //Debug.Log("FINISHED!");
             //finishController.Finish();
             if (goalController != null) goalController.RemovePlayerFromList(transform);
             //if (goalController != null) goalController.PlayerFinish();

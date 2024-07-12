@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.5897458, g: 0.8574647, b: 0.9798402, a: 1}
+  m_IndirectSpecularColor: {r: 0.5901111, g: 0.8572175, b: 0.9774028, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19855,6 +19855,7 @@ MonoBehaviour:
   numberOfRace: 1
   maxRaces: 3
   playerWon: 0
+  raceBots: []
 --- !u!4 &635491658
 Transform:
   m_ObjectHideFlags: 0
@@ -28361,7 +28362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &869780069
 Transform:
   m_ObjectHideFlags: 0
@@ -52293,7 +52294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1623689404
 Transform:
   m_ObjectHideFlags: 0
@@ -53616,7 +53617,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1653325895}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.5, z: 274}
+  m_LocalPosition: {x: 0, y: -2.5, z: 75}
   m_LocalScale: {x: 1.6, y: 1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -78993,7 +78994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testing: 1
-  moveSpeed: 7
+  moveSpeed: 9
   rotationSpeed: 2
   velocityText: {fileID: 1637405505}
   playerHeight: 2
