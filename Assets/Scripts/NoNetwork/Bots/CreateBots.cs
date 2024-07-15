@@ -88,16 +88,23 @@ public class CreateBots : MonoBehaviour
         //SI NO, leer los que han pasado
         else
         {
-            //el primero lo ocupa el jugador, por eso se instancia i-1
             for (int i = 0; i < spawnpointData.Count; i++)
             {
-                if (i > RaceManager.Instance.raceBots.Count) break;
+                print(i);
+                if (i >= RaceManager.Instance.raceBots.Count)
+                {
+                    break;
+                }
+
+                else if (RaceManager.Instance.raceBots[i].isPlayer)
+                {
+                    continue;
+                }
 
                 else if (!spawnpointData[i]._isOccupied)
                 {
-                    Debug.Log($"Bot {i}: {RaceManager.Instance.raceBots[i-1].botID}. SPD Count: {spawnpointData.Count}. Race bots count: {RaceManager.Instance.raceBots.Count}");
-                    UpdateSpawnpointsList(i, spawnpointData[i]._spPosition, true, RaceManager.Instance.raceBots[i-1].botID);
-                    SpawnExistingBot(spawnpointData[i]._spPosition + new Vector3(0, 1, 0), RaceManager.Instance.raceBots[i-1].botID);
+                    UpdateSpawnpointsList(i, spawnpointData[i]._spPosition, true, RaceManager.Instance.raceBots[i].botID);
+                    SpawnExistingBot(spawnpointData[i]._spPosition + new Vector3(0, 1, 0), RaceManager.Instance.raceBots[i]);
                 }
             }
 
@@ -127,10 +134,31 @@ public class CreateBots : MonoBehaviour
         inst.transform.parent = transform;
     }
 
-    public void SpawnExistingBot(Vector3 spawnpointPosition, string botID)
+    public void SpawnExistingBot(Vector3 spawnpointPosition, RaceManager.RaceBotsData raceBotsData)
     {
         GameObject inst = Instantiate(botPrefab, spawnpointPosition, transform.rotation);
-        inst.name = botID;
+        inst.name = raceBotsData.botID;
         inst.transform.parent = transform;
+
+        //Configurar apariencia
+        Transform botModel = inst.transform.GetChild(0).GetChild(0);
+
+        //skin
+        botModel.GetChild(raceBotsData.skinIndex).gameObject.SetActive(true);
+        //pelo
+        if (botModel.GetChild(raceBotsData.skinIndex).GetChild(0).childCount != 0)  botModel.GetChild(raceBotsData.skinIndex).GetChild(0).GetChild(raceBotsData.hairIndex).gameObject.SetActive(true);
+        //camiseta
+        if (botModel.GetChild(raceBotsData.skinIndex).GetChild(1).childCount != 0)  botModel.GetChild(raceBotsData.skinIndex).GetChild(1).GetChild(raceBotsData.topIndex).gameObject.SetActive(true);
+        //pantalones
+        if (botModel.GetChild(raceBotsData.skinIndex).GetChild(2).childCount != 0)  botModel.GetChild(raceBotsData.skinIndex).GetChild(2).GetChild(raceBotsData.bottomIndex).gameObject.SetActive(true);
+        //zapatos
+        if (botModel.GetChild(raceBotsData.skinIndex).GetChild(3).childCount != 0)  botModel.GetChild(raceBotsData.skinIndex).GetChild(3).GetChild(raceBotsData.shoeIndex).gameObject.SetActive(true);
+
+        //actualizar diccionario bot skins
+        inst.GetComponentInChildren<BotSkins>().botSkinData.Add("Skin", raceBotsData.skinIndex);
+        inst.GetComponentInChildren<BotSkins>().botSkinData.Add("Hair", raceBotsData.hairIndex);
+        inst.GetComponentInChildren<BotSkins>().botSkinData.Add("Shirt", raceBotsData.topIndex);
+        inst.GetComponentInChildren<BotSkins>().botSkinData.Add("Pants", raceBotsData.bottomIndex);
+        inst.GetComponentInChildren<BotSkins>().botSkinData.Add("Shoes", raceBotsData.shoeIndex);
     }
 }

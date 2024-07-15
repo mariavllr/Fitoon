@@ -11,7 +11,7 @@ public class ClassifyScene : MonoBehaviour
     void Start()
     {
         countdownText.text = countdown.ToString();
-        StartCoroutine(Countdown());
+       // StartCoroutine(Countdown());
 
         //RaceManager.Instance.numberOfRace = 1;
         //RaceManager.Instance.maxRaces = 3;

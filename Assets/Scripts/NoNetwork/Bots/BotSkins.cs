@@ -5,17 +5,22 @@ using UnityEngine;
 public class BotSkins : MonoBehaviour
 {
     GameObject skin;
-    int hair = 0;
-    int shirt = 1;
-    int pants = 2;
-    int shoes = 3;
+
+    //Indices de cada elemento del personaje
+    public Dictionary<string, int> botSkinData;
+
     private void Awake()
     {
-        RandomizeSkin();
-        RandomizeObject(hair);
-        RandomizeObject(shirt);
-        RandomizeObject(pants);
-        RandomizeObject(shoes);
+        botSkinData = new Dictionary<string, int>();
+
+        if (RaceManager.Instance.numberOfRace == 1)
+        {
+            RandomizeSkin();
+            RandomizeObject("Hair", 0);
+            RandomizeObject("Shirt", 1);
+            RandomizeObject("Pants", 2);
+            RandomizeObject("Shoes", 3);
+        }
     }
 
  
@@ -25,14 +30,17 @@ public class BotSkins : MonoBehaviour
         int rand = Random.Range(0, transform.childCount);
         skin = transform.GetChild(rand).gameObject;
         skin.SetActive(true);
+
+        botSkinData.Add("Skin", rand);
     }
 
-    void RandomizeObject(int type)
+    void RandomizeObject(string type, int index)
     {
-        //Obtiene el gameobject que contiene los peinados y elige uno aleatorio de sus hijos
-        Transform container = skin.transform.GetChild(type);
+        Transform container = skin.transform.GetChild(index);
         int rand = Random.Range(0, container.childCount);
 
         if(container.childCount != 0) container.GetChild(rand).gameObject.SetActive(true);
+
+        botSkinData.Add(type, rand);
     }
 }

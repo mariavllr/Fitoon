@@ -7,11 +7,19 @@ public class RaceManager : MonoBehaviour
     [System.Serializable]
     public struct RaceBotsData
     {
-        public string botID;//, hairIndex, topIndex, bottomIndex, shoeIndex;
+        public bool isPlayer;
+        public string botID;
+        public int skinIndex, hairIndex, topIndex, bottomIndex, shoeIndex;
 
-        public RaceBotsData(string _botID)
+        public RaceBotsData(bool isPlayer, string botID, int skinIndex, int hairIndex, int topIndex, int bottomIndex, int shoeIndex)
         {
-            botID = _botID;
+            this.isPlayer = isPlayer;
+            this.botID = botID;
+            this.skinIndex = skinIndex;
+            this.hairIndex = hairIndex;
+            this.topIndex = topIndex;
+            this.bottomIndex = bottomIndex;
+            this.shoeIndex = shoeIndex;
         }
     }
 
@@ -19,7 +27,7 @@ public class RaceManager : MonoBehaviour
 
     public int numberOfRace = 1;
     public int maxRaces = 3;
-    public bool playerWon;
+    public int[] playerPerRace;
 
     public List<RaceBotsData> raceBots;
 
@@ -35,6 +43,17 @@ public class RaceManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        raceBots = new List<RaceBotsData>();
+        playerPerRace = new int[3];
+        playerPerRace[0] = 16;
+        playerPerRace[1] = 8;
+        playerPerRace[2] = 1;
+    }
+
+    public void Reset()
+    {
+        numberOfRace = 1;
+        maxRaces = 3;
         raceBots = new List<RaceBotsData>();
     }
 }
