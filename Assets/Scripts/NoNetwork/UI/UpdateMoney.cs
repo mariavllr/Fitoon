@@ -6,7 +6,7 @@ using UnityEngine;
 public class UpdateMoney : MonoBehaviour
 {
     public TextMeshProUGUI coinsText;
-    public TextMeshProUGUI diamondsText;
+    //public TextMeshProUGUI diamondsText;
     SaveData save;
 
     private void Start()
@@ -18,7 +18,7 @@ public class UpdateMoney : MonoBehaviour
     public void UpdateMoneyText()
     {
         coinsText.text = save.player.normalCoins.ToString();
-        diamondsText.text = save.player.diamondsCoins.ToString();
+        //diamondsText.text = save.player.diamondsCoins.ToString();
     }
 
 }

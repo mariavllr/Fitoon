@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 public class Tienda : MonoBehaviour
 {
     public List<IconTienda> itemsTienda;
@@ -10,11 +11,15 @@ public class Tienda : MonoBehaviour
     public GameObject gameManager;
     SaveData save;
     public GameObject container;
+    ScrollRect scrollRect;
+    RectTransform item;
     void Start()
     {
         save = gameManager.GetComponent<SaveData>();
         CleanShop();
         CreateShop();
+        scrollRect = FindObjectOfType<ScrollRect>();
+        item = container.GetComponent<RectTransform>();
     }
 
     private void CleanShop()
@@ -38,9 +43,16 @@ public class Tienda : MonoBehaviour
             //destruir hijo que ya existe
             Destroy(iconoCreado.transform.GetChild(1).GetChild(0).gameObject);
             Instantiate(itemsTienda[i].objectIcon, iconTransform.position, iconTransform.rotation, iconoCreado.transform.GetChild(1));
-
             //tercer hijo: nombre
             iconoCreado.transform.GetChild(2).gameObject.GetComponentInChildren<TextMeshProUGUI>().text = itemsTienda[i].itemName;
+            //añadir id
+            itemsTienda[i].itemID = i;
         }
     }
+
+    public void ScrollUntilItem()
+    {
+        StartCoroutine(ScrollViewFocusFunctions.FocusOnItemToLeftCoroutine(scrollRect, item, 0.5f));
+    }
+
 }
