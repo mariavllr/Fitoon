@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0088a8de9577e8a40bea6a2327f18cc4, type: 3}
   m_Name: ShoesOrange
   m_EditorClassIdentifier: 
-  itemID: 0
+  itemID: 1
   itemType: 2
   objectIcon: {fileID: 5050203246128201615, guid: 524b71f4c19450b42bbac5aee7989986, type: 3}
   itemName: Orange Shoes
   itemPrice: 5
-  coinType: {fileID: 21300000, guid: 0d8381f0fbd541b47a9b9e11ba10bcf9, type: 3}
+  coinType: {fileID: 21300000, guid: cc56ed4117b317c4495b248f5affc31f, type: 3}
   isAlreadyBought: 0
