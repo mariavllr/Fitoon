@@ -10,11 +10,10 @@ public class ClassifyScene : MonoBehaviour
 
     void Start()
     {
-        countdownText.text = countdown.ToString();
-       // StartCoroutine(Countdown());
+        RaceManager.Instance.numberOfRace++;
 
-        //RaceManager.Instance.numberOfRace = 1;
-        //RaceManager.Instance.maxRaces = 3;
+        countdownText.text = countdown.ToString();
+        StartCoroutine(Countdown());
     }
 
     IEnumerator Countdown()

@@ -5,10 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
+    public string username;
     public int normalCoins;
     public int diamondsCoins;
+    public int points;
     public List<int> skinsCompradas;
-    //public CharacterItem actualCharacter;
     public CharacterData playerCharacterData;
 }
 [System.Serializable]

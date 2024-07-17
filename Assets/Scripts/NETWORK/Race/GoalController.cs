@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GoalController : MonoBehaviour
 {
+    SaveData saveData;
     public TextMeshProUGUI currentPositionTextMesh;
 
     [SerializeField] private int finishedPlayers = 0;
@@ -21,7 +22,10 @@ public class GoalController : MonoBehaviour
     //Evento cuando acaba la carrera. Se manda a todos los participantes (bots incluidos)
     public delegate void OnRaceFinish();
     public static event OnRaceFinish onRaceFinishEvent;
-
+    private void Awake()
+    {
+        saveData = FindAnyObjectByType<SaveData>();
+    }
     private void Start()
     {
         Reset();
@@ -64,7 +68,7 @@ public class GoalController : MonoBehaviour
                 FindObjectOfType<FinishController>().Finish(); //Animacion de acabar. To do: que diga You win!
 
                 //Añadirlo a una lista en race manager para la siguiente ronda
-                RaceManager.Instance.raceBots.Add(new RaceManager.RaceBotsData(true, player.name, 0, 0, 0, 0, 0));
+                RaceManager.Instance.raceBots.Add(new RaceManager.RaceBotsData(true, saveData.player.username, 0, 0, 0, 0, 0));
             }
 
             else
@@ -87,11 +91,11 @@ public class GoalController : MonoBehaviour
             }
         }
 
-        else if(finishedPlayers == maxPlayers && !finish)
+        if(finishedPlayers == maxPlayers && !finish)
         {
             //Fin de carrera
             EndRace();
-        }      
+        }
     }
 
     private void EndRace()
@@ -105,9 +109,9 @@ public class GoalController : MonoBehaviour
         }
 
         FindObjectOfType<FinishController>().Finish(); //Animacion de acabar
-
-        RaceManager.Instance.numberOfRace++;
-        if (RaceManager.Instance.numberOfRace > RaceManager.Instance.maxRaces)
+        print("numb of race" + RaceManager.Instance.numberOfRace);
+        print("max races" + RaceManager.Instance.maxRaces);
+        if (RaceManager.Instance.numberOfRace == RaceManager.Instance.maxRaces)
         {
             EndGame();
         }
@@ -123,7 +127,6 @@ public class GoalController : MonoBehaviour
                 //Ha perdido, vuelve al inicio
                 //infoText.text = "You lost... Press exit to go back";
                 exitButton.gameObject.SetActive(true);
-                RaceManager.Instance.Reset();
                 exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("YouLose"); });
             }
         }
@@ -132,19 +135,19 @@ public class GoalController : MonoBehaviour
     private void EndGame()
     {
         Debug.LogWarning("fin de PARTIDA");
-        RaceManager.Instance.Reset();
 
         if (playerFinished)
         {
             //Ganó el jugador
-            //infoText.text = "You win!!! Press exit to go back";
+            infoText.text = "You win!!! Press exit to go back";
+            RaceManager.Instance.playerWon = true;
             exitButton.gameObject.SetActive(true);
             exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("YouWin"); });
         }
         else
         {
             //Perdió
-            //infoText.text = "You lost!!! Press exit to go back";
+            infoText.text = "You lost!!! Press exit to go back";
             exitButton.gameObject.SetActive(true);
             exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("YouLose"); });
         } 

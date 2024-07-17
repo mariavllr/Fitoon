@@ -1,19 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class InitialScreen : MonoBehaviour
 {
-    [SerializeField] GameObject characterContainer;
     SaveData saveData;
+    [SerializeField] GameObject characterContainer;
     [SerializeField] List<CharacterItem> characters;
     [SerializeField] GameObject treadmillPrefab;
+    [SerializeField] TMP_InputField inputName;
     private void Start()
     {
         saveData = GetComponent<SaveData>();
+        ReadUsername();
         ReadCharacter();
     }
 
+    void ReadUsername()
+    {
+        if (saveData.player.username == "Username") return;
+        else
+        {
+            inputName.text = saveData.player.username;
+        }
+    }
     void ReadCharacter()
     {
         //Leer la skin
@@ -42,5 +53,11 @@ public class InitialScreen : MonoBehaviour
         //Para alejarlo un poco de la camara
         characterContainer.transform.position = new Vector3(0, 0, -2.91f);
         characterContainer.transform.Rotate(transform.up, 120f);
+    }
+
+    public void SaveUsername(string value)
+    {
+        saveData.player.username = value;
+        saveData.SaveToJson();
     }
 }

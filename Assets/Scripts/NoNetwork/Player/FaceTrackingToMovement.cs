@@ -34,9 +34,6 @@ public class FaceTrackingToMovement : MonoBehaviour
     int pasosAnimacion;
     float timer;
     bool activarTimer = false;
-
-    [Header("Debug")]
-    public TMP_InputField enter_intensity;
     
 
     //EVENTOS (Para el movimiento del personaje)
@@ -185,7 +182,6 @@ public class FaceTrackingToMovement : MonoBehaviour
         if(timer >= 15)
         {
             Debug.Log($"Cadencia personaje: {pasosAnimacion*4}");
-            animCadenceText.text = $"Animation cadence: {pasosAnimacion * 4}";
             timer = 0;
             pasosAnimacion = 0;
         }
@@ -221,21 +217,5 @@ public class FaceTrackingToMovement : MonoBehaviour
             }
             if (fadeCamera != null) fadeCamera.StartFade(true);
         }
-    }
-
-
-
-    //-------DEBUG------------
-    public void ChangeRotationIntensity()
-    {
-        string intensity = enter_intensity.text;
-        int.TryParse(intensity, out rotationIntensity);
-        Debug.Log("Rotacion cambiada a: " + rotationIntensity);
-    }
-
-
-
-
-
-    
+    }  
 }

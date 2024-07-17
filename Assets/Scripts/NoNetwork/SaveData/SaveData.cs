@@ -43,8 +43,10 @@ public class SaveData : MonoBehaviour
             playerData = JsonUtility.ToJson(player);
             Debug.Log("No había datos. Creando personaje por defecto.");
         }
+        player.username = "Username";
         player.diamondsCoins = 0;
         player.normalCoins = 0;
+        player.points = 0;
         System.IO.File.WriteAllText(filePath, playerData);
         Debug.Log("[SAVE] Datos guardados en " + filePath);
     }

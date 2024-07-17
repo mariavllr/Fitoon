@@ -27,6 +27,7 @@ public class RaceManager : MonoBehaviour
 
     public int numberOfRace = 1;
     public int maxRaces = 3;
+    public bool playerWon;
     public int[] playerPerRace;
 
     public List<RaceBotsData> raceBots;
@@ -52,8 +53,10 @@ public class RaceManager : MonoBehaviour
 
     public void Reset()
     {
+        Debug.Log("RACE MANAGER RESET");
         numberOfRace = 1;
         maxRaces = 3;
         raceBots = new List<RaceBotsData>();
+        playerWon = false;
     }
 }

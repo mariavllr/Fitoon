@@ -90,7 +90,6 @@ public class CreateBots : MonoBehaviour
         {
             for (int i = 0; i < spawnpointData.Count; i++)
             {
-                print(i);
                 if (i >= RaceManager.Instance.raceBots.Count)
                 {
                     break;

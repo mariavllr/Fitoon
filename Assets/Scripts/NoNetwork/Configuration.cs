@@ -13,7 +13,7 @@ public class Configuration : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Application.targetFrameRate = 60;
-        Debug.Log("Target framerate set to " + Application.targetFrameRate);
+        //Debug.Log("Target framerate set to " + Application.targetFrameRate);
         Screen.sleepTimeout = SleepTimeout.NeverSleep; //Para que no se apague el telefono
     }
 }

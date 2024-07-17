@@ -176,7 +176,7 @@ public class PlayerControl : MonoBehaviour
             if (!botSpawner.spawnpointData[i]._isOccupied)
             {
                 //Updates the spawnpoint NetworkList with this spawnpoint as isOccupied and the playerId on it
-                botSpawner.UpdateSpawnpointsList(i, botSpawner.spawnpointData[i]._spPosition, true, "Player");
+                botSpawner.UpdateSpawnpointsList(i, botSpawner.spawnpointData[i]._spPosition, true, saveData.player.username);
 
                 transform.position = new Vector3(botSpawner.spawnpointData[i]._spPosition.x, botSpawner.spawnpointData[i]._spPosition.y + 1, botSpawner.spawnpointData[i]._spPosition.z);
                 playerSPIndex = i;
