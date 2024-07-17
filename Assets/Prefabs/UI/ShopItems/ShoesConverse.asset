@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0088a8de9577e8a40bea6a2327f18cc4, type: 3}
-  m_Name: SkinChicaDorsal
+  m_Name: ShoesConverse
   m_EditorClassIdentifier: 
-  itemID: 2
-  itemType: 0
-  objectIcon: {fileID: 11614476633520781, guid: 23c5cfd249a4cb34f85407ab34e5453b, type: 3}
-  itemName: Laura
-  itemPrice: 15
+  itemID: 0
+  itemType: 2
+  objectIcon: {fileID: 5050203246128201615, guid: e830231061371a04d8edd41e3cc326f1, type: 3}
+  itemName: Red Shoes
+  itemPrice: 5
   coinType: {fileID: 21300000, guid: 0d8381f0fbd541b47a9b9e11ba10bcf9, type: 3}
   isAlreadyBought: 0

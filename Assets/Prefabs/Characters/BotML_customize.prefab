@@ -15433,8 +15433,6 @@ GameObject:
   - component: {fileID: 4383728619802453837}
   - component: {fileID: 4571057853172583755}
   - component: {fileID: 1654530939058067331}
-  - component: {fileID: 6588914514280538078}
-  - component: {fileID: 4182105779678806387}
   m_Layer: 3
   m_Name: BotML_customize
   m_TagString: Player
@@ -15459,6 +15457,7 @@ Transform:
   - {fileID: 2629517684476296360}
   - {fileID: 2065261668367865505}
   - {fileID: 8152179832571938248}
+  - {fileID: 9055456465330537496}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15538,7 +15537,7 @@ MonoBehaviour:
   m_Model: {fileID: 5022602860645237092, guid: ef4b5041d03e2344283ca773de980b1d, type: 3}
   m_InferenceDevice: 3
   m_BehaviorType: 2
-  m_BehaviorName: RunnerAgent
+  m_BehaviorName: GeneralAgent
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -15575,68 +15574,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DecisionPeriod: 5
   TakeActionsBetweenDecisions: 1
---- !u!114 &6588914514280538078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3155978158771037683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: RayPerceptionSensorUp
-  m_DetectableTags:
-  - Floor
-  - Wall
-  - POI
-  - Goal
-  - Obstacle
-  m_RaysPerDirection: 3
-  m_MaxRayDegrees: 50
-  m_SphereCastRadius: 0.5
-  m_RayLength: 20
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967233
-  m_ObservationStacks: 1
-  rayHitColor: {r: 0, g: 1, b: 0.043653965, a: 1}
-  rayMissColor: {r: 1, g: 0, b: 0, a: 0.20784314}
-  m_StartVerticalOffset: 0
-  m_EndVerticalOffset: 5
---- !u!114 &4182105779678806387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3155978158771037683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: RayPerceptionSensorDown
-  m_DetectableTags:
-  - Floor
-  - Wall
-  - POI
-  - Goal
-  - Obstacle
-  m_RaysPerDirection: 3
-  m_MaxRayDegrees: 50
-  m_SphereCastRadius: 0.5
-  m_RayLength: 20
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967233
-  m_ObservationStacks: 1
-  rayHitColor: {r: 0, g: 1, b: 0.043653965, a: 1}
-  rayMissColor: {r: 1, g: 0, b: 0, a: 0.20784314}
-  m_StartVerticalOffset: 0
-  m_EndVerticalOffset: -5
 --- !u!1 &3189695667978756726
 GameObject:
   m_ObjectHideFlags: 0
@@ -30677,6 +30614,101 @@ Transform:
   m_Father: {fileID: 6305944844787392310}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7691283208916958797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9055456465330537496}
+  - component: {fileID: 7660926297074893169}
+  - component: {fileID: 2096752963950232649}
+  m_Layer: 0
+  m_Name: RaycastTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9055456465330537496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691283208916958797}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4943296492848184713}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7660926297074893169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691283208916958797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: RayPerceptionSensorUp
+  m_DetectableTags:
+  - Floor
+  - Wall
+  - POI
+  - Goal
+  - Obstacle
+  m_RaysPerDirection: 3
+  m_MaxRayDegrees: 50
+  m_SphereCastRadius: 0.5
+  m_RayLength: 15
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967233
+  m_ObservationStacks: 1
+  rayHitColor: {r: 0, g: 1, b: 0.043653965, a: 1}
+  rayMissColor: {r: 1, g: 0, b: 0, a: 0.20784314}
+  m_StartVerticalOffset: 0
+  m_EndVerticalOffset: 0
+--- !u!114 &2096752963950232649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691283208916958797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: RayPerceptionSensorDown
+  m_DetectableTags:
+  - Floor
+  - Wall
+  - POI
+  - Goal
+  - Obstacle
+  m_RaysPerDirection: 3
+  m_MaxRayDegrees: 50
+  m_SphereCastRadius: 0.5
+  m_RayLength: 20
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967233
+  m_ObservationStacks: 1
+  rayHitColor: {r: 0, g: 1, b: 0.043653965, a: 1}
+  rayMissColor: {r: 1, g: 0, b: 0, a: 0.20784314}
+  m_StartVerticalOffset: 0
+  m_EndVerticalOffset: -5
 --- !u!1 &7692398923244126569
 GameObject:
   m_ObjectHideFlags: 0

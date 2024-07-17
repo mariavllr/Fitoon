@@ -32,7 +32,18 @@ public static class ScrollViewFocusFunctions
 		return scrollView.CalculateFocusedScrollPosition(itemCenterPoint + contentSizeOffset);
 	}
 
-	public static void FocusAtPoint(this ScrollRect scrollView, Vector2 focusPoint)
+    // New function to calculate the scroll position to the leftmost point of the item
+    public static Vector2 CalculateFocusedScrollPositionToLeft(this ScrollRect scrollView, RectTransform item)
+    {
+        Vector2 itemLeftPoint = scrollView.content.InverseTransformPoint(item.transform.TransformPoint(new Vector2(item.rect.xMin, item.rect.center.y)));
+
+        Vector2 contentSizeOffset = scrollView.content.rect.size;
+        contentSizeOffset.Scale(scrollView.content.pivot);
+
+        return scrollView.CalculateFocusedScrollPosition(itemLeftPoint + contentSizeOffset);
+    }
+
+    public static void FocusAtPoint(this ScrollRect scrollView, Vector2 focusPoint)
 	{
 		scrollView.normalizedPosition = scrollView.CalculateFocusedScrollPosition(focusPoint);
 	}
@@ -42,7 +53,13 @@ public static class ScrollViewFocusFunctions
 		scrollView.normalizedPosition = scrollView.CalculateFocusedScrollPosition(item);
 	}
 
-	private static IEnumerator LerpToScrollPositionCoroutine(this ScrollRect scrollView, Vector2 targetNormalizedPos, float speed)
+    // New function to focus on the leftmost point of the item
+    public static void FocusOnItemToLeft(this ScrollRect scrollView, RectTransform item)
+    {
+        scrollView.normalizedPosition = scrollView.CalculateFocusedScrollPositionToLeft(item);
+    }
+
+    private static IEnumerator LerpToScrollPositionCoroutine(this ScrollRect scrollView, Vector2 targetNormalizedPos, float speed)
 	{
 		Vector2 initialNormalizedPos = scrollView.normalizedPosition;
 
@@ -67,4 +84,10 @@ public static class ScrollViewFocusFunctions
 	{
 		yield return scrollView.LerpToScrollPositionCoroutine(scrollView.CalculateFocusedScrollPosition(item), speed);
 	}
+
+    // New coroutine to focus on the leftmost point of the item
+    public static IEnumerator FocusOnItemToLeftCoroutine(this ScrollRect scrollView, RectTransform item, float speed)
+    {
+        yield return scrollView.LerpToScrollPositionCoroutine(scrollView.CalculateFocusedScrollPositionToLeft(item), speed);
+    }
 }
