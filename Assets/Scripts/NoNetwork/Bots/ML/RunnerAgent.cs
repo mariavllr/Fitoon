@@ -13,12 +13,10 @@ public class RunnerAgent : Agent
     private NPCController controller;
     private Vector3 diff;
     private Vector3 lastDiff;
-    [SerializeField] private HashSet<GameObject> checkpointsPassedSet;
 
     public override void Initialize()
     {
         controller = GetComponent<NPCController>();
-        checkpointsPassedSet = new HashSet<GameObject>();
         target = FindObjectOfType<GoalController>().transform;
     }
 
@@ -27,7 +25,6 @@ public class RunnerAgent : Agent
         controller.enabled = true;
         controller.SetBoost(1f);
         target.GetComponent<Collider>().enabled = true;
-        checkpointsPassedSet.Clear();
 
         lastDiff = (target.transform.localPosition - transform.localPosition) / 20;
     }
@@ -37,7 +34,7 @@ public class RunnerAgent : Agent
         diff = (target.transform.localPosition - transform.localPosition) / 20;
         sensor.AddObservation(diff);
 
-        if (diff.magnitude < lastDiff.magnitude) AddReward(0.1f);
+        if (diff.magnitude < lastDiff.magnitude) AddReward(0.5f);
         if (diff.magnitude > lastDiff.magnitude) AddReward(-0.1f);
         lastDiff = diff;
 
@@ -54,12 +51,6 @@ public class RunnerAgent : Agent
         if (moveV == 0 && moveH == 0)
         {
             AddReward(-0.1f); // Penalize for staying still
-        }
-
-        if (GetCumulativeReward() < -1000)
-        {
-            checkpointsPassedSet.Clear();
-            EndEpisode();
         }
     }
 
@@ -81,19 +72,6 @@ public class RunnerAgent : Agent
         if (collider.gameObject.CompareTag("POI"))
         {
             AddReward(20f);
-        }
-        if (collider.gameObject.CompareTag("Checkpoint"))
-        {
-            if (checkpointsPassedSet.Contains(collider.gameObject))
-            {
-                AddReward(-5f); // Penalize for reaching a repeated CheckPoint
-                EndEpisode();
-            }
-            else
-            {
-                checkpointsPassedSet.Add(collider.gameObject);
-                AddReward(50f); // Reward for reaching a new CheckPoint
-            }
         }
     }
 

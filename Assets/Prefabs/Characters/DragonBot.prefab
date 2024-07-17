@@ -106,6 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 749281610221200591}
   - component: {fileID: 6666971712590610101}
+  - component: {fileID: 2467899829986747209}
   m_Layer: 6
   m_Name: ChicaGafasBot
   m_TagString: Untagged
@@ -152,10 +153,10 @@ Animator:
   m_GameObject: {fileID: 85052769467629173}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 92e891d76552750479737996e2f444e0, type: 3}
-  m_Controller: {fileID: 9100000, guid: dad7b6c191a366841a3e8b0a06984654, type: 2}
+  m_Controller: {fileID: 9100000, guid: 86d744490b0a3514897df454b49d6504, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -163,6 +164,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2467899829986747209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85052769467629173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 458509c24db04f2409fbde8b0019fdd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &86041238062143555
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,6 +218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 759940753415004287}
   - component: {fileID: 6659687788236585477}
+  - component: {fileID: 3412476895209058963}
   m_Layer: 6
   m_Name: ChicaDorsalBot
   m_TagString: Untagged
@@ -249,10 +263,10 @@ Animator:
   m_GameObject: {fileID: 126112585074653893}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e33d27a957c5e6d4a9055f17f8797c55, type: 3}
-  m_Controller: {fileID: 9100000, guid: a33d5e16261e11a4385df82ff55cb4ba, type: 2}
+  m_Controller: {fileID: 9100000, guid: 86d744490b0a3514897df454b49d6504, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -260,6 +274,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3412476895209058963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126112585074653893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 458509c24db04f2409fbde8b0019fdd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &137597200016294498
 GameObject:
   m_ObjectHideFlags: 0
@@ -15407,10 +15433,8 @@ GameObject:
   - component: {fileID: 4383728619802453837}
   - component: {fileID: 4571057853172583755}
   - component: {fileID: 1654530939058067331}
-  - component: {fileID: 6588914514280538078}
-  - component: {fileID: 4182105779678806387}
   m_Layer: 3
-  m_Name: BotDragon
+  m_Name: DragonBot
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15433,6 +15457,7 @@ Transform:
   - {fileID: 2629517684476296360}
   - {fileID: 2065261668367865505}
   - {fileID: 8152179832571938248}
+  - {fileID: 9055456465330537496}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15480,7 +15505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 8494882338557731173}
   trailBoost: {fileID: 8657391804162438242}
-  moveSpeed: 6
+  moveSpeed: 7
   rotationSpeed: 1
   playerHeight: 2
   whatIsGround:
@@ -15509,10 +15534,10 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: f5a2c865042edf942af5cd5f2b0bab49, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 05f8e9bb5bf41cc4b8504e915f0249cc, type: 3}
   m_InferenceDevice: 3
   m_BehaviorType: 2
-  m_BehaviorName: RunnerAgent
+  m_BehaviorName: GeneralAgent
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -15549,68 +15574,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DecisionPeriod: 5
   TakeActionsBetweenDecisions: 1
---- !u!114 &6588914514280538078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3155978158771037683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: RayPerceptionSensorUp
-  m_DetectableTags:
-  - Floor
-  - Wall
-  - POI
-  - Goal
-  - Obstacle
-  m_RaysPerDirection: 3
-  m_MaxRayDegrees: 50
-  m_SphereCastRadius: 0.5
-  m_RayLength: 20
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967233
-  m_ObservationStacks: 1
-  rayHitColor: {r: 0, g: 1, b: 0.043653965, a: 1}
-  rayMissColor: {r: 1, g: 0, b: 0, a: 0.20784314}
-  m_StartVerticalOffset: 0
-  m_EndVerticalOffset: 5
---- !u!114 &4182105779678806387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3155978158771037683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: RayPerceptionSensorDown
-  m_DetectableTags:
-  - Floor
-  - Wall
-  - POI
-  - Goal
-  - Obstacle
-  m_RaysPerDirection: 3
-  m_MaxRayDegrees: 50
-  m_SphereCastRadius: 0.5
-  m_RayLength: 20
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967233
-  m_ObservationStacks: 1
-  rayHitColor: {r: 0, g: 1, b: 0.043653965, a: 1}
-  rayMissColor: {r: 1, g: 0, b: 0, a: 0.20784314}
-  m_StartVerticalOffset: 0
-  m_EndVerticalOffset: -5
 --- !u!1 &3189695667978756726
 GameObject:
   m_ObjectHideFlags: 0
@@ -17902,7 +17865,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 86d744490b0a3514897df454b49d6504, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -27697,6 +27660,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6103470569048862149}
   - component: {fileID: 167705148180182975}
+  - component: {fileID: 8334519566925549298}
   m_Layer: 6
   m_Name: ChicoSudaderaBot
   m_TagString: Untagged
@@ -27740,10 +27704,10 @@ Animator:
   m_GameObject: {fileID: 6915332794092959615}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 937cf9e42142eb941bd6c366f1339d16, type: 3}
-  m_Controller: {fileID: 9100000, guid: 764af077580f0bf468869b3a066810a4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 86d744490b0a3514897df454b49d6504, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -27751,6 +27715,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8334519566925549298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6915332794092959615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 458509c24db04f2409fbde8b0019fdd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6921840284608699408
 GameObject:
   m_ObjectHideFlags: 0
@@ -30624,6 +30600,101 @@ Transform:
   m_Father: {fileID: 6305944844787392310}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7691283208916958797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9055456465330537496}
+  - component: {fileID: 7660926297074893169}
+  - component: {fileID: 2096752963950232649}
+  m_Layer: 0
+  m_Name: RaycastTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9055456465330537496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691283208916958797}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4943296492848184713}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7660926297074893169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691283208916958797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: RayPerceptionSensorUp
+  m_DetectableTags:
+  - Floor
+  - Wall
+  - POI
+  - Goal
+  - Obstacle
+  m_RaysPerDirection: 3
+  m_MaxRayDegrees: 50
+  m_SphereCastRadius: 0.5
+  m_RayLength: 15
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967233
+  m_ObservationStacks: 1
+  rayHitColor: {r: 0, g: 1, b: 0.043653965, a: 1}
+  rayMissColor: {r: 1, g: 0, b: 0, a: 0.20784314}
+  m_StartVerticalOffset: 0
+  m_EndVerticalOffset: 0
+--- !u!114 &2096752963950232649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691283208916958797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: RayPerceptionSensorDown
+  m_DetectableTags:
+  - Floor
+  - Wall
+  - POI
+  - Goal
+  - Obstacle
+  m_RaysPerDirection: 3
+  m_MaxRayDegrees: 50
+  m_SphereCastRadius: 0.5
+  m_RayLength: 20
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967233
+  m_ObservationStacks: 1
+  rayHitColor: {r: 0, g: 1, b: 0.043653965, a: 1}
+  rayMissColor: {r: 1, g: 0, b: 0, a: 0.20784314}
+  m_StartVerticalOffset: 0
+  m_EndVerticalOffset: -5
 --- !u!1 &7692398923244126569
 GameObject:
   m_ObjectHideFlags: 0
