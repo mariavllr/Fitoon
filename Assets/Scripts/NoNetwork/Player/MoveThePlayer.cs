@@ -46,7 +46,7 @@ public class MoveThePlayer : MonoBehaviour
     {
         //Ground check
         RaycastHit hit;
-        grounded = Physics.Raycast(transform.position, Vector3.down, out hit, playerHeight * 0.5f + 1f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, out hit, playerHeight * 0.5f + 3f, whatIsGround);
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
