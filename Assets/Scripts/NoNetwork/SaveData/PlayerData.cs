@@ -7,7 +7,6 @@ public class PlayerData
 {
     public string username;
     public int normalCoins;
-    public int diamondsCoins;
     public int points;
     public List<int> skinsCompradas;
     public CharacterData playerCharacterData;

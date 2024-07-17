@@ -8,7 +8,6 @@ public class UpdateParameters : MonoBehaviour
 {
     SaveData save;
     public TextMeshProUGUI coinsText;
-    public TextMeshProUGUI diamondsText;
     public TextMeshProUGUI pointsText;
     public TextMeshProUGUI pointsLeftText;
     public TextMeshProUGUI levelText;
@@ -30,7 +29,6 @@ public class UpdateParameters : MonoBehaviour
     public void UpdateMoneyText()
     {
         coinsText.text = save.player.normalCoins.ToString();
-        diamondsText.text = save.player.diamondsCoins.ToString();
         
     }
 

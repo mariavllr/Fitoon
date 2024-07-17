@@ -44,7 +44,6 @@ public class SaveData : MonoBehaviour
             Debug.Log("No había datos. Creando personaje por defecto.");
         }
         player.username = "Username";
-        player.diamondsCoins = 0;
         player.normalCoins = 0;
         player.points = 0;
         System.IO.File.WriteAllText(filePath, playerData);
