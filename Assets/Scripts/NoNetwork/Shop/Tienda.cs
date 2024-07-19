@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 public class Tienda : MonoBehaviour
 {
-    public List<IconTienda> itemsTienda;
+    public List<IconTienda> itemsByCategory;
     public GameObject iconPrefab;
     public GameObject gameManager;
-    SaveData save;
     public GameObject container;
     ScrollRect scrollRect;
     RectTransform item;
     void Start()
     {
-        save = gameManager.GetComponent<SaveData>();
         CleanShop();
         CreateShop();
         scrollRect = FindObjectOfType<ScrollRect>();
@@ -31,22 +28,23 @@ public class Tienda : MonoBehaviour
     }
     private void CreateShop()
     {
-        //Create skins
-        for(int i = 0; i < itemsTienda.Count; i++)
+        for(int i = 0; i < itemsByCategory.Count; i++)
         {
             GameObject iconoCreado = Instantiate(iconPrefab, container.transform);
+            IconTienda iconTiendaActual = itemsByCategory[i];
             //Primer hijo: Boton. Hijos (en orden): Texto monedas y Icono monedas
-            iconoCreado.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = itemsTienda[i].itemPrice.ToString();
-            iconoCreado.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = itemsTienda[i].coinType;
+            iconoCreado.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = iconTiendaActual.itemPrice.ToString();
+            iconoCreado.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = iconTiendaActual.coinType;
             //segundo hijo: icono 3D
             Transform iconTransform = iconoCreado.transform.GetChild(1).GetChild(0).transform;
             //destruir hijo que ya existe
             Destroy(iconoCreado.transform.GetChild(1).GetChild(0).gameObject);
-            Instantiate(itemsTienda[i].objectIcon, iconTransform.position, iconTransform.rotation, iconoCreado.transform.GetChild(1));
+            Instantiate(iconTiendaActual.objectIcon, iconTransform.position, iconTransform.rotation, iconoCreado.transform.GetChild(1));
             //tercer hijo: nombre
-            iconoCreado.transform.GetChild(2).gameObject.GetComponentInChildren<TextMeshProUGUI>().text = itemsTienda[i].itemName;
+            iconoCreado.transform.GetChild(2).gameObject.GetComponentInChildren<TextMeshProUGUI>().text = iconTiendaActual.itemName;
             //añadir id
-            itemsTienda[i].itemID = i;
+            itemsByCategory[i].itemID = i;
+            iconoCreado.GetComponent<ShopItem>().iconTiendaPropio = iconTiendaActual;
         }
     }
 
