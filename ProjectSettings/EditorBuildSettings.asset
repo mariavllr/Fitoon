@@ -47,6 +47,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CicloJuego/YouWin.unity
     guid: 4bd9bba55e7aa5847973b45d031e5f48
+  - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: 690dfcb43e70f8440bd87521443c1e3e
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: c175f3a20621136409bd2d6e59083b3e, type: 2}
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 72baa23c2ed28534ca0d90b538ce552a, type: 2}

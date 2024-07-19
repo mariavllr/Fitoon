@@ -10,4 +10,9 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void ExitApp()
+    {
+        Application.Quit();
+    }
+
 }
