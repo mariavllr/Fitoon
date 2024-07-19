@@ -8,7 +8,9 @@ public class PlayerData
     public string username;
     public int normalCoins;
     public int points;
-    public List<int> skinsCompradas;
+    public List<int> purchasedSkins;
+    public List<int> purchasedShoes;
+    public List<int> purchasedColors;
     public CharacterData playerCharacterData;
 }
 [System.Serializable]
