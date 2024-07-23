@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 877447799784726138}
   - component: {fileID: 839898665549631664}
-  - component: {fileID: 839898665549631665}
   m_Layer: 0
   m_Name: JumpPadCactus
   m_TagString: Checkpoint
@@ -49,21 +48,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1226741425343580362, guid: caaf991be9249c44fb0df22a062a3c6f, type: 3}
---- !u!114 &839898665549631665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533257312906609856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f44df1f1dd37e54a847cc2a082867ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRepel: 0
-  jumpForce: 16
-  forwardForce: 11
 --- !u!1 &839898664490668871
 GameObject:
   m_ObjectHideFlags: 0

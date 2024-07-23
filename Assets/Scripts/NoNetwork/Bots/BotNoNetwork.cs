@@ -149,7 +149,7 @@ public class BotNoNetwork : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor") && !endRace)
         {
             LockMovement(false);
         }
