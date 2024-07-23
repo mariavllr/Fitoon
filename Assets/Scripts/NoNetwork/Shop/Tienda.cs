@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 public class Tienda : MonoBehaviour
 {
+    SaveData saveData;
     public List<IconTienda> itemsByCategory;
     public GameObject iconPrefab;
     public GameObject gameManager;
@@ -13,10 +14,11 @@ public class Tienda : MonoBehaviour
     RectTransform item;
     void Start()
     {
-        CleanShop();
-        CreateShop();
+        saveData = FindAnyObjectByType<SaveData>();
         scrollRect = FindObjectOfType<ScrollRect>();
         item = container.GetComponent<RectTransform>();
+        CleanShop();
+        CreateShop();
     }
 
     private void CleanShop()
@@ -28,7 +30,8 @@ public class Tienda : MonoBehaviour
     }
     private void CreateShop()
     {
-        for(int i = 0; i < itemsByCategory.Count; i++)
+        saveData.ReadFromJson();
+        for (int i = 0; i < itemsByCategory.Count; i++)
         {
             GameObject iconoCreado = Instantiate(iconPrefab, container.transform);
             IconTienda iconTiendaActual = itemsByCategory[i];
@@ -43,8 +46,17 @@ public class Tienda : MonoBehaviour
             //tercer hijo: nombre
             iconoCreado.transform.GetChild(2).gameObject.GetComponentInChildren<TextMeshProUGUI>().text = iconTiendaActual.itemName;
             //añadir id
-            itemsByCategory[i].itemID = i;
+            iconTiendaActual.itemID = i;
             iconoCreado.GetComponent<ShopItem>().iconTiendaPropio = iconTiendaActual;
+
+            if ((saveData.player.purchasedSkins.Contains(i) && iconTiendaActual.itemType.ToString() == "SKIN") || 
+                (saveData.player.purchasedShoes.Contains(i) && iconTiendaActual.itemType.ToString() == "SHOE") || 
+                (saveData.player.purchasedSkins.Contains(i) && iconTiendaActual.itemType.ToString() == "COLOR"))
+            {
+                //Change the item to purchased aspect
+                transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                transform.GetChild(i).GetComponent<Image>().color = new Color(221f / 255f, 255f / 255f, 90f / 255f);
+            }
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class TiendaManager : MonoBehaviour
 {
@@ -70,11 +71,9 @@ public class TiendaManager : MonoBehaviour
         panel.SetActive(false);
         lockBackground.SetActive(false);
 
-        //Change the item
+        //Change the item to purchased aspect
         tienda.transform.GetChild(itemSelected.itemID).GetChild(0).gameObject.SetActive(false);
         tienda.transform.GetChild(itemSelected.itemID).GetComponent<Image>().color = new Color(221f / 255f, 255f / 255f, 90f / 255f);
-        //tienda.itemsByCategory[itemSelected.itemID].itemPrice = 0;
-        //tienda.itemsByCategory[itemSelected.itemID].coinType = null;
     }
 
     public void ActivateConfirmPurchasePanel(IconTienda item)
@@ -82,6 +81,8 @@ public class TiendaManager : MonoBehaviour
         panel.SetActive(true);
         lockBackground.SetActive(true);
         itemSelected = item;
+        //Read
+        saveData.ReadFromJson();
 
         if (saveData.player.normalCoins >= item.itemPrice)
         {
