@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0088a8de9577e8a40bea6a2327f18cc4, type: 3}
   m_Name: SkinChicaGafas
   m_EditorClassIdentifier: 
-  itemID: 3
+  itemID: 1
   itemType: 0
   objectIcon: {fileID: 2760423497530465616, guid: 2fe791077d66bfa48abe2063f0e728b4, type: 3}
   itemName: Glasses Girl
-  itemPrice: 10
+  itemPrice: 15
   coinType: {fileID: 21300000, guid: cc56ed4117b317c4495b248f5affc31f, type: 3}
   isAlreadyBought: 0

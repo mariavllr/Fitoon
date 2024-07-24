@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 2
   objectIcon: {fileID: 5050203246128201615, guid: 524b71f4c19450b42bbac5aee7989986, type: 3}
   itemName: Orange Shoes
-  itemPrice: 5
+  itemPrice: 10
   coinType: {fileID: 21300000, guid: cc56ed4117b317c4495b248f5affc31f, type: 3}
   isAlreadyBought: 0

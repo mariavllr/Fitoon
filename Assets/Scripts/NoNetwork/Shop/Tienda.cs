@@ -51,7 +51,7 @@ public class Tienda : MonoBehaviour
 
             if ((saveData.player.purchasedSkins.Contains(i) && iconTiendaActual.itemType.ToString() == "SKIN") || 
                 (saveData.player.purchasedShoes.Contains(i) && iconTiendaActual.itemType.ToString() == "SHOE") || 
-                (saveData.player.purchasedSkins.Contains(i) && iconTiendaActual.itemType.ToString() == "COLOR"))
+                (saveData.player.purchasedColors.Contains(i) && iconTiendaActual.itemType.ToString() == "COLOR"))
             {
                 //Change the item to purchased aspect
                 transform.GetChild(i).GetChild(0).gameObject.SetActive(false);

@@ -418,6 +418,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5863279230379946901, guid: f288081b226145d45aae3937e5bdedeb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 146489842}
+    - target: {fileID: 5863279230379946901, guid: f288081b226145d45aae3937e5bdedeb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8225273834033410417, guid: f288081b226145d45aae3937e5bdedeb, type: 3}
       propertyPath: m_Name
       value: CanvasSuperior
@@ -546,7 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d12caf7fb7baac4b98e2dd1033dfda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinsText: {fileID: 0}
+  coinsText: {fileID: 2030726872}
   pointsText: {fileID: 567908237}
   pointsLeftText: {fileID: 1864238128}
   levelText: {fileID: 443742567}
@@ -4979,6 +4987,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 257.5611, y: 218.3529, z: 50}
   m_Center: {x: 128.98375, y: -0.70597076, z: 0}
+--- !u!114 &2030726872 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 407426166007844154, guid: f288081b226145d45aae3937e5bdedeb, type: 3}
+  m_PrefabInstance: {fileID: 116525883}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2117115708
 GameObject:
   m_ObjectHideFlags: 0

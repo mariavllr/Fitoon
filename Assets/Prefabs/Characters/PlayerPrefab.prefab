@@ -2041,9 +2041,10 @@ MonoBehaviour:
   player:
     username: 
     normalCoins: 0
-    diamondsCoins: 0
     points: 0
-    skinsCompradas: 
+    purchasedSkins: 
+    purchasedShoes: 
+    purchasedColors: 
     playerCharacterData:
       characterName: Diego
       hairColor: '#000000'
@@ -2083,7 +2084,6 @@ MonoBehaviour:
   animCadenceText: {fileID: 0}
   sampleRate: 128
   distanciaPaso: 0.67
-  enter_intensity: {fileID: 0}
 --- !u!114 &2354388624231188453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2096,7 +2096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5328d53ecbeb5749807d279de4886f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 1
+  testing: 0
   moveSpeed: 9
   rotationSpeed: 2
   velocityText: {fileID: 0}
@@ -2207,6 +2207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebea1d0276123d0459e192ba74ba1cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userText: {fileID: 0}
 --- !u!23 &7852759645126894193
 MeshRenderer:
   m_ObjectHideFlags: 0

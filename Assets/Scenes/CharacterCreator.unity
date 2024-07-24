@@ -517,7 +517,7 @@ RectTransform:
   - {fileID: 1649231020}
   - {fileID: 1769762626}
   m_Father: {fileID: 631649770}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1664,6 +1664,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 949207955}
   - {fileID: 1320904398}
   - {fileID: 638938178}
   - {fileID: 799366541}
@@ -1673,7 +1674,6 @@ RectTransform:
   - {fileID: 1910696850}
   - {fileID: 1599192573}
   - {fileID: 1508787096}
-  - {fileID: 949207955}
   - {fileID: 5385222}
   - {fileID: 286778664}
   m_Father: {fileID: 1088923768}
@@ -1754,7 +1754,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 631649770}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2111,7 +2111,7 @@ RectTransform:
   m_Children:
   - {fileID: 662116618}
   m_Father: {fileID: 631649770}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2600,7 +2600,7 @@ RectTransform:
   - {fileID: 1071566397}
   - {fileID: 951358309}
   m_Father: {fileID: 631649770}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2949,7 +2949,7 @@ RectTransform:
   m_Children:
   - {fileID: 444331437}
   m_Father: {fileID: 631649770}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -3788,7 +3788,9 @@ MonoBehaviour:
     username: 
     normalCoins: 0
     points: 0
-    skinsCompradas: 
+    purchasedSkins: 
+    purchasedShoes: 
+    purchasedColors: 
     playerCharacterData:
       characterName: Juan
       hairColor: '#4D2413'
@@ -3952,7 +3954,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 12.9999695, y: -13.9999695}
+  m_AnchoredPosition: {x: 12.9999695, y: -14}
   m_SizeDelta: {x: 81.4583, y: 81.45831}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1071566398
@@ -5183,7 +5185,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 631649770}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -6417,7 +6419,7 @@ RectTransform:
   m_Children:
   - {fileID: 945570992}
   m_Father: {fileID: 631649770}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6831,7 +6833,7 @@ RectTransform:
   m_Children:
   - {fileID: 1171773704}
   m_Father: {fileID: 631649770}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -7076,7 +7078,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 12.9999695, y: -13.9999695}
+  m_AnchoredPosition: {x: 12.9999695, y: -14}
   m_SizeDelta: {x: 81.4583, y: 81.45831}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1649231021
@@ -8827,7 +8829,7 @@ RectTransform:
   - {fileID: 1786603015}
   - {fileID: 2126100642}
   m_Father: {fileID: 631649770}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9187,7 +9189,7 @@ RectTransform:
   - {fileID: 870008733}
   - {fileID: 1972685327}
   m_Father: {fileID: 631649770}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

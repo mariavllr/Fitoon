@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 0
   objectIcon: {fileID: 653098680963409810, guid: 6fee5700039388c4392fe5bb6e464de5, type: 3}
   itemName: Curly Guy
-  itemPrice: 10
+  itemPrice: 15
   coinType: {fileID: 21300000, guid: cc56ed4117b317c4495b248f5affc31f, type: 3}
   isAlreadyBought: 0

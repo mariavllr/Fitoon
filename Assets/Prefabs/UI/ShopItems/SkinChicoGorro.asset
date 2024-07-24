@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 0
   objectIcon: {fileID: 7987499003461173977, guid: c3ecce5cd34bf5043b7e5330a3b04bdd, type: 3}
   itemName: Hat Guy
-  itemPrice: 10
+  itemPrice: 15
   coinType: {fileID: 21300000, guid: cc56ed4117b317c4495b248f5affc31f, type: 3}
   isAlreadyBought: 0
