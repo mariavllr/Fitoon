@@ -1965,7 +1965,6 @@ GameObject:
   - component: {fileID: 5762957606672097170}
   - component: {fileID: 2086458394171190086}
   - component: {fileID: 2354388624231188463}
-  - component: {fileID: 2354388624231188456}
   - component: {fileID: 2354388624231188455}
   - component: {fileID: 2354388624231188457}
   - component: {fileID: 2354388624231188453}
@@ -2026,31 +2025,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2354388624231188456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5762957606672097181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4194d1097cce0c4b955b9ef1a50f77a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player:
-    username: 
-    normalCoins: 0
-    points: 0
-    purchasedSkins: 
-    purchasedShoes: 
-    purchasedColors: 
-    playerCharacterData:
-      characterName: Diego
-      hairColor: '#000000'
-      skinColor: '#6C2F0A'
-      topColor: '#298123'
-      bottomColor: '#0048A5'
 --- !u!114 &2354388624231188455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2097,7 +2071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testing: 0
-  moveSpeed: 9
+  moveSpeed: 8
   rotationSpeed: 2
   velocityText: {fileID: 0}
   playerHeight: 2
@@ -2207,7 +2181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebea1d0276123d0459e192ba74ba1cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userText: {fileID: 0}
+  userText: {fileID: 3346269200303520961}
 --- !u!23 &7852759645126894193
 MeshRenderer:
   m_ObjectHideFlags: 0

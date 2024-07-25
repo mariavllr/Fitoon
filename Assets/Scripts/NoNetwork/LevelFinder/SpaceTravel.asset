@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SpaceTravel
   m_EditorClassIdentifier: 
   imagenEscenario: {fileID: 21300000, guid: 036344b787fbaff48a29dc2a9ef5c2dc, type: 3}
-  nombreEscenario: Space Travel
+  nombreEscenario: SpaceTravelAR
