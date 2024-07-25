@@ -123,7 +123,7 @@ public class NPCController : MonoBehaviour
         {
             trailBoost.GetComponent<TrailRenderer>().emitting = true;
             trailBoost.GetComponentInChildren<ParticleSystem>().Play();
-            speedBoost -= 0.01f;
+            speedBoost -= 0.04f;
             speedBoost = Mathf.Clamp(speedBoost, 1f, 10f);
         }
 
@@ -204,7 +204,8 @@ public class NPCController : MonoBehaviour
         //Rotate Player based on Horizontal input
         Vector3 rotation = new Vector3(0, moveH * rotationSpeed, 0);
         Vector3 currentRotation = transform.rotation.eulerAngles;
-        rb.MoveRotation(Quaternion.Euler(currentRotation + rotation));
+        Vector3 limitedRotation = RotationLimited(currentRotation);
+        rb.MoveRotation(Quaternion.Euler(limitedRotation + rotation));
 
         moveDirection = transform.forward * moveV + transform.right * moveH;
         if (moveV != 0) rb.AddForce(moveDirection.normalized * moveSpeed * 10f * speedBoost, ForceMode.Force);
@@ -221,4 +222,21 @@ public class NPCController : MonoBehaviour
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
     }
+
+    private Vector3 RotationLimited(Vector3 rotation)
+    {
+        if (rotation.y > 90 && rotation.y < 270)
+        {
+            if (rotation.y < 180)
+            {
+                rotation.y = 90; // Ajustar a 90 si está entre 90 y 180
+            }
+            else
+            {
+                rotation.y = 270; // Ajustar a 270 si está entre 180 y 270
+            }
+        }
+        return rotation;
+    }
+
 }

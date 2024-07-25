@@ -13,6 +13,7 @@ public class RunnerAgent : Agent
     private NPCController controller;
     private Vector3 diff;
     private Vector3 lastDiff;
+    private float backwards = 0f;
 
     public override void Initialize()
     {
@@ -25,6 +26,7 @@ public class RunnerAgent : Agent
         controller.enabled = true;
         controller.SetBoost(1f);
         target.GetComponent<Collider>().enabled = true;
+        backwards = 0f;
 
         lastDiff = (target.transform.localPosition - transform.localPosition) / 20;
     }
@@ -35,7 +37,11 @@ public class RunnerAgent : Agent
         sensor.AddObservation(diff);
 
         if (diff.magnitude < lastDiff.magnitude) AddReward(0.5f);
-        if (diff.magnitude > lastDiff.magnitude) AddReward(-0.1f);
+        if (diff.magnitude > lastDiff.magnitude)
+        {
+            AddReward(-0.5f);
+            backwards += 0.1f;
+        }
         lastDiff = diff;
 
         //AddReward(-0.001f); //Encourage the player to move faster
@@ -52,6 +58,11 @@ public class RunnerAgent : Agent
         {
             AddReward(-0.1f); // Penalize for staying still
         }
+
+        //if (GetCumulativeReward() < -1000 || backwards > 20f)
+        //{
+        //    EndEpisode();
+        //}
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
