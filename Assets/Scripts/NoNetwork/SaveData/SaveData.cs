@@ -40,6 +40,7 @@ public class SaveData : MonoBehaviour
             player.playerCharacterData.skinColor = "#A87458";
             player.playerCharacterData.topColor = "#B46600";
             player.playerCharacterData.bottomColor = "#4F2F12";
+            player.playerCharacterData.shoes = 0;
             playerData = JsonUtility.ToJson(player);
             Debug.Log("No había datos. Creando personaje por defecto.");
         }

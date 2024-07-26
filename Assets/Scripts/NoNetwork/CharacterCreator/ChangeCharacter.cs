@@ -12,7 +12,9 @@ public class ChangeCharacter : MonoBehaviour
     [SerializeField] GameObject container;
     [SerializeField] GameObject characterSavedText;
     [SerializeField] List<CharacterItem> characters;
+    [SerializeField] List<ObjectItem> shoes;
     int characterActive = 0;
+    ObjectItem actualShoes;
     [SerializeField] TextMeshProUGUI nameText;
 
     SaveData saveData;
@@ -23,6 +25,7 @@ public class ChangeCharacter : MonoBehaviour
         saveData = GetComponent<SaveData>();
         saveData.ReadFromJson();
         ReadCharacter();
+        //actualShoes = characters[characterActive].shoes;
     }
 
     public void OnSkinClicked(string skinName)
@@ -37,6 +40,7 @@ public class ChangeCharacter : MonoBehaviour
         instance.GetComponent<RotateCharacter>().enabled = true;
         instance.GetComponent<Outline>().enabled = false;
         nameText.text = actualCharacter.characterName;
+       // actualShoes = characters[characterActive].shoes;
     }
 
     public void OnArrowClicked(string direction)
@@ -69,6 +73,12 @@ public class ChangeCharacter : MonoBehaviour
         nameText.text = characters[characterActive].characterName;
 
         actualCharacter = characters[characterActive];
+       // actualShoes = characters[characterActive].shoes;
+    }
+
+    public void OnShoeClicked(ObjectItem shoeItem)
+    {
+        actualShoes = shoeItem;
     }
 
     public void ResetCharacter()
@@ -111,38 +121,55 @@ public class ChangeCharacter : MonoBehaviour
         instance.GetComponent<Outline>().enabled = false;
         nameText.text = actualCharacter.characterName;
 
+        //Actualizar zapatillas
+        GameObject zapatos = GameObject.FindGameObjectWithTag("Shoes");
+        SkinnedMeshRenderer renderer = zapatos.GetComponent<SkinnedMeshRenderer>();
+        int i = saveData.player.playerCharacterData.shoes;
+
+        foreach(ObjectItem shoeItem in shoes)
+        {
+            if(shoeItem.id == i)
+            {
+                renderer.sharedMesh = shoeItem.mesh;
+                renderer.materials = shoeItem.materials;
+                break;
+            }
+        }
+
+        Debug.Log($"Zapatos: {zapatos.name}. Mesh: {renderer.sharedMesh}. Materials: {renderer.materials}. Shoe id: {i}");
+
         //Asignar colores guardados (cuando haga reset deben salir estos)
-       /* Color color = Color.black; //si falla saldrá negro
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.hairColor, out color))
-        {
-            actualCharacter.hairColor = color;
-            playerCharacter.hairColor = color;
-        }
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.skinColor, out color))
-        {
-            actualCharacter.skinColor = color;
-        }
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.bottomColor, out color))
-        {
-            actualCharacter.bottomColor = color;
-        }
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.topColor, out color))
-        {
-            actualCharacter.topColor = color;
-        }*/
+        /* Color color = Color.black; //si falla saldrá negro
+         if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.hairColor, out color))
+         {
+             actualCharacter.hairColor = color;
+             playerCharacter.hairColor = color;
+         }
+         if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.skinColor, out color))
+         {
+             actualCharacter.skinColor = color;
+         }
+         if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.bottomColor, out color))
+         {
+             actualCharacter.bottomColor = color;
+         }
+         if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.topColor, out color))
+         {
+             actualCharacter.topColor = color;
+         }*/
 
 
         //scriptable object con estos datos
-      /*playerCharacter.characterName = actualCharacter.characterName;
-        playerCharacter.prefab = actualCharacter.prefab;
-        playerCharacter.hair = actualCharacter.hair;
-        playerCharacter.skin = actualCharacter.skin;
-        playerCharacter.top = actualCharacter.top;
-        playerCharacter.bottom = actualCharacter.bottom;
-        playerCharacter.hairColor = actualCharacter.hairColor;
-        playerCharacter.skinColor = actualCharacter.skinColor;
-        playerCharacter.topColor = actualCharacter.topColor;
-        playerCharacter.bottomColor = actualCharacter.bottomColor;*/
+        /*playerCharacter.characterName = actualCharacter.characterName;
+          playerCharacter.prefab = actualCharacter.prefab;
+          playerCharacter.hair = actualCharacter.hair;
+          playerCharacter.skin = actualCharacter.skin;
+          playerCharacter.top = actualCharacter.top;
+          playerCharacter.bottom = actualCharacter.bottom;
+          playerCharacter.hairColor = actualCharacter.hairColor;
+          playerCharacter.skinColor = actualCharacter.skinColor;
+          playerCharacter.topColor = actualCharacter.topColor;
+          playerCharacter.bottomColor = actualCharacter.bottomColor;*/
     }
 
     public void SaveCharacter()
@@ -152,6 +179,7 @@ public class ChangeCharacter : MonoBehaviour
         saveData.player.playerCharacterData.skinColor = ColorToHex(actualCharacter.skin.color);
         saveData.player.playerCharacterData.topColor = ColorToHex(actualCharacter.top.color);
         saveData.player.playerCharacterData.bottomColor = ColorToHex(actualCharacter.bottom.color);
+        saveData.player.playerCharacterData.shoes = actualShoes.id;
         saveData.SaveToJson();
         saveData.ReadFromJson();
         ReadCharacter();

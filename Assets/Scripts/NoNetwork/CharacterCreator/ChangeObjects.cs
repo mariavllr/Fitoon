@@ -5,7 +5,6 @@ using UnityEngine;
 public class ChangeObjects : MonoBehaviour
 {
     GameObject[] selectedObjects;
-    //List<Mesh> shoesMeshes;
 
     //cuando se pulsa el boton de "shoes" hay que buscar los zapatos en la escena
     public void SetSelectedObjectType(string type)

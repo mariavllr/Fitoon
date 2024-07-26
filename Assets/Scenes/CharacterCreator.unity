@@ -811,7 +811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &322659135
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1591,6 +1591,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 993146021}
+        m_TargetAssemblyTypeName: ChangeCharacter, Assembly-CSharp
+        m_MethodName: OnShoeClicked
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 31139ce02ebf2dd4fac1bc77f8e4d3b2, type: 2}
+          m_ObjectArgumentAssemblyTypeName: ObjectItem, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &531719106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2314,6 +2326,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 521287157, guid: 9e8509871f06db943a76ba79219c56a3, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1294650200938208474, guid: 9e8509871f06db943a76ba79219c56a3, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2355253033629851648, guid: 9e8509871f06db943a76ba79219c56a3, type: 3}
@@ -3635,6 +3651,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 993146021}
+        m_TargetAssemblyTypeName: ChangeCharacter, Assembly-CSharp
+        m_MethodName: OnShoeClicked
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 158b7b6357dd92847b6a55d0f2f98a7d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: ObjectItem, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &968579570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3719,6 +3747,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3500b0f443d6c01438652ed81533ba29, type: 2}
   - {fileID: 11400000, guid: 6f25130db9a5749408d3dd3f76d34610, type: 2}
   - {fileID: 11400000, guid: 723b8df3ce551ec41a9cb8c6935dc3f5, type: 2}
+  shoes:
+  - {fileID: 11400000, guid: 158b7b6357dd92847b6a55d0f2f98a7d, type: 2}
+  - {fileID: 11400000, guid: 6cbb8dfb02351d24395c22f2a698c655, type: 2}
+  - {fileID: 11400000, guid: 2e4dcd7d6421e2b4d96e21aab24c80b1, type: 2}
+  - {fileID: 11400000, guid: 31139ce02ebf2dd4fac1bc77f8e4d3b2, type: 2}
+  - {fileID: 11400000, guid: 45e162a67199dbd46b847c1d9c3ddbe9, type: 2}
   nameText: {fileID: 662116619}
 --- !u!4 &993146022
 Transform:
@@ -3797,6 +3831,7 @@ MonoBehaviour:
       skinColor: '#A87458'
       topColor: '#B46600'
       bottomColor: '#4F2F12'
+      shoes: 0
 --- !u!114 &993146027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8310,6 +8345,18 @@ MonoBehaviour:
       - m_Target: {fileID: 993146024}
         m_TargetAssemblyTypeName: ChangeObjects, Assembly-CSharp
         m_MethodName: ChangeObject
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 45e162a67199dbd46b847c1d9c3ddbe9, type: 2}
+          m_ObjectArgumentAssemblyTypeName: ObjectItem, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 993146021}
+        m_TargetAssemblyTypeName: ChangeCharacter, Assembly-CSharp
+        m_MethodName: OnShoeClicked
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 45e162a67199dbd46b847c1d9c3ddbe9, type: 2}

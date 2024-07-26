@@ -18,6 +18,6 @@ public class CharacterData
 {
     public string characterName;
     public string hairColor, skinColor, topColor, bottomColor; //hex color
-    //public string shoes; //guid object
+    public int shoes;
 }
 

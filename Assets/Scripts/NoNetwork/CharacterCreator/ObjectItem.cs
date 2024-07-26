@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class ObjectItem : ScriptableObject
 {
+    public int id;
     public Sprite icon;
     public Mesh mesh;
     public Material[] materials;
