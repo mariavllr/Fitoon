@@ -15,6 +15,7 @@ public class InitialScreen : MonoBehaviour
         saveData = GetComponent<SaveData>();
         ReadUsername();
         ReadCharacter();
+        if (RaceManager.Instance != null) RaceManager.Instance.Reset();
     }
 
     void ReadUsername()

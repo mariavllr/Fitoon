@@ -112,10 +112,11 @@ public class ChangeCharacter : MonoBehaviour
         nameText.text = actualCharacter.characterName;
 
         //Asignar colores guardados (cuando haga reset deben salir estos)
-        Color color = Color.black; //si falla saldrá negro
+       /* Color color = Color.black; //si falla saldrá negro
         if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.hairColor, out color))
         {
             actualCharacter.hairColor = color;
+            playerCharacter.hairColor = color;
         }
         if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.skinColor, out color))
         {
@@ -128,10 +129,11 @@ public class ChangeCharacter : MonoBehaviour
         if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.topColor, out color))
         {
             actualCharacter.topColor = color;
-        }
+        }*/
+
 
         //scriptable object con estos datos
-        playerCharacter.characterName = actualCharacter.characterName;
+      /*playerCharacter.characterName = actualCharacter.characterName;
         playerCharacter.prefab = actualCharacter.prefab;
         playerCharacter.hair = actualCharacter.hair;
         playerCharacter.skin = actualCharacter.skin;
@@ -140,7 +142,7 @@ public class ChangeCharacter : MonoBehaviour
         playerCharacter.hairColor = actualCharacter.hairColor;
         playerCharacter.skinColor = actualCharacter.skinColor;
         playerCharacter.topColor = actualCharacter.topColor;
-        playerCharacter.bottomColor = actualCharacter.bottomColor;
+        playerCharacter.bottomColor = actualCharacter.bottomColor;*/
     }
 
     public void SaveCharacter()

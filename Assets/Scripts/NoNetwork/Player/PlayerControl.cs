@@ -90,8 +90,10 @@ public class PlayerControl : MonoBehaviour
         int characterActive = charactersList.FindIndex(character => character.characterName == savedSkin);
         actualCharacter = charactersList[characterActive];
 
+        playerCharacter = actualCharacter;
+
         //Asignar colores guardados
-        Color color = Color.black; //si falla saldrá negro
+        /*Color color = Color.black; //si falla saldrá negro
         if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.hairColor, out color))
         {
             actualCharacter.hairColor = color;
@@ -107,10 +109,10 @@ public class PlayerControl : MonoBehaviour
         if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.topColor, out color))
         {
             actualCharacter.topColor = color;
-        }
+        }*/
 
         //scriptable object con estos datos
-        playerCharacter.characterName = actualCharacter.characterName;
+    /*    playerCharacter.characterName = actualCharacter.characterName;
         playerCharacter.prefab = actualCharacter.prefab;
         playerCharacter.hair = actualCharacter.hair;
         playerCharacter.skin = actualCharacter.skin;
@@ -119,7 +121,7 @@ public class PlayerControl : MonoBehaviour
         playerCharacter.hairColor = actualCharacter.hairColor;
         playerCharacter.skinColor = actualCharacter.skinColor;
         playerCharacter.topColor = actualCharacter.topColor;
-        playerCharacter.bottomColor = actualCharacter.bottomColor;
+        playerCharacter.bottomColor = actualCharacter.bottomColor;*/
     }
 
     private void Awake()

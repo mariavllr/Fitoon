@@ -19,7 +19,7 @@ MonoBehaviour:
   top: {fileID: 2100000, guid: 86cecc6124531674b977e481715abea6, type: 2}
   bottom: {fileID: 2100000, guid: 1d7b9a2fb128d5a498946edb2452823e, type: 2}
   hairColor: {r: 0, g: 0, b: 0, a: 1}
-  skinColor: {r: 0.26415077, g: 0.10181544, b: 0.051085673, a: 1}
-  topColor: {r: 0.08944448, g: 0.26415077, b: 0.076005556, a: 1}
-  bottomColor: {r: 0.0915805, g: 0.22908264, b: 0.39622626, a: 1}
+  skinColor: {r: 0.3882353, g: 0.08627451, b: 0, a: 1}
+  topColor: {r: 0.1254902, g: 0.4627451, b: 0.09411765, a: 1}
+  bottomColor: {r: 0, g: 0.2901961, b: 0.6666667, a: 1}
   shoes: {fileID: 11400000, guid: 6cbb8dfb02351d24395c22f2a698c655, type: 2}
