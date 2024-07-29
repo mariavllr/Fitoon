@@ -512,6 +512,7 @@ MonoBehaviour:
       skinColor: 
       topColor: 
       bottomColor: 
+      shoes: 0
 --- !u!114 &146489846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,6 +532,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3500b0f443d6c01438652ed81533ba29, type: 2}
   - {fileID: 11400000, guid: 6f25130db9a5749408d3dd3f76d34610, type: 2}
   - {fileID: 11400000, guid: 723b8df3ce551ec41a9cb8c6935dc3f5, type: 2}
+  shoes:
+  - {fileID: 11400000, guid: 158b7b6357dd92847b6a55d0f2f98a7d, type: 2}
+  - {fileID: 11400000, guid: 6cbb8dfb02351d24395c22f2a698c655, type: 2}
+  - {fileID: 11400000, guid: 2e4dcd7d6421e2b4d96e21aab24c80b1, type: 2}
+  - {fileID: 11400000, guid: 31139ce02ebf2dd4fac1bc77f8e4d3b2, type: 2}
+  - {fileID: 11400000, guid: 45e162a67199dbd46b847c1d9c3ddbe9, type: 2}
   treadmillPrefab: {fileID: 392287001776682457, guid: cc93add219906c547a7022c345cfe457, type: 3}
   inputName: {fileID: 1694878070}
 --- !u!114 &146489848

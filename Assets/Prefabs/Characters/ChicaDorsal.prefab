@@ -669,6 +669,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1409260956598720497}
   - component: {fileID: 294361576951697523}
+  - component: {fileID: 4108980349801703908}
   m_Layer: 3
   m_Name: BezierCurve.011
   m_TagString: Shoes
@@ -755,6 +756,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.37943372, y: 1.6091926, z: 0.08806649}
     m_Extent: {x: 0.7823179, y: 0.89039534, z: 0.89120054}
   m_DirtyAABB: 0
+--- !u!114 &4108980349801703908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622028833889940071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62b9780ab5ead5c43a4aba122c01e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myShoe: {fileID: 11400000, guid: 45e162a67199dbd46b847c1d9c3ddbe9, type: 2}
 --- !u!1 &1701343700689534218
 GameObject:
   m_ObjectHideFlags: 0

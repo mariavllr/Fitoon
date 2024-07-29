@@ -9,12 +9,13 @@ public class ChangeCharacter : MonoBehaviour
     public CharacterItem actualCharacter; //el que sale mostrado actualmente en el creador de personajes
     public CharacterItem playerCharacter; //el guardado
 
+    [SerializeField] GameObject optionsPanels;
     [SerializeField] GameObject container;
     [SerializeField] GameObject characterSavedText;
     [SerializeField] List<CharacterItem> characters;
     [SerializeField] List<ObjectItem> shoes;
     int characterActive = 0;
-    ObjectItem actualShoes;
+    [SerializeField] ObjectItem actualShoes;
     [SerializeField] TextMeshProUGUI nameText;
 
     SaveData saveData;
@@ -25,27 +26,43 @@ public class ChangeCharacter : MonoBehaviour
         saveData = GetComponent<SaveData>();
         saveData.ReadFromJson();
         ReadCharacter();
-        //actualShoes = characters[characterActive].shoes;
+        
     }
 
     public void OnSkinClicked(string skinName)
     {
+        for(int i = 0; i < optionsPanels.transform.childCount; i++)
+        {
+            if (optionsPanels.transform.GetChild(i).gameObject.activeInHierarchy)
+            {
+                optionsPanels.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
         //Buscar en qué índice de la lista de personajes está, segun el NOMBRE de la skin
         characterActive = characters.FindIndex(character => character.characterName == skinName);
         actualCharacter = characters[characterActive];
 
         //Actualizar el personaje en pantalla
-        Destroy(container.transform.GetChild(0).gameObject);
+        DestroyImmediate(container.transform.GetChild(0).gameObject);
         GameObject instance = Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, container.transform);
         instance.GetComponent<RotateCharacter>().enabled = true;
         instance.GetComponent<Outline>().enabled = false;
         nameText.text = actualCharacter.characterName;
-       // actualShoes = characters[characterActive].shoes;
+
+        UpdateShoes();
     }
 
     public void OnArrowClicked(string direction)
     {
-        Destroy(container.transform.GetChild(0).gameObject);
+        DestroyImmediate(container.transform.GetChild(0).gameObject);
+        for (int i = 0; i < optionsPanels.transform.childCount; i++)
+        {
+            if (optionsPanels.transform.GetChild(i).gameObject.activeInHierarchy)
+            {
+                optionsPanels.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
 
         if (direction == "RIGHT")
         {
@@ -73,7 +90,8 @@ public class ChangeCharacter : MonoBehaviour
         nameText.text = characters[characterActive].characterName;
 
         actualCharacter = characters[characterActive];
-       // actualShoes = characters[characterActive].shoes;
+
+        UpdateShoes();
     }
 
     public void OnShoeClicked(ObjectItem shoeItem)
@@ -88,14 +106,7 @@ public class ChangeCharacter : MonoBehaviour
         characters[characterActive].top.color = characters[characterActive].topColor;
         characters[characterActive].bottom.color = characters[characterActive].bottomColor;
 
-        GameObject[] shoes = GameObject.FindGameObjectsWithTag("Shoes");
-
-        foreach (GameObject shoe in shoes)
-        {
-            SkinnedMeshRenderer renderer = shoe.GetComponent<SkinnedMeshRenderer>();
-            renderer.sharedMesh = characters[characterActive].shoes.mesh;
-            renderer.materials = characters[characterActive].shoes.materials;
-        }
+        UpdateShoes();
 
     }
 
@@ -115,28 +126,17 @@ public class ChangeCharacter : MonoBehaviour
         actualCharacter = characters[characterActive];
 
         //Actualizar el personaje en pantalla
-        Destroy(container.transform.GetChild(0).gameObject);
+        if(container.transform.childCount != 0)
+        {
+            DestroyImmediate(container.transform.GetChild(0).gameObject);
+        }
+        
         GameObject instance = Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, container.transform);
         instance.GetComponent<RotateCharacter>().enabled = true;
         instance.GetComponent<Outline>().enabled = false;
         nameText.text = actualCharacter.characterName;
 
-        //Actualizar zapatillas
-        GameObject zapatos = GameObject.FindGameObjectWithTag("Shoes");
-        SkinnedMeshRenderer renderer = zapatos.GetComponent<SkinnedMeshRenderer>();
-        int i = saveData.player.playerCharacterData.shoes;
-
-        foreach(ObjectItem shoeItem in shoes)
-        {
-            if(shoeItem.id == i)
-            {
-                renderer.sharedMesh = shoeItem.mesh;
-                renderer.materials = shoeItem.materials;
-                break;
-            }
-        }
-
-        Debug.Log($"Zapatos: {zapatos.name}. Mesh: {renderer.sharedMesh}. Materials: {renderer.materials}. Shoe id: {i}");
+        UpdateShoes();
 
         //Asignar colores guardados (cuando haga reset deben salir estos)
         /* Color color = Color.black; //si falla saldrá negro
@@ -171,9 +171,40 @@ public class ChangeCharacter : MonoBehaviour
           playerCharacter.topColor = actualCharacter.topColor;
           playerCharacter.bottomColor = actualCharacter.bottomColor;*/
     }
+    void UpdateShoes()
+    {
+        //Actualizar zapatillas
+        GameObject zapatos = GameObject.FindGameObjectWithTag("Shoes");
+        SkinnedMeshRenderer renderer = zapatos.GetComponent<SkinnedMeshRenderer>();
+        int i = saveData.player.playerCharacterData.shoes;
+
+      //  Debug.Log($"ANTES: Zapato GO: {zapatos.name}. Mesh rendered: {renderer.sharedMesh}. ActualShoe id: {i}");
+
+        foreach (ObjectItem shoeItem in shoes)
+        {
+            if (shoeItem.id == i)
+            {
+                renderer.sharedMesh = shoeItem.mesh;
+                renderer.materials = shoeItem.materials;
+                zapatos.GetComponent<WhatShoeIHave>().myShoe = shoeItem;
+                actualShoes = zapatos.GetComponent<WhatShoeIHave>().myShoe;
+                break;
+            }
+        }
+
+      //  Debug.Log($"DESPUES: Zapato GO: {zapatos.name}. Mesh rendered: {renderer.sharedMesh}. ActualShoe id: {i}");
+    }
 
     public void SaveCharacter()
     {
+        for (int i = 0; i < optionsPanels.transform.childCount; i++)
+        {
+            if (optionsPanels.transform.GetChild(i).gameObject.activeInHierarchy)
+            {
+                optionsPanels.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
         saveData.player.playerCharacterData.characterName = actualCharacter.characterName;
         saveData.player.playerCharacterData.hairColor = ColorToHex(actualCharacter.hair.color);
         saveData.player.playerCharacterData.skinColor = ColorToHex(actualCharacter.skin.color);
@@ -181,8 +212,9 @@ public class ChangeCharacter : MonoBehaviour
         saveData.player.playerCharacterData.bottomColor = ColorToHex(actualCharacter.bottom.color);
         saveData.player.playerCharacterData.shoes = actualShoes.id;
         saveData.SaveToJson();
-        saveData.ReadFromJson();
+        //saveData.ReadFromJson();
         ReadCharacter();
+        
         StartCoroutine(CharacterSavedText());
     }
 

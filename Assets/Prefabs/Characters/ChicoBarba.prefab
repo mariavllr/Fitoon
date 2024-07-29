@@ -2723,6 +2723,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5371541872990794168}
   - component: {fileID: 6934215225140282908}
+  - component: {fileID: 5091550979929959358}
   m_Layer: 3
   m_Name: zapas_converse_negras
   m_TagString: Shoes
@@ -2807,6 +2808,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.37955517, y: 1.8277633, z: 0.14167476}
     m_Extent: {x: 0.7920489, y: 0.93722457, z: 0.95540035}
   m_DirtyAABB: 0
+--- !u!114 &5091550979929959358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7766441638429181916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62b9780ab5ead5c43a4aba122c01e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myShoe: {fileID: 11400000, guid: 2e4dcd7d6421e2b4d96e21aab24c80b1, type: 2}
 --- !u!1 &8102702160731868571
 GameObject:
   m_ObjectHideFlags: 0

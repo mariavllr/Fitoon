@@ -20,6 +20,7 @@ public class ChangeObjects : MonoBehaviour
             SkinnedMeshRenderer renderer = obj.GetComponent<SkinnedMeshRenderer>();
             renderer.sharedMesh = objectItem.mesh;
             renderer.materials = objectItem.materials;
+            obj.GetComponent<WhatShoeIHave>().myShoe = objectItem;
         }
     }
 

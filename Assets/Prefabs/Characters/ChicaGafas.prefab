@@ -73,6 +73,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3319863484742880205}
   - component: {fileID: 1470750291571521978}
+  - component: {fileID: 5651389269334564184}
   m_Layer: 3
   m_Name: Cylinder.054
   m_TagString: Shoes
@@ -159,6 +160,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.39438045, y: 1.6898246, z: 0.11458203}
     m_Extent: {x: 0.8623234, y: 0.867341, z: 0.8949002}
   m_DirtyAABB: 0
+--- !u!114 &5651389269334564184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65630057062362728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62b9780ab5ead5c43a4aba122c01e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myShoe: {fileID: 11400000, guid: 31139ce02ebf2dd4fac1bc77f8e4d3b2, type: 2}
 --- !u!1 &175255144235136264
 GameObject:
   m_ObjectHideFlags: 0

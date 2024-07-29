@@ -147,7 +147,22 @@ public class PlayerControl : MonoBehaviour
 
         newCharacter.transform.SetSiblingIndex(0);
 
-        Destroy(characterInPrefab);
+        DestroyImmediate(characterInPrefab);
+
+    /*    //Actualizar zapatillas
+        GameObject zapatos = GameObject.FindGameObjectWithTag("Shoes");
+        SkinnedMeshRenderer renderer = zapatos.GetComponent<SkinnedMeshRenderer>();
+        int i = saveData.player.playerCharacterData.shoes;
+
+        foreach (ObjectItem shoeItem in shoes)
+        {
+            if (shoeItem.id == i)
+            {
+                renderer.sharedMesh = shoeItem.mesh;
+                renderer.materials = shoeItem.materials;
+                break;
+            }
+        }*/
 
 
     }

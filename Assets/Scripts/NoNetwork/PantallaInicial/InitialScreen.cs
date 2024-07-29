@@ -8,6 +8,7 @@ public class InitialScreen : MonoBehaviour
     SaveData saveData;
     [SerializeField] GameObject characterContainer;
     [SerializeField] List<CharacterItem> characters;
+    [SerializeField] List<ObjectItem> shoes;
     [SerializeField] GameObject treadmillPrefab;
     [SerializeField] TMP_InputField inputName;
     private void Start()
@@ -44,9 +45,11 @@ public class InitialScreen : MonoBehaviour
         GameObject treadmill = Instantiate(treadmillPrefab, Vector3.zero, Quaternion.identity, characterContainer.transform);
 
         //Instanciar el personaje como hijo de la cinta
-        Destroy(characterContainer.transform.GetChild(0).gameObject);
+        DestroyImmediate(characterContainer.transform.GetChild(0).gameObject);
         GameObject characterInstance = Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, treadmill.transform);
         characterInstance.GetComponent<Animator>().SetBool("isRunning", true);
+        UpdateShoes();
+
         //Colocar a personaje adecuadamente en la cinta
         characterInstance.transform.Rotate(transform.up, 180f);
         characterInstance.transform.position = new Vector3(0, 0.54f, 1.6f);
@@ -54,6 +57,28 @@ public class InitialScreen : MonoBehaviour
         //Para alejarlo un poco de la camara
         characterContainer.transform.position = new Vector3(0, 0, -2.91f);
         characterContainer.transform.Rotate(transform.up, 120f);
+    }
+
+    void UpdateShoes()
+    {
+        //Actualizar zapatillas
+        GameObject zapatos = GameObject.FindGameObjectWithTag("Shoes");
+        SkinnedMeshRenderer renderer = zapatos.GetComponent<SkinnedMeshRenderer>();
+        int i = saveData.player.playerCharacterData.shoes;
+
+        //  Debug.Log($"ANTES: Zapato GO: {zapatos.name}. Mesh rendered: {renderer.sharedMesh}. ActualShoe id: {i}");
+
+        foreach (ObjectItem shoeItem in shoes)
+        {
+            if (shoeItem.id == i)
+            {
+                renderer.sharedMesh = shoeItem.mesh;
+                renderer.materials = shoeItem.materials;
+                break;
+            }
+        }
+
+        //  Debug.Log($"DESPUES: Zapato GO: {zapatos.name}. Mesh rendered: {renderer.sharedMesh}. ActualShoe id: {i}");
     }
 
     public void SaveUsername(string value)
