@@ -29,6 +29,7 @@ public class PlayerControl : MonoBehaviour
 
     SaveData saveData;
     [SerializeField] List<CharacterItem> charactersList;
+    [SerializeField] List<ObjectItem> shoes;
 
 
     //-----EVENTS-----
@@ -149,7 +150,7 @@ public class PlayerControl : MonoBehaviour
 
         DestroyImmediate(characterInPrefab);
 
-    /*    //Actualizar zapatillas
+        //Actualizar zapatillas
         GameObject zapatos = GameObject.FindGameObjectWithTag("Shoes");
         SkinnedMeshRenderer renderer = zapatos.GetComponent<SkinnedMeshRenderer>();
         int i = saveData.player.playerCharacterData.shoes;
@@ -162,7 +163,7 @@ public class PlayerControl : MonoBehaviour
                 renderer.materials = shoeItem.materials;
                 break;
             }
-        }*/
+        }
 
 
     }

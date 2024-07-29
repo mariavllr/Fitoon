@@ -16007,7 +16007,7 @@ GameObject:
   - component: {fileID: 7141958072495212842}
   m_Layer: 3
   m_Name: zapas_converse_azules
-  m_TagString: Shoes
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23799,7 +23799,7 @@ GameObject:
   - component: {fileID: 5445782986294977138}
   m_Layer: 3
   m_Name: zapas_moradas
-  m_TagString: Shoes
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29970,7 +29970,7 @@ GameObject:
   - component: {fileID: 674982498759410739}
   m_Layer: 3
   m_Name: zapas_converse_rojas
-  m_TagString: Shoes
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33624,7 +33624,7 @@ GameObject:
   - component: {fileID: 3172824769778642105}
   m_Layer: 3
   m_Name: zapas_naranjas
-  m_TagString: Shoes
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41275,7 +41275,7 @@ GameObject:
   - component: {fileID: 4790498162103113521}
   m_Layer: 3
   m_Name: zapas_converse_negras
-  m_TagString: Shoes
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

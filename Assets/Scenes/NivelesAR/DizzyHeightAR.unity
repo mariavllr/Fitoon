@@ -46728,6 +46728,7 @@ MonoBehaviour:
       skinColor: '#6C2F0A'
       topColor: '#298123'
       bottomColor: '#0048A5'
+      shoes: 0
 --- !u!4 &1469708777
 Transform:
   m_ObjectHideFlags: 0
