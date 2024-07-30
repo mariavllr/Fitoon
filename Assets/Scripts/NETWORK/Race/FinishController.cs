@@ -20,7 +20,7 @@ public class FinishController : MonoBehaviour
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("End"))
         {
             //Cursor.visible = true;
-            exitButton.SetActive(true);
+            //exitButton.SetActive(true);
             anim.SetTrigger("Reset");
             anim.enabled = false;
             isFinished = false;

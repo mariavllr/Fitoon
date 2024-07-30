@@ -48,9 +48,7 @@ public class RandomEscenario : MonoBehaviour
         }
 
         //timer = 0;
-        Debug.Log($"Dentro de player antes: {saveData.player.scenesPlayed.Count}");
         saveData.player.scenesPlayed.Add(escenarioElegido);
-        Debug.Log($"Dentro de player despues: {saveData.player.scenesPlayed.Count}");
         saveData.SaveToJson();
 
         timerActive = false;
@@ -78,11 +76,9 @@ public class RandomEscenario : MonoBehaviour
     private void GetAvaliableScenarios()
     {
         saveData.ReadFromJson();
-        Debug.Log($"Disponibles al inicio: {escenariosDisponibles.Count}");
         foreach (EscenarioItem item in saveData.player.scenesPlayed)
         {
             escenariosDisponibles.Remove(item);
         }
-        Debug.Log($"Disponibles al final: {escenariosDisponibles.Count}");
     }
 }

@@ -29,6 +29,7 @@ public class GoalController : MonoBehaviour
     private void Start()
     {
         Reset();
+        exitButton.gameObject.SetActive(false);
     }
 
     public void UpdatePosition()
@@ -66,6 +67,7 @@ public class GoalController : MonoBehaviour
                 FindObjectOfType<PlayerControl>().StopCharacterOnFinish();
                 FindObjectOfType<PlayerControl>().LockMovement(true);
                 FindObjectOfType<FinishController>().Finish(); //Animacion de acabar. To do: que diga You win!
+                exitButton.gameObject.SetActive(false);
 
                 //Añadirlo a una lista en race manager para la siguiente ronda
                 RaceManager.Instance.raceBots.Add(new RaceManager.RaceBotsData(true, saveData.player.username, 0, 0, 0, 0, 0));
@@ -156,7 +158,7 @@ public class GoalController : MonoBehaviour
     IEnumerator NextLevel()
     {
         infoText.text = "You win! Next level...";
-        exitButton.gameObject.SetActive(false) ;
+        exitButton.gameObject.SetActive(false);
         yield return new WaitForSeconds(5f);
         FindObjectOfType<ButtonFunctions>().LoadScene("Classified");
     }

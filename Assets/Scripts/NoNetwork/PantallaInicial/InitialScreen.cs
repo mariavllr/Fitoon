@@ -16,6 +16,7 @@ public class InitialScreen : MonoBehaviour
         saveData = GetComponent<SaveData>();
         ReadUsername();
         ReadCharacter();
+        ResetScenesPlayed();
         if (RaceManager.Instance != null) RaceManager.Instance.Reset();
     }
 
@@ -84,6 +85,12 @@ public class InitialScreen : MonoBehaviour
     public void SaveUsername(string value)
     {
         saveData.player.username = value;
+        saveData.SaveToJson();
+    }
+
+    public void ResetScenesPlayed()
+    {
+        saveData.player.scenesPlayed.Clear();
         saveData.SaveToJson();
     }
 }
