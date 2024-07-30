@@ -25,9 +25,8 @@ public class GameOver : MonoBehaviour
     }
     void Start()
     {
+        saveData.ReadFromJson();
         CalculateReward();
-        
-
         RaceManager.Instance.Reset();
         saveData.SaveToJson();
     }
@@ -72,4 +71,9 @@ public class GameOver : MonoBehaviour
         }
     }
 
+    public void PlayAgain()
+    {
+        RaceManager.Instance.Reset();
+        GetComponent<ButtonFunctions>().LoadScene("FindingScenario");
+    }
 }

@@ -22,6 +22,7 @@ public class UpdateParameters : MonoBehaviour
     private void Start()
     {
         save = GetComponent<SaveData>();
+        save.ReadFromJson();
         UpdateMoneyText();
         UpdatePoints();
     }

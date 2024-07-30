@@ -67,7 +67,7 @@ public class GoalController : MonoBehaviour
                 FindObjectOfType<PlayerControl>().StopCharacterOnFinish();
                 FindObjectOfType<PlayerControl>().LockMovement(true);
                 FindObjectOfType<FinishController>().Finish(); //Animacion de acabar. To do: que diga You win!
-                exitButton.gameObject.SetActive(false);
+                infoText.text = "You are in! Waiting for the others...";
 
                 //Añadirlo a una lista en race manager para la siguiente ronda
                 RaceManager.Instance.raceBots.Add(new RaceManager.RaceBotsData(true, saveData.player.username, 0, 0, 0, 0, 0));
@@ -122,14 +122,14 @@ public class GoalController : MonoBehaviour
             if (playerFinished)
             {
                 //Ha ganado, puede pasar a siguiente nivel aleatorio
-                StartCoroutine(NextLevel());
+                StartCoroutine(NextLevel("You are classified!", "Classified"));
             }
             else
             {
                 //Ha perdido, vuelve al inicio
-                //infoText.text = "You lost... Press exit to go back";
                 exitButton.gameObject.SetActive(true);
                 exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("YouLose"); });
+                StartCoroutine(NextLevel("You lost... Press exit or wait 2s", "YouLose"));
             }
         }
     }
@@ -141,26 +141,26 @@ public class GoalController : MonoBehaviour
         if (playerFinished)
         {
             //Ganó el jugador
-            infoText.text = "You win!!! Press exit to go back";
             RaceManager.Instance.playerWon = true;
             exitButton.gameObject.SetActive(true);
             exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("YouWin"); });
+            StartCoroutine(NextLevel("You win!!!", "YouWin"));
         }
         else
         {
             //Perdió
-            infoText.text = "You lost!!! Press exit to go back";
             exitButton.gameObject.SetActive(true);
             exitButton.onClick.AddListener(delegate { FindObjectOfType<ButtonFunctions>().LoadScene("YouLose"); });
+            StartCoroutine(NextLevel("You lost...", "YouLose"));
         } 
     }
 
-    IEnumerator NextLevel()
+    IEnumerator NextLevel(string textToInform, string sceneToGo)
     {
-        infoText.text = "You win! Next level...";
+        infoText.text = textToInform;
         exitButton.gameObject.SetActive(false);
-        yield return new WaitForSeconds(5f);
-        FindObjectOfType<ButtonFunctions>().LoadScene("Classified");
+        yield return new WaitForSeconds(3f);
+        FindObjectOfType<ButtonFunctions>().LoadScene(sceneToGo);
     }
 
 
