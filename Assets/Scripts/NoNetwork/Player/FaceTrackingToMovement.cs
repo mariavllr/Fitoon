@@ -93,6 +93,11 @@ public class FaceTrackingToMovement : MonoBehaviour
         if(data.Count == sampleRate)
         {
 
+            if(animator == null)
+            {
+                Debug.Log("animator is null!");
+                animator = GetComponentInChildren<Animator>();
+            }
                 float frecuencia = frequencyCounter.DoFFT(data.ToArray());
                 //Calcular la velocidad. Pasos/segundo -> Metros/segundo
                 velocidad = distanciaPaso * frecuencia;
@@ -101,6 +106,7 @@ public class FaceTrackingToMovement : MonoBehaviour
                 float cadencia = frecuencia * 60f;
                 //La animacion base a velocidad 1 tiene una cadencia de aprox 136.
                 float animationSpeed = cadencia / 136;
+
                 animator.SetFloat("playerSpeed", animationSpeed);
 
                 cadenceText.text = $"Cadence: {cadencia}";
