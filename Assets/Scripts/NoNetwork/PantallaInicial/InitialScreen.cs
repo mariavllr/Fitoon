@@ -8,6 +8,7 @@ public class InitialScreen : MonoBehaviour
     SaveData saveData;
     [SerializeField] GameObject characterContainer;
     [SerializeField] List<CharacterItem> characters;
+    CharacterItem actualCharacter;
     [SerializeField] List<ObjectItem> shoes;
     [SerializeField] GameObject treadmillPrefab;
     [SerializeField] TMP_InputField inputName;
@@ -40,7 +41,7 @@ public class InitialScreen : MonoBehaviour
             return;
         }
         //Buscar personaje
-        CharacterItem actualCharacter = characters.Find(character => character.characterName == savedSkin);
+        actualCharacter = characters.Find(character => character.characterName == savedSkin);
 
         //Instanciar la cinta de correr
         GameObject treadmill = Instantiate(treadmillPrefab, Vector3.zero, Quaternion.identity, characterContainer.transform);
@@ -49,7 +50,9 @@ public class InitialScreen : MonoBehaviour
         DestroyImmediate(characterContainer.transform.GetChild(0).gameObject);
         GameObject characterInstance = Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, treadmill.transform);
         characterInstance.GetComponent<Animator>().SetBool("isRunning", true);
+
         UpdateShoes();
+        UpdateColors();
 
         //Colocar a personaje adecuadamente en la cinta
         characterInstance.transform.Rotate(transform.up, 180f);
@@ -80,6 +83,27 @@ public class InitialScreen : MonoBehaviour
         }
 
         //  Debug.Log($"DESPUES: Zapato GO: {zapatos.name}. Mesh rendered: {renderer.sharedMesh}. ActualShoe id: {i}");
+    }
+
+    void UpdateColors()
+    {
+        Color color = Color.black; //si falla saldrá negro
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.hairColor, out color))
+        {
+            actualCharacter.hair.color = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.skinColor, out color))
+        {
+            actualCharacter.skin.color = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.bottomColor, out color))
+        {
+            actualCharacter.bottom.color = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.topColor, out color))
+        {
+            actualCharacter.top.color = color;
+        }
     }
 
     public void SaveUsername(string value)

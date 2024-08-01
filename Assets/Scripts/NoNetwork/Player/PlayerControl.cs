@@ -30,6 +30,7 @@ public class PlayerControl : MonoBehaviour
     SaveData saveData;
     [SerializeField] List<CharacterItem> charactersList;
     [SerializeField] List<ObjectItem> shoes;
+    CharacterItem actualCharacter;
 
 
     //-----EVENTS-----
@@ -47,6 +48,54 @@ public class PlayerControl : MonoBehaviour
         GoalController.onRaceFinishEvent -= EndRace;
         FaceTrackingToMovement.onCaraDetectadaEvent -= caraDetectada;
         FaceTrackingToMovement.onCaraNoDetectadaEvent -= caraNoDetectada;
+    }
+
+
+    private void Awake()
+    {
+        rB = GetComponent<Rigidbody>();
+        saveData = FindAnyObjectByType<SaveData>();
+        ReadCharacterSaved();
+
+        countdownTimer = FindObjectOfType<Countdown>();
+        finishController = FindObjectOfType<FinishController>();
+        botSpawner = FindObjectOfType<CreateBots>();
+        goalController = FindObjectOfType<GoalController>();
+        goal = goalController.gameObject;
+
+        //Asignar personaje guardado
+        GameObject playerContainer = GameObject.FindGameObjectWithTag("Player");
+        GameObject characterInPrefab = GameObject.FindGameObjectWithTag("Character");
+        GameObject newCharacter = Instantiate(playerCharacter.prefab, characterInPrefab.transform.position, Quaternion.identity, playerContainer.transform);
+        newCharacter.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+        playerContainer.GetComponent<PlayerControl>().anim = newCharacter.GetComponent<Animator>();
+        Destroy(newCharacter.GetComponent<CapsuleCollider>());
+        Destroy(newCharacter.GetComponent<RotateCharacter>());
+
+        newCharacter.transform.SetSiblingIndex(0);
+
+        DestroyImmediate(characterInPrefab);
+
+        UpdateShoes();
+        UpdateColors();
+    }
+
+    private void Start()
+    {
+        if (goalController != null) goalController.Reset();
+
+        LockMovement(false);
+        //-------------------------------------------------------------------------------------------
+
+        if (countdownTimer == null) countdownTimer = FindObjectOfType<Countdown>();
+        if (finishController == null) finishController = FindObjectOfType<FinishController>();
+        if (botSpawner == null) botSpawner = FindObjectOfType<CreateBots>();
+
+        countdownTimer.Reset();
+
+        //When a Player spawn, the Server searches for a not occupied spawnpoint from the NetworkList for him.
+        SearchNextFreeSpawnPoint();
+
     }
 
     void caraDetectada()
@@ -78,7 +127,7 @@ public class PlayerControl : MonoBehaviour
     {
         saveData.ReadFromJson();
 
-        CharacterItem actualCharacter = new CharacterItem();
+        actualCharacter = new CharacterItem();
         //Buscar la skin
         string savedSkin = saveData.player.playerCharacterData.characterName;
         if (savedSkin == null)
@@ -93,63 +142,10 @@ public class PlayerControl : MonoBehaviour
 
         playerCharacter = actualCharacter;
 
-        //Asignar colores guardados
-        /*Color color = Color.black; //si falla saldrá negro
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.hairColor, out color))
-        {
-            actualCharacter.hairColor = color;
-        }
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.skinColor, out color))
-        {
-            actualCharacter.skinColor = color;
-        }
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.bottomColor, out color))
-        {
-            actualCharacter.bottomColor = color;
-        }
-        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.topColor, out color))
-        {
-            actualCharacter.topColor = color;
-        }*/
-
-        //scriptable object con estos datos
-    /*    playerCharacter.characterName = actualCharacter.characterName;
-        playerCharacter.prefab = actualCharacter.prefab;
-        playerCharacter.hair = actualCharacter.hair;
-        playerCharacter.skin = actualCharacter.skin;
-        playerCharacter.top = actualCharacter.top;
-        playerCharacter.bottom = actualCharacter.bottom;
-        playerCharacter.hairColor = actualCharacter.hairColor;
-        playerCharacter.skinColor = actualCharacter.skinColor;
-        playerCharacter.topColor = actualCharacter.topColor;
-        playerCharacter.bottomColor = actualCharacter.bottomColor;*/
     }
 
-    private void Awake()
+    void UpdateShoes()
     {
-        rB = GetComponent<Rigidbody>();
-        saveData = FindAnyObjectByType<SaveData>();
-        ReadCharacterSaved();
-
-        countdownTimer = FindObjectOfType<Countdown>();
-        finishController = FindObjectOfType<FinishController>();
-        botSpawner = FindObjectOfType<CreateBots>();
-        goalController = FindObjectOfType<GoalController>();
-        goal = goalController.gameObject;
-
-        //Asignar personaje guardado
-        GameObject playerContainer = GameObject.FindGameObjectWithTag("Player");
-        GameObject characterInPrefab = GameObject.FindGameObjectWithTag("Character");
-        GameObject newCharacter = Instantiate(playerCharacter.prefab, characterInPrefab.transform.position, Quaternion.identity, playerContainer.transform);
-        newCharacter.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-        playerContainer.GetComponent<PlayerControl>().anim = newCharacter.GetComponent<Animator>();
-        Destroy(newCharacter.GetComponent<CapsuleCollider>());
-        Destroy(newCharacter.GetComponent<RotateCharacter>());
-
-        newCharacter.transform.SetSiblingIndex(0);
-
-        DestroyImmediate(characterInPrefab);
-
         //Actualizar zapatillas
         GameObject zapatos = GameObject.FindGameObjectWithTag("Shoes");
         SkinnedMeshRenderer renderer = zapatos.GetComponent<SkinnedMeshRenderer>();
@@ -164,28 +160,29 @@ public class PlayerControl : MonoBehaviour
                 break;
             }
         }
-
-
     }
 
-
-    private void Start()
+    void UpdateColors()
     {
-        if (goalController != null) goalController.Reset();
-
-        LockMovement(false);
-        //-------------------------------------------------------------------------------------------
-
-        if (countdownTimer == null) countdownTimer = FindObjectOfType<Countdown>();
-        if (finishController == null) finishController = FindObjectOfType<FinishController>();
-        if (botSpawner == null) botSpawner = FindObjectOfType<CreateBots>();
-
-        countdownTimer.Reset();
-
-        //When a Player spawn, the Server searches for a not occupied spawnpoint from the NetworkList for him.
-        SearchNextFreeSpawnPoint();
-
+        Color color = Color.black; //si falla saldrá negro
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.hairColor, out color))
+        {
+            actualCharacter.hair.color = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.skinColor, out color))
+        {
+            actualCharacter.skin.color = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.bottomColor, out color))
+        {
+            actualCharacter.bottom.color = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.topColor, out color))
+        {
+            actualCharacter.top.color = color;
+        }
     }
+
 
     private void SearchNextFreeSpawnPoint()
     {

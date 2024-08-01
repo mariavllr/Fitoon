@@ -137,6 +137,8 @@ public class ChangeCharacter : MonoBehaviour
         nameText.text = actualCharacter.characterName;
 
         UpdateShoes();
+        UpdateColors();
+        
 
         //Asignar colores guardados (cuando haga reset deben salir estos)
         /* Color color = Color.black; //si falla saldrá negro
@@ -193,6 +195,27 @@ public class ChangeCharacter : MonoBehaviour
         }
 
       //  Debug.Log($"DESPUES: Zapato GO: {zapatos.name}. Mesh rendered: {renderer.sharedMesh}. ActualShoe id: {i}");
+    }
+
+    void UpdateColors()
+    {
+        Color color = Color.black; //si falla saldrá negro
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.hairColor, out color))
+        {
+            actualCharacter.hair.color = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.skinColor, out color))
+        {
+            actualCharacter.skin.color = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.bottomColor, out color))
+        {
+            actualCharacter.bottom.color = color;
+        }
+        if (ColorUtility.TryParseHtmlString(saveData.player.playerCharacterData.topColor, out color))
+        {
+            actualCharacter.top.color = color;
+        }
     }
 
     public void SaveCharacter()
