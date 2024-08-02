@@ -3306,6 +3306,8 @@ MonoBehaviour:
       skinColor: 
       topColor: 
       bottomColor: 
+      shoes: 0
+    scenesPlayed: []
 --- !u!4 &1873404258
 Transform:
   m_ObjectHideFlags: 0
@@ -4505,7 +4507,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 92, y: 0}
+  m_AnchoredPosition: {x: 142.93, y: 0}
   m_SizeDelta: {x: 184, y: 184}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8826409536864211222
