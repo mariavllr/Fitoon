@@ -430,6 +430,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadScene
       objectReference: {fileID: 0}
+    - target: {fileID: 5863279230379946901, guid: f288081b226145d45aae3937e5bdedeb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Settings
+      objectReference: {fileID: 0}
     - target: {fileID: 8225273834033410417, guid: f288081b226145d45aae3937e5bdedeb, type: 3}
       propertyPath: m_Name
       value: CanvasSuperior
@@ -513,6 +517,7 @@ MonoBehaviour:
       topColor: 
       bottomColor: 
       shoes: 0
+    scenesPlayed: []
 --- !u!114 &146489846
 MonoBehaviour:
   m_ObjectHideFlags: 0

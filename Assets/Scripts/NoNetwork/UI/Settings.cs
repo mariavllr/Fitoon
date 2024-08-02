@@ -13,8 +13,8 @@ public class Settings : MonoBehaviour
     [SerializeField] Slider sfxSlider;
 
     [Header("Controls")]
-    [SerializeField] List<GameObject> screens;
     [SerializeField] GameObject screenContainer;
+    public int screensNumber;
     int actualScreen = 0;
     void Start()
     {
@@ -46,13 +46,13 @@ public class Settings : MonoBehaviour
 
     public void OnArrowClicked(string direction)
     {
-        Destroy(screenContainer.transform.GetChild(0).gameObject);
+        screenContainer.transform.GetChild(actualScreen).gameObject.SetActive(false);
 
         if (direction == "RIGHT")
         {
             actualScreen++;
 
-            if (actualScreen == screens.Count)
+            if (actualScreen == screensNumber)
             {
                 actualScreen = 0;
             }
@@ -64,10 +64,11 @@ public class Settings : MonoBehaviour
 
             if (actualScreen < 0)
             {
-                actualScreen = screens.Count - 1;
+                actualScreen = screensNumber - 1;
             }
         }
 
-        Instantiate(screens[actualScreen], screenContainer.transform);
+        screenContainer.transform.GetChild(actualScreen).gameObject.SetActive(true);
+
     }
 }
