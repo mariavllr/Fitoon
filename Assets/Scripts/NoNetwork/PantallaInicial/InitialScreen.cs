@@ -50,6 +50,7 @@ public class InitialScreen : MonoBehaviour
         DestroyImmediate(characterContainer.transform.GetChild(0).gameObject);
         GameObject characterInstance = Instantiate(actualCharacter.prefab, Vector3.zero, Quaternion.identity, treadmill.transform);
         characterInstance.GetComponent<Animator>().SetBool("isRunning", true);
+        characterInstance.GetComponent<Outline>().enabled = false;
 
         UpdateShoes();
         UpdateColors();
