@@ -194,7 +194,7 @@ public class GoalController : MonoBehaviour
                     maxPlayers = RaceManager.Instance.playerPerRace[2];
                     break;
             }
-            roundText.text = "RONDA " + ronda;
+            roundText.text = "ROUND " + ronda;
         }
         
         else Debug.LogError("Error: No race manager");
